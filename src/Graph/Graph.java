@@ -66,8 +66,8 @@ public class Graph
 		}
 		return neighbourhood;
 	}
-	public String draw()
-	{
+	//public String draw()
+	//{
 		
-	}
+	//}
 }

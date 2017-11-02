@@ -1,4 +1,5 @@
 import java.lang.Math;
+import Graph.*
 public class FDD
 {
 	private double c1 = 2;
@@ -16,10 +17,18 @@ public class FDD
 	
 	private Graph g;
 	
-	public FDD(Graph g) {
+	public FDD(Graph g) 
+	{
 		this.g = g;
 	}
-	
+	public String run(int i)
+	{
+		//randomise
+		for(int i = 0;i<g.getV().size();i++)
+		{
+			
+		}
+	}
 	public void applyForces() 
 	{
 		Vector[] displacement = new Vector[g.getV().size()];
@@ -86,10 +95,20 @@ public class FDD
 	
 	public static void main(Strings args[])
 	{
+		ArrayList<Vertex> V = new ArrayList<Vertex>();
+		ArrayList<Edge> E = new ArrayList<Edge>();
+		for(int i = 0;i<10;i++)
+		{
+			Vertex temp = new Vertex(String.valueOf(i));
+			Vertex temp2 = new Vertex(String.valueOf(i+10));
+			V.add(temp);
+			V.add(temp2);
+			Edge te = new Edge(temp,temp2);
+			E.add(te);
+		}
+		Graph graph = new Graph(V,E);
+		FDD = new FDD(Graph);
+		FDD.run(100);
 		
 	}
-	
-	
-	
-		
 }

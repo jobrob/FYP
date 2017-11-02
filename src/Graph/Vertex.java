@@ -51,6 +51,6 @@ public class Vertex
 	}
 	public String draw()
 	{
-		return("<!-- " + name " --> <g id = \"" + name + "class=\"edge\"<ellipse fill=\"none\" stroke=\"#000000\" cx=\"" + vector.getX() + "\" cy=\"" + vector.getY()"rx=\"1\" ry=\"1\"/>");
+		return("<!-- " + name + " --> <g id = \"" + name + "class=\"edge\"<ellipse fill=\"none\" stroke=\"#000000\" cx=\"" + vector.getX() + "\" cy=\"" + vector.getY() + "rx=\"1\" ry=\"1\"/>");
 	}
 }

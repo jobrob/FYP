@@ -38,6 +38,6 @@ public class Edge
 	
 	public String draw()
 	{
-		
+		return("")
 	}
 } 
