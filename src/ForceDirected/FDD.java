@@ -16,12 +16,20 @@ public class FDD
 	
 	
 	private Graph g;
-	
+	/**
+	 * Creates a FDD of a given graph
+	 * @param g The graph
+	 */
 	public FDD(Graph g) 
 	{
 		this.g = g;
 	}
-	public String run(int i)
+	
+	/**
+	 * Calculates the froces i times
+	 * @param i the number of times the forces will be calculated.
+	 */
+	public String simulate(int i)
 	{
 		//randomise
 		for(int i = 0;i<g.getV().size();i++)
@@ -29,6 +37,10 @@ public class FDD
 			
 		}
 	}
+	
+	/**
+	 * Applies both the electrostatic and the spring force
+	 */
 	public void applyForces() 
 	{
 		Vector[] displacement = new Vector[g.getV().size()];
@@ -49,11 +61,19 @@ public class FDD
 		}
 	}
 	
+	/**
+	 * calculates the net force on a vertex
+	 * @param v the vertex which the net force will be calculated on
+	 */
 	public Vector netForce(Vertex v)
 	{
 		return netEForce(v).plus(netSForce(v));
 	}
 	
+	/*
+	 * calculates the total electrostatic foce on a given vertex from all other vertices in the graph
+	 * @param v the vertex 
+	 */
 	public Vector netEForce(Vertex v) {	
 		Vector result = Vector.ZERO;
 		for (Vertex v2 : g.getV()) {
@@ -64,6 +84,11 @@ public class FDD
 		return result;
 	}
 	
+	/**
+	 * Calculates the net spring foce on a vertex v
+	 * Caused by all vertices in the neighbourhood of v
+	 * @param v the vertex being considered.
+	 */
 	public Vector netSForce(Vertex v) {
 		Vector result = Vector.ZERO;
 		for(Vertex v2 : g.neighbourhood(v)) {
@@ -76,6 +101,8 @@ public class FDD
 	 * Get the "electrostatic" force induced on the
 	 * Vertex `on` as caused by the Vertex `by`. This
 	 * force follows an inverse-square law.
+	 * @param on the vertex which feals the force
+	 * @param by the vertex which exerts the force
 	 */
 	public Vector eForce(Vertex on, Vertex by) {
 		Vector s = by.getVector().minus(on.getVector());
@@ -86,6 +113,13 @@ public class FDD
 		return s.negate().normalise().scale(c3 / (r*r*r));
 	}
 	
+	/**
+	 * Get the spring force induced on
+	 * the Vertex 'on' caused the Vertex 'by' 
+	 * which shares an edge with 'on'
+	 * @param on the vertex which feals the force
+	 * @param by the vertex which exerts the force
+	 */
 	public Vector sForce (Vertex on, Vertex by)
 	{
 		Vector s = by.getVector().minus(on.getVector());
