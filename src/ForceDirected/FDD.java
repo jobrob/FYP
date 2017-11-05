@@ -1,5 +1,11 @@
+package ForceDirected;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.Math;
-import Graph.*
+import Graph.*;
+import java.util.ArrayList;
 public class FDD
 {
 	private double c1 = 2;
@@ -26,15 +32,36 @@ public class FDD
 	}
 	
 	/**
-	 * Calculates the froces i times
+	 * Calculates the forces i times
 	 * @param i the number of times the forces will be calculated.
 	 */
-	public String simulate(int i)
+	public void simulate(int i)
 	{
-		//randomise
-		for(int i = 0;i<g.getV().size();i++)
+		for(Vertex v : g.getV())
 		{
-			
+			v.randomise();
+		}
+		for(int j = i; j > 0; j--)
+		{
+			applyForces();
+		}
+		
+		PrintWriter writer;
+		try 
+		{
+			writer = new PrintWriter("FDD.svg", "UTF-8");
+			writer.print(SVG.of(g));
+			writer.close();
+		} 
+		catch (FileNotFoundException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (UnsupportedEncodingException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -71,8 +98,8 @@ public class FDD
 	}
 	
 	/*
-	 * calculates the total electrostatic foce on a given vertex from all other vertices in the graph
-	 * @param v the vertex 
+	 * calculates the total electrostatic force on a given vertex from all other vertices in the graph
+	 * @param v The vertex to compute the total electrostatic force on. 
 	 */
 	public Vector netEForce(Vertex v) {	
 		Vector result = Vector.ZERO;
@@ -85,7 +112,7 @@ public class FDD
 	}
 	
 	/**
-	 * Calculates the net spring foce on a vertex v
+	 * Calculates the net spring force on a vertex v
 	 * Caused by all vertices in the neighbourhood of v
 	 * @param v the vertex being considered.
 	 */
@@ -101,7 +128,7 @@ public class FDD
 	 * Get the "electrostatic" force induced on the
 	 * Vertex `on` as caused by the Vertex `by`. This
 	 * force follows an inverse-square law.
-	 * @param on the vertex which feals the force
+	 * @param on the vertex which feels the force
 	 * @param by the vertex which exerts the force
 	 */
 	public Vector eForce(Vertex on, Vertex by) {
@@ -117,7 +144,7 @@ public class FDD
 	 * Get the spring force induced on
 	 * the Vertex 'on' caused the Vertex 'by' 
 	 * which shares an edge with 'on'
-	 * @param on the vertex which feals the force
+	 * @param on the vertex which feels the force
 	 * @param by the vertex which exerts the force
 	 */
 	public Vector sForce (Vertex on, Vertex by)
@@ -127,22 +154,23 @@ public class FDD
 		return s.negate().normalise().scale(c1*Math.log(r/c2));
 	}
 	
-	public static void main(Strings args[])
+	public static void main(String args[])
 	{
 		ArrayList<Vertex> V = new ArrayList<Vertex>();
 		ArrayList<Edge> E = new ArrayList<Edge>();
-		for(int i = 0;i<10;i++)
+		for(int i = 0; i < 10; i++)
 		{
-			Vertex temp = new Vertex(String.valueOf(i));
-			Vertex temp2 = new Vertex(String.valueOf(i+10));
-			V.add(temp);
-			V.add(temp2);
-			Edge te = new Edge(temp,temp2);
-			E.add(te);
+			Vertex v = new Vertex(""+i);
+			Vertex v2 = new Vertex(""+(i+10));
+			V.add(v);
+			V.add(v2);
+			
+			Edge e = new Edge(v, v2);
+			E.add(e);
 		}
-		Graph graph = new Graph(V,E);
-		FDD = new FDD(Graph);
-		FDD.run(100);
+		Graph graph = new Graph(V, E);
 		
+		FDD fdd = new FDD(graph);
+		fdd.simulate(100);
 	}
 }

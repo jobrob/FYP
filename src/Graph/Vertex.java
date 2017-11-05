@@ -1,9 +1,13 @@
+package Graph;
+
+import java.util.Random;
+
 public class Vertex
 {
 	String name;
 	Vector vector;
 	/**
-	 * Creats a Vertex out of a name and a vector to define it position
+	 * Creates a Vertex out of a name and a vector to define it position
 	 * @param name the name of the vertex
 	 * @param vector the position of the vertex
 	 */
@@ -15,7 +19,7 @@ public class Vertex
 	
 	/**
 	 * Creates a vertex without a position vector
-	 * Automaticly assigns the 0 vector is a assigned
+	 * Automatically assigns the 0 vector is a assigned
 	 * @param name the name of the vertex
 	 */
 	public Vertex(String name)
@@ -88,5 +92,14 @@ public class Vertex
 	public String draw()
 	{
 		return("<!-- " + name + " --> <g id = \"" + name + "class=\"edge\"<ellipse fill=\"none\" stroke=\"#000000\" cx=\"" + vector.getX() + "\" cy=\"" + vector.getY() + "rx=\"1\" ry=\"1\"/>");
+	}
+
+	public void randomise() 
+	{
+		Random rand = new Random();
+		int x = rand.nextInt(50);
+		int y = rand.nextInt(50);
+		Vector randomVector = new Vector(x,y);
+		setVector(randomVector);
 	}
 }

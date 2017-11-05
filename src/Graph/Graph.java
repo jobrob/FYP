@@ -1,3 +1,4 @@
+package Graph;
 import java.util.ArrayList;
 public class Graph
 {
@@ -9,8 +10,10 @@ public class Graph
 	@param V the collection of vertices
 	@param E the collection of edges
 	*/
-	public Graph(Vertex[] V,Edge[] E) throws Exception
+	public Graph(ArrayList<Vertex> V,ArrayList<Edge> E) 
 	{
+		this.V = new ArrayList<Vertex>();
+		this.E = new ArrayList<Edge>();
 		for(Vertex v : V)
 		{
 			addVertex(v);
@@ -41,14 +44,11 @@ public class Graph
 	Adds a vertex to the collection of vertices and asserts that its not already in V
 	@param vertex the vertex being added
 	*/
-	public void addVertex(Vertex vertex) throws Exception
+	public void addVertex(Vertex vertex) 
 	{
 		for(Vertex v : V)
 		{
-			if(v.equals(vertex))
-			{
-				throw new Exception("Vertex " + vertex + " has the same name as a vertex in the graph");
-			}
+			assert(!v.equals(vertex)) : "Vertex with same name error";
 		}
 		V.add(vertex);
 	}
@@ -57,14 +57,15 @@ public class Graph
 	Adds an edge to the collection of edges and asserts that its not already in E
 	@param edge the edge to be added
 	*/
-	public void addEdge(Edge edge) throws Exception
+	public void addEdge(Edge edge)
 	{
 		for(Edge e : E)
 		{
-			if (edge.equals(e))
-			{
-				throw new Exception("Edge " + edge + " already exists in this graph");
-			}
+			assert(!e.equals(edge)) : "Two same Edges";
+			//if (edge.equals(e))
+			//{
+			//	throw new Exception("Edge " + edge + " already exists in this graph");
+			//}
 		}
 		E.add(edge);
 	}

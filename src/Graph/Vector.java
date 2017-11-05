@@ -1,17 +1,14 @@
-import java.io.Serializable;
-
+package Graph;
 
 /**
  * A class of objects to describe 3D Euclidean vectors.
  * @author Jivan Pal
  *
  */
-public class Vector implements Serializable {
-    private static final long serialVersionUID = 1L;
-    
+public class Vector {
 
 /// CONSTANTS
-
+	
     /**
      * The zero vector, (0,0,0).
      */
@@ -33,6 +30,7 @@ public class Vector implements Serializable {
     public static final Vector K    = new Vector(0, 0, 1);
 
 /// FIELDS
+    
     private final double x, y, z;
 
 /// CONSTRUCTORS
@@ -125,7 +123,8 @@ public class Vector implements Serializable {
      * @return  the string "(x,y,z)", where 'x', 'y', and 'z' are the
      *          values of the vector's components.
      */
-    public String toString() {
+    public String toString()
+	{
         return "("+String.format("%.5f", x)+", "+String.format("%.5f", y)+", "+String.format("%.5f", z)+")";
     }
 

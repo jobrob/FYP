@@ -1,3 +1,4 @@
+package Graph;
 public class Edge
 {
 	private Vertex v1;
@@ -56,8 +57,8 @@ public class Edge
 	/**
 	 * Returns a string in the format requierd for svg.
 	 */
-	public String draw()
-	{
-		return("")
-	}
+	//public String draw()
+	//{
+	//	return("<g id=\"edge\" class=\"edge\"><path fill=\"none\" stroke=\"#000000\" d=\"M" + v1.getX() + ")
+	//}
 } 
