@@ -97,4 +97,26 @@ public class Graph
 	//{
 		
 	//}
+	
+	public static Graph K(int n)
+	{
+		assert n > 0;
+		
+		ArrayList<Vertex>	V = new ArrayList<Vertex>();
+		ArrayList<Edge>		E = new ArrayList<Edge>();
+		
+		for(int i = 0; i < n; i++)
+		{
+			V.add(new Vertex(""+i));
+		}
+		for(int i = 0; i < n; i++) 
+		{
+			for(int j = i+1; j < n; j++)
+			{
+				E.add(new Edge(V.get(i), V.get(j)));
+			}
+		}
+		return new Graph(V,E);
+	}
+	
 }

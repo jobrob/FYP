@@ -2,19 +2,19 @@ package Graph;
 
 import java.util.Random;
 
-public class Vertex
+public class Vertex 
 {
+	Vector position;
 	String name;
-	Vector vector;
 	/**
 	 * Creates a Vertex out of a name and a vector to define it position
 	 * @param name the name of the vertex
 	 * @param vector the position of the vertex
 	 */
-	public Vertex(String name,Vector vector)
+	public Vertex(String name, Vector position)
 	{
+		this.position = position;
 		this.name = name;
-		this.vector = vector;
 	}
 	
 	/**
@@ -24,16 +24,7 @@ public class Vertex
 	 */
 	public Vertex(String name)
 	{
-		this.name = name;
-		this.vector = new Vector(0,0);
-	}
-	
-	/**
-	 * Returns the position vector of the vertex
-	 */
-	public Vector getVector()
-	{
-		return vector;
+		this(name, Vector.ZERO);
 	}
 	
 	/**
@@ -41,7 +32,7 @@ public class Vertex
 	 */
 	public double getX()
 	{
-		return vector.getX();
+		return position.getX();
 	}
 	
 	/**
@@ -49,7 +40,7 @@ public class Vertex
 	 */
 	public double getY()
 	{
-		return vector.getY();
+		return position.getY();
 	}
 	
 	/**
@@ -61,45 +52,50 @@ public class Vertex
 	}
 	
 	/**
-	 * Updates the vector of the vertex
-	 * @param vector the new vector
+	 * Returns the vector of the vertex
 	 */
-	public void setVector(Vector vector)
+	public Vector getVector()
 	{
-		this.vector = vector;
+		return position;
+	}
+	/**
+	 * Sets the vector of the vertex to the one given
+	 * @param postion the new position vector
+	 */
+	public void setVector(Vector position)
+	{
+		this.position = position;
 	}
 	
 	/**
-	 * Checks to see if two vertices are equal
-	 * @param vertex. the vertex to be compared to
+	 * Checks to see if two vertices have the same name.
+	 * @param v The other vertex.
 	 */
 	public boolean equals(Vertex v)
 	{
-		return (v.equals(vector));
+		return (v.getName().equals(name));
 	}
 	
 	/**
-	 * returns the vertex as a string in the form of a touple of its name and its vector
+	 * Return a string representation of this instance consisting of its
+	 * name, position, and velocity.
 	 */
 	public String toString()
 	{	
-		return(name + ":" + vector);
+		return(name+": s = "+position);
 	}
 	
 	/**
-	 * returns a string in the form that draws the vertex in the from required for svg.
+	 * Randomises the position vector of the vertex
+	 * Coordinates are chosen from 0 to i
+	 * @param i the the random number cap
 	 */
-	public String draw()
+	public void randomise(int i) 
 	{
-		return("<!-- " + name + " --> <g id = \"" + name + "class=\"edge\"<ellipse fill=\"none\" stroke=\"#000000\" cx=\"" + vector.getX() + "\" cy=\"" + vector.getY() + "rx=\"1\" ry=\"1\"/>");
-	}
-
-	public void randomise() 
-	{
-		Random rand = new Random();
-		int x = rand.nextInt(50);
-		int y = rand.nextInt(50);
-		Vector randomVector = new Vector(x,y);
-		setVector(randomVector);
+		Random r = new Random();
+		double x = r.nextDouble() * i;
+		double y = r.nextDouble() * i;
+		
+		position = (new Vector(x,y));
 	}
 }

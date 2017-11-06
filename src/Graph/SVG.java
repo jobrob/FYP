@@ -5,7 +5,7 @@ import java.nio.file.*;
 
 public class SVG
 {
-	final static int NODE_RADIUS = 4;
+	final static String NODE_RADIUS = "4";
 	
 	public static String convert(Vertex v)
 	{
@@ -21,18 +21,24 @@ public class SVG
 	public static String of(Graph g)
 	{
 		String result = null;
-		try {
+		try 
+		{
 			result = new String(Files.readAllBytes(Paths.get("../assets/template-header.svg")));
-		} catch (IOException e) {
+			//	System.out.println(result);
+		} 
+		catch (IOException e)
+		{
 			System.err.println("Couldn't get `template-header.svg`.");
 			e.printStackTrace();
 		}
 		
-		if(result == null)
-			return null;
+		//if(result == null)
+		//	return null;
 		
 		for(Vertex v : g.getV())
+		{
 			result += "    " + SVG.convert(v) + "\n";
+		}
 		
 		for(Edge e : g.getE())
 			result += "    " + SVG.convert(e) + "\n";
