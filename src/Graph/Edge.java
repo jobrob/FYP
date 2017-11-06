@@ -14,6 +14,7 @@ public class Edge
 		this.v1 = v1;
 		this.v2 = v2;
 	}
+	
 	/**
 	 * Returns the first vertex
 	 */
@@ -21,6 +22,7 @@ public class Edge
 	{
 		return v1;
 	}
+	
 	/**
 	 * Returns the second vertex
 	 */
@@ -30,7 +32,7 @@ public class Edge
 	}
 	/**
 	 * Checks to see if two edges are equal.
-	 * The edges are unorderd to (v1,v2)==(v2,v1)
+	 * The edges are unordered to (v1,v2)==(v2,v1)
 	 * @param e the edge being compared to 
 	 */
 	public boolean equals(Edge e)
@@ -54,11 +56,4 @@ public class Edge
 	{
 		return(v1.equals(v) || v2.equals(v));
 	}
-	/**
-	 * Returns a string in the format requierd for svg.
-	 */
-	//public String draw()
-	//{
-	//	return("<g id=\"edge\" class=\"edge\"><path fill=\"none\" stroke=\"#000000\" d=\"M" + v1.getX() + ")
-	//}
 } 

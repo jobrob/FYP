@@ -7,12 +7,12 @@ public class SVG
 {
 	final static String NODE_RADIUS = "4";
 	
-	public static String convert(Vertex v)
+	public static String of(Vertex v)
 	{
 		return "<circle class=\"node\" cx=\"" + v.getX() + "\" cy=\"" + v.getY() + "\" r=\"" + NODE_RADIUS + "\" />";	
 	}
 	
-	public static String convert(Edge e)
+	public static String of(Edge e)
 	{
 		return "<line class=\"edge\" x1=\"" + e.getV1().getX() + "\" y1=\"" + e.getV1().getY() + "\" x2=\""
 											+ e.getV2().getX() + "\" y2=\"" + e.getV2().getY() + "\" />";
@@ -37,14 +37,14 @@ public class SVG
 		
 		for(Vertex v : g.getV())
 		{
-			result += "    " + SVG.convert(v) + "\n";
+			result += "    " + SVG.of(v) + "\n";
 		}
 		
 		for(Edge e : g.getE())
-			result += "    " + SVG.convert(e) + "\n";
-		
+		{
+			result += "    " + SVG.of(e) + "\n";
+		}
 		result += "\n</svg>\n";
-		
 		return result;
 	}
 }

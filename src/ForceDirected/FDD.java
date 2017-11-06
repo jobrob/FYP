@@ -1,8 +1,6 @@
 package ForceDirected;
 
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.lang.Math;
 import Graph.*;
 
@@ -15,10 +13,6 @@ public class FDD
 	private double c2 = 1;
 	private double c3 = 600;
 	private double c4 = 0.1;
-	
-	private final double MIN_EFORCE_RADIUS = 0.01;
-	private final double MAX_EFORCE_MAG =
-		c3 / (MIN_EFORCE_RADIUS * MIN_EFORCE_RADIUS * MIN_EFORCE_RADIUS);
 	
 	//Attraction caused by an edge = c1*log(d/c2)
 	//Repulsion caused by two vertices = c3/d^2
@@ -119,9 +113,11 @@ public class FDD
 	 * Caused by all vertices in the neighbourhood of v
 	 * @param v the vertex being considered.
 	 */
-	public Vector netSForce(Vertex v) {
+	public Vector netSForce(Vertex v)
+	{
 		Vector result = Vector.ZERO;
-		for(Vertex v2 : g.neighbourhood(v)) {
+		for(Vertex v2 : g.neighbourhood(v)) 
+		{
 			result = result.plus(sForce(v, v2));
 		}
 		return result;
@@ -134,7 +130,8 @@ public class FDD
 	 * @param on the vertex which feels the force
 	 * @param by the vertex which exerts the force
 	 */
-	public Vector eForce(Vertex on, Vertex by) {
+	public Vector eForce(Vertex on, Vertex by)
+	{
 		Vector s = by.getVector().minus(on.getVector());
 		double r = s.length();
 		return s.negate().normalise().scale(c3 / (r*r));

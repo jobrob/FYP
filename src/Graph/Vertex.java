@@ -95,7 +95,6 @@ public class Vertex
 		Random r = new Random();
 		double x = r.nextDouble() * i;
 		double y = r.nextDouble() * i;
-		
 		position = (new Vector(x,y));
 	}
 }
