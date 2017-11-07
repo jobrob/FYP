@@ -5,7 +5,7 @@ import java.lang.Math;
 import Graph.*;
 
 import java.util.ArrayList;
-public class FDD
+public class Eades
 {
 	private static String filename = null;
 	
@@ -24,7 +24,7 @@ public class FDD
 	 * Creates a FDD of a given graph
 	 * @param g The graph
 	 */
-	public FDD(Graph g) 
+	public Eades(Graph g) 
 	{
 		this.g = g;
 	}
@@ -228,7 +228,7 @@ public class FDD
 		E.add(e14);
 		E.add(e15);
 		Graph graph = new Graph(V,E);
-		FDD fdd = new FDD(graph);
-		fdd.simulate(1000);
+		Eades eades = new Eades(graph);
+		eades.simulate(1000);
 	}
 }
