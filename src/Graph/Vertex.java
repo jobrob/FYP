@@ -5,15 +5,17 @@ import java.util.Random;
 public class Vertex 
 {
 	Vector position;
+	Vector displacement;
 	String name;
 	/**
 	 * Creates a Vertex out of a name and a vector to define it position
 	 * @param name the name of the vertex
 	 * @param vector the position of the vertex
 	 */
-	public Vertex(String name, Vector position)
+	public Vertex(String name, Vector position,Vector displacement)
 	{
 		this.position = position;
+		this.displacement = displacement;
 		this.name = name;
 	}
 	
@@ -24,7 +26,12 @@ public class Vertex
 	 */
 	public Vertex(String name)
 	{
-		this(name, Vector.ZERO);
+		this(name, Vector.ZERO, Vector.ZERO);
+	}
+	
+	public Vertex(String name, Vector position)
+	{
+		this(name, position, Vector.ZERO);
 	}
 	
 	/**
@@ -54,17 +61,27 @@ public class Vertex
 	/**
 	 * Returns the vector of the vertex
 	 */
-	public Vector getVector()
+	public Vector getPosition()
 	{
 		return position;
+	}
+	
+	public Vector getDisplacement()
+	{
+		return displacement;
 	}
 	/**
 	 * Sets the vector of the vertex to the one given
 	 * @param postion the new position vector
 	 */
-	public void setVector(Vector position)
+	public void setPosition(Vector position)
 	{
 		this.position = position;
+	}
+	
+	public void setDisplacement(Vector displacement)
+	{
+		this.displacement = displacement;
 	}
 	
 	/**
@@ -82,7 +99,7 @@ public class Vertex
 	 */
 	public String toString()
 	{	
-		return(name+": s = "+position);
+		return(name+": pos = "+position + "disp = " + displacement);
 	}
 	
 	/**

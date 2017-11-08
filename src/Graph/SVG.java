@@ -6,18 +6,29 @@ import java.nio.file.*;
 public class SVG
 {
 	final static String NODE_RADIUS = "4";
-	
+	/**
+	 * Converts a vertex into a string for displaying with SVG
+	 * @param v the vertex being converted to SVG
+	 */
 	public static String of(Vertex v)
 	{
 		return "<circle class=\"node\" cx=\"" + v.getX() + "\" cy=\"" + v.getY() + "\" r=\"" + NODE_RADIUS + "\" />";	
 	}
 	
+	/**
+	 * Converts an edge into a string for displaying with SVG 
+	 * @param e the edge being converted
+	 */
 	public static String of(Edge e)
 	{
 		return "<line class=\"edge\" x1=\"" + e.getV1().getX() + "\" y1=\"" + e.getV1().getY() + "\" x2=\""
 											+ e.getV2().getX() + "\" y2=\"" + e.getV2().getY() + "\" />";
 	}
 	
+	/**
+	 * Converts a graph into a string for displaying with SVG 
+	 * @param g the graph being converted
+	 */
 	public static String of(Graph g)
 	{
 		String result = null;

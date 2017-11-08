@@ -44,6 +44,16 @@ public class Eades
 		for(int j = 0; j < i; j++)
 		{
 			applyForces();
+			/*try 
+			{
+				writer = new PrintWriter("../" + j + ".svg", "UTF-8");
+				writer.print(SVG.of(g));
+				writer.close();
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}*/
 		}
 		
 		try 
@@ -64,20 +74,23 @@ public class Eades
 	 */
 	public void applyForces() 
 	{
-		Vector[] force = new Vector[g.getV().size()];
+		
+		//Vector[] force = new Vector[g.getV().size()];
 		for(int i = 0; i < g.getV().size(); i++)
 		{
-			force[i] = netForce(g.getV().get(i));
+			g.getV().get(i).setDisplacement(Vector.ZERO);
+			g.getV().get(i).setDisplacement(netForce(g.getV().get(i)));
+			//force[i] = netForce(g.getV().get(i));
 		}
 		
 		for(int i = 0; i < g.getV().size(); i++)
 		{
-			g.getV().get(i).setVector
+			g.getV().get(i).setPosition
 			(
-				g.getV().get(i).getVector().plus
-				(
-					force[i]
-				)
+					g.getV().get(i).getPosition().plus
+					(
+							g.getV().get(i).getDisplacement()
+					)
 			);
 		}
 	}
@@ -132,7 +145,7 @@ public class Eades
 	 */
 	public Vector eForce(Vertex on, Vertex by)
 	{
-		Vector s = by.getVector().minus(on.getVector());
+		Vector s = by.getPosition().minus(on.getPosition());
 		double r = s.length();
 		return s.negate().normalise().scale(c3 / (r*r));
 	}
@@ -146,7 +159,7 @@ public class Eades
 	 */
 	public Vector sForce (Vertex on, Vertex by)
 	{
-		Vector s = by.getVector().minus(on.getVector());
+		Vector s = by.getPosition().minus(on.getPosition());
 		double r = s.length();
 		return s.normalise().scale(c1*Math.log(r/c2));
 	}
@@ -227,7 +240,9 @@ public class Eades
 		E.add(e13);
 		E.add(e14);
 		E.add(e15);
+		
 		Graph graph = new Graph(V,E);
+		//Graph graph = (Graph.K(6));
 		Eades eades = new Eades(graph);
 		eades.simulate(1000);
 	}
