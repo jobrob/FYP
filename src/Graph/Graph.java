@@ -181,4 +181,10 @@ public class Graph
 		return null;
 	}
 	
+	public Graph copy()
+	{
+		ArrayList<Vertex> Vertexs = new ArrayList<Vertex>(this.V);
+		ArrayList<Edge> Edges = new ArrayList<Edge>(this.E);
+		return(new Graph(Vertexs,Edges));
+	}
 }

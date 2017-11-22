@@ -92,7 +92,6 @@ public class Eades
 				)
 			);
 		}
-		System.out.println();
 	}
 	
 	/**
@@ -119,7 +118,6 @@ public class Eades
 			}
 		}
 		
-//		System.out.println("Calculated eForce is "+result+".");
 		
 		return result;
 	}
@@ -137,7 +135,6 @@ public class Eades
 			result = result.plus(sForce(v, v2));
 		}
 		
-	//	System.out.println("Calculated sForce is "+result+".");
 		
 		return result;
 	}
@@ -253,7 +250,6 @@ public class Eades
 		graph.addEdge(new Edge((graph.getVertex("1")),(graph.getVertex("2"))));
 		for(Vertex v : graph.neighbourhood(graph.getVertex("1")))
 		{
-			System.out.println(v);
 		}
 		//graph.addEdge(new Edge(new Vertex("1"), new Vertex("2")));
 		//Graph graph = (Graph.K(15));
