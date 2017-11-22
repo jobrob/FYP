@@ -59,7 +59,8 @@ public class Eades
 		try 
 		{
 			writer = new PrintWriter("../" + filename + ".svg", "UTF-8");
-			writer.print(SVG.of(g));
+			double[] minMax = g.minMax();
+			writer.print(SVG.of(g));//,minMax[0],minMax[1],minMax[2],minMax[3]));
 			writer.close();
 		} 
 		catch (Exception e) 
@@ -85,14 +86,13 @@ public class Eades
 		
 		for(int i = 0; i < g.getV().size(); i++)
 		{
-			g.getV().get(i).setPosition
-			(
-					g.getV().get(i).getPosition().plus
-					(
-							g.getV().get(i).getDisplacement()
-					)
+			g.getV().get(i).setPosition(
+				g.getV().get(i).getPosition().plus(
+					g.getV().get(i).getDisplacement()
+				)
 			);
 		}
+		System.out.println();
 	}
 	
 	/**
@@ -118,6 +118,9 @@ public class Eades
 				result = result.plus(eForce(v, v2));
 			}
 		}
+		
+//		System.out.println("Calculated eForce is "+result+".");
+		
 		return result;
 	}
 	
@@ -133,6 +136,9 @@ public class Eades
 		{
 			result = result.plus(sForce(v, v2));
 		}
+		
+	//	System.out.println("Calculated sForce is "+result+".");
+		
 		return result;
 	}
 	
@@ -161,7 +167,8 @@ public class Eades
 	{
 		Vector s = by.getPosition().minus(on.getPosition());
 		double r = s.length();
-		return s.normalise().scale(c1*Math.log(r/c2));
+		Vector force = s.normalise().scale(c1*Math.log(r/c2));
+		return force;
 	}
 	
 	public static void main(String args[])
@@ -225,7 +232,7 @@ public class Eades
 		Edge e13 = new Edge(v4,v14);
 		Edge e14 = new Edge(v4,v15);
 		Edge e15 = new Edge(v4,v16);
-		E.add(e1);
+		//E.add(e1);
 		E.add(e2);
 		E.add(e3);
 		E.add(e4);
@@ -240,9 +247,16 @@ public class Eades
 		E.add(e13);
 		E.add(e14);
 		E.add(e15);
+		//E.add(new Edge(new Vertex("1"), new Vertex("2")));
 		
 		Graph graph = new Graph(V,E);
-		//Graph graph = (Graph.K(6));
+		graph.addEdge(new Edge((graph.getVertex("1")),(graph.getVertex("2"))));
+		for(Vertex v : graph.neighbourhood(graph.getVertex("1")))
+		{
+			System.out.println(v);
+		}
+		//graph.addEdge(new Edge(new Vertex("1"), new Vertex("2")));
+		//Graph graph = (Graph.K(15));
 		Eades eades = new Eades(graph);
 		eades.simulate(1000);
 	}

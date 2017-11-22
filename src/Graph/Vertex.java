@@ -50,6 +50,11 @@ public class Vertex
 		return position.getY();
 	}
 	
+	public double getZ()
+	{
+		return position.getZ();
+	}
+	
 	/**
 	 * Returns the name of the Vertex
 	 */

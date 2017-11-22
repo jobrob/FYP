@@ -58,4 +58,63 @@ public class SVG
 		result += "\n</svg>\n";
 		return result;
 	}
+	
+	public static String of(Graph g, double xmin, double ymin, double xmax, double ymax)
+	{
+		String result = null;
+		String result2 = null;
+		try 
+		{
+			result = new String(Files.readAllBytes(Paths.get("../assets/template-header-part1.svg")));
+			result2 = new String(Files.readAllBytes(Paths.get("../assets/template-header-part2.svg")));
+			//	System.out.println(result);
+		} 
+		catch (IOException e)
+		{
+			System.err.println("Couldn't get `template-header-part-part.svg`.");
+			e.printStackTrace();
+		}
+		result += (xmin-50) + " " + (ymin-50) + " " + (xmax+50) + " " + (ymax+50);
+		result += result2;
+		for(Vertex v : g.getV())
+		{
+			result += "    " + SVG.of(v) + "\n";
+		}
+		
+		for(Edge e : g.getE())
+		{
+			result += "    " + SVG.of(e) + "\n";
+		}
+		result += "\n</svg>\n";
+		return result;
+	}
+	
+	public static String of(Graph3D g3d)
+	{
+		String result = null;
+		try 
+		{
+			result = new String(Files.readAllBytes(Paths.get("../assets/template-header.svg")));
+			//	System.out.println(result);
+		} 
+		catch (IOException e)
+		{
+			System.err.println("Couldn't get `template-header.svg`.");
+			e.printStackTrace();
+		}
+		for(Graph g :g3d.getG())
+		{
+			for(Vertex v : g.getV())
+			{
+				result += "    " + SVG.of(v) + "\n";
+			}
+			
+			for(Edge e : g.getE())
+			{
+				result += "    " + SVG.of(e) + "\n";
+			}
+		}
+		result += "\n</svg>\n";
+		return result;
+	}
 }

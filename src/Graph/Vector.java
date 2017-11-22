@@ -157,7 +157,7 @@ public class Vector {
      * Get the length/norm/magnitude of the vector.
      */
     public double length() {
-        return Math.sqrt(x*x + y*y + z*z);
+        return Math.sqrt(x*x + y*y);
     }
 
     /**
@@ -186,7 +186,7 @@ public class Vector {
      * @return  Returns the corresponding scalar multiple of the vector.
      */
     public Vector scale(double scalar) {
-        return new Vector(scalar * x, scalar * y, scalar * z);
+        return new Vector(scalar * x, scalar * y, 0);
     }
 
     /**
@@ -195,7 +195,7 @@ public class Vector {
      * @return  Returns the sum of the two vectors.
      */
     public Vector plus(Vector v) {
-        return new Vector(x + v.getX(), y + v.getY(), z + v.getZ());
+        return new Vector(x + v.getX(), y + v.getY());
     }
 
     /**
@@ -214,7 +214,7 @@ public class Vector {
      * @return  Returns the dot product (scalar product) of the two vectors.
      */
     public double dot(Vector v) {
-        return x * v.getX() + y * v.getY() + z * v.getZ();
+        return x * v.getX() + y * v.getY();
     }
 
     /**

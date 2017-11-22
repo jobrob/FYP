@@ -48,7 +48,7 @@ public class Graph
 	{
 		for(Vertex v : V)
 		{
-			assert(!v.equals(vertex)) : "Vertex with same name error";
+			assert(!v.equals(vertex) && v.getZ() != vertex.getZ()) : "Vertex with same name error";
 		}
 		V.add(vertex);
 	}
@@ -61,6 +61,10 @@ public class Graph
 	{
 		for(Edge e : E)
 		{
+			if(e.equals(edge))
+			{
+				break;
+			}
 			assert(!e.equals(edge)) : "Two same Edges";
 			//if (edge.equals(e))
 			//{
@@ -118,6 +122,63 @@ public class Graph
 			}
 		}
 		return new Graph(V,E);
+	}
+	
+	public double[] minMax()
+	{
+		double xmin = Double.MAX_VALUE;
+		double ymin = Double.MAX_VALUE;
+		double xmax = Double.MIN_VALUE;
+		double ymax = Double.MIN_VALUE;
+		for(Vertex v : V)
+		{
+			if(v.getX() < xmin)
+			{
+				xmin = v.getX();
+			}
+			if(v.getY() < ymin)
+			{
+				ymin = v.getY();
+			}
+			if(v.getX() > xmax)
+			{
+				xmax = v.getX();
+			}
+			if(v.getY() > ymax)
+			{
+				ymax = v.getY();
+			}
+		}
+		double[] result = new double[4];
+		result[0] = xmin;
+		result[1] = ymin;
+		result[2] = xmax;
+		result[3] = ymax;
+		return result;
+	}
+
+	public boolean isIn(Vertex vertex) 
+	{
+		for(Vertex v : V)
+		{
+			if (v.equals(vertex))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Vertex getVertex(String name) 
+	{
+		for(Vertex v : V)
+		{
+			if(v.name.equals(name))
+			{
+				return v;
+			}
+		}
+		return null;
 	}
 	
 }
