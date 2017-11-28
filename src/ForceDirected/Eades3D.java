@@ -8,6 +8,8 @@ import Graph.*;
 public class Eades3D 
 {
 	private Graph3D g3d;
+	
+	public double temperature = 100;
 
 	public Eades3D(Graph3D g3d)
 	{
@@ -30,8 +32,25 @@ public class Eades3D
 			Vector s = by.getPosition().minus(on.getPosition());
 			Vector t = on.getPosition().minus(by.getPosition());
 			double r = s.length();
-			by.setDisplacement(by.getDisplacement().plus(t.normalise().scale(10*Math.log(r/10))));
-			on.setDisplacement(on.getDisplacement().plus(s.normalise().scale(10*Math.log(r/10))));	
+			by.setDisplacement(by.getDisplacement().plus(t.normalise().scale(1*Math.log(r/10))));
+			on.setDisplacement(on.getDisplacement().plus(s.normalise().scale(1*Math.log(r/10))));
+			/*if(by.getDisplacement().length() > temperature)
+			{
+				double z = by.getZ();
+				by.setDisplacement(new Vector(1,1,z).scale(temperature));
+				temperature = temperature/1.001; 
+			}
+			if(on.getDisplacement().length() > temperature)
+			{
+				double z = on.getZ();
+				on.setDisplacement(new Vector(1,1,z).scale(temperature));
+			}*/
+			
+			if(by.getName().equals("1"))
+			{
+				System.out.println("The 3D forces acting on " + by);
+			//	System.out.println("The 3D forces acting on " + on);
+			}
 		}
 		for(Edge3D e3d : g3d.getE())
 		{
@@ -133,6 +152,6 @@ public class Eades3D
 		
 		Graph3D g3d = new Graph3D(G);
 		Eades3D e3d = new Eades3D(g3d);
-		e3d.simulate(10000);
+		e3d.simulate(4500);
 	}
 }
