@@ -15,7 +15,7 @@ public class Eades3D
 	{
 		this.g3d = g3d;
 	}
-	
+
 	public void applyForces()
 	{
 		for(Graph g : g3d.getG())
@@ -23,10 +23,10 @@ public class Eades3D
 			Eades eades = new Eades(g);
 			eades.applyForces();
 		}
-		for(Edge3D e3d : g3d.getE())
+		for(Edge e : g3d.getE())
 		{
-			Vertex by = e3d.getG1().getVertex(e3d.getV().getName());
-			Vertex on = e3d.getG2().getVertex(e3d.getV().getName());
+			Vertex by = e.getV1();
+			Vertex on = e.getV2();
 			by.setDisplacement(Vector.ZERO);
 			on.setDisplacement(Vector.ZERO);
 			Vector s = by.getPosition().minus(on.getPosition());
@@ -34,28 +34,17 @@ public class Eades3D
 			double r = s.length();
 			by.setDisplacement(by.getDisplacement().plus(t.normalise().scale(1*Math.log(r/10))));
 			on.setDisplacement(on.getDisplacement().plus(s.normalise().scale(1*Math.log(r/10))));
-			/*if(by.getDisplacement().length() > temperature)
-			{
-				double z = by.getZ();
-				by.setDisplacement(new Vector(1,1,z).scale(temperature));
-				temperature = temperature/1.001; 
-			}
-			if(on.getDisplacement().length() > temperature)
-			{
-				double z = on.getZ();
-				on.setDisplacement(new Vector(1,1,z).scale(temperature));
-			}*/
 			
 			if(by.getName().equals("1"))
 			{
-				System.out.println("The 3D forces acting on " + by);
+			//	System.out.println("The 3D forces acting on " + by);
 			//	System.out.println("The 3D forces acting on " + on);
 			}
 		}
-		for(Edge3D e3d : g3d.getE())
+		for(Edge e : g3d.getE())
 		{
-			Vertex by = e3d.getG1().getVertex(e3d.getV().getName());
-			Vertex on = e3d.getG2().getVertex(e3d.getV().getName());
+			Vertex by = e.getV1();
+			Vertex on = e.getV2();
 			by.setPosition(by.getPosition().plus(by.getDisplacement()));
 			on.setPosition(on.getPosition().plus(on.getDisplacement()));
 		}
@@ -102,30 +91,32 @@ public class Eades3D
 				e.printStackTrace();
 			}
 		}
+		for (Vertex v : g3d.getG().get(0).neighbourhood(g3d.getG().get(0).getV().get(0)))
+		{
+			System.out.println(v);
+		}
 	}
 	
 	public static void main(String[] args)
 	{
 		ArrayList<Graph> G = new ArrayList<Graph>();
-		for(int i = 0; i<2; i++)
-		{
-			ArrayList<Vertex> V = new ArrayList<Vertex>();
-			ArrayList<Edge> E = new ArrayList<Edge>();
-			Vertex v1 = new Vertex("1");
-			Vertex v2 = new Vertex("2");
-			Vertex v3 = new Vertex("3");
-			Edge e1 = new Edge(v1,v2);
-			Edge e2 = new Edge(v1,v3);
-			Graph g = new Graph(V,E);
-			g.addVertex(v1);
-			g.addVertex(v2);
-			g.addVertex(v3);
-			g.addEdge(e1);
-			g.addEdge(e2);
-			G.add(g);
-		}
+		ArrayList<Vertex> V = new ArrayList<Vertex>();
+		ArrayList<Edge> E = new ArrayList<Edge>();
+		Vertex v1 = new Vertex("1");
+		Vertex v2 = new Vertex("2");
+		Vertex v3 = new Vertex("3");
+		Edge e1 = new Edge(v1,v2);
+		Edge e2 = new Edge(v1,v3);
+		Graph g = new Graph(V,E);
+		g.addVertex(v1);
+		g.addVertex(v2);
+		g.addVertex(v3);
+		g.addEdge(e1);
+		g.addEdge(e2);
+		G.add(g);
 		
-		
+		Graph g2 = g.copy();
+		G.add(g2);
 		
 		G.get(1).getV().add(new Vertex("4"));
 		G.get(1).getE().add(
@@ -134,21 +125,12 @@ public class Eades3D
 				G.get(1).getVertex("4")
 			)
 		);
-		//G.get(1).getV().add(new Vertex("5"));
 		G.get(1).getE().add(
 				new Edge(
 						G.get(1).getVertex("2"),
 						G.get(1).getVertex("4")
 						)
 				);
-		/*G.get(2).getV().add(new Vertex("4"));
-		G.get(2).getV().add(new Vertex("5"));
-		G.get(2).getE().add(
-				new Edge(
-						G.get(2).getVertex("4"),
-						G.get(2).getVertex("5")
-						)
-				);*/
 		
 		Graph3D g3d = new Graph3D(G);
 		Eades3D e3d = new Eades3D(g3d);

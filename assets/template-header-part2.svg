@@ -1,0 +1,15 @@
+" style="enable-background:new 0 0 256 256;" xml:space="preserve">
+
+	<style type="text/css">
+		.node {
+			stroke-width: 0;
+		}
+
+		.edge {
+			stroke: black;
+			stroke-width: 1;
+			fill: none;
+		}
+	</style>
+	
+	

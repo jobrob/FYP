@@ -12,7 +12,7 @@ public class SVG
 	 */
 	public static String of(Vertex v)
 	{
-		return "<circle class=\"node\" cx=\"" + v.getX() + "\" cy=\"" + v.getY() + "\" r=\"" + NODE_RADIUS + "\" />";	
+		return "<circle class=\"node\" cx=\"" + v.getX() + "\" cy=\"" + v.getY() + "\" r=\"" + NODE_RADIUS + "\"" + " fill=\"" + v.getColour() + "\" />";	
 	}
 	
 	/**
@@ -31,7 +31,8 @@ public class SVG
 	 */
 	public static String of(Graph g)
 	{
-		String result = null;
+		return SVG.of(g,0,0,256,256);
+		/*String result = null;
 		try 
 		{
 			result = new String(Files.readAllBytes(Paths.get("../assets/template-header.svg")));
@@ -56,11 +57,12 @@ public class SVG
 			result += "    " + SVG.of(e) + "\n";
 		}
 		result += "\n</svg>\n";
-		return result;
+		return result;*/
 	}
 	
 	public static String of(Graph g, double xmin, double ymin, double xmax, double ymax)
 	{
+		System.out.println("here");
 		String result = null;
 		String result2 = null;
 		try 
@@ -76,14 +78,15 @@ public class SVG
 		}
 		result += (xmin-50) + " " + (ymin-50) + " " + (xmax+50) + " " + (ymax+50);
 		result += result2;
-		for(Vertex v : g.getV())
-		{
-			result += "    " + SVG.of(v) + "\n";
-		}
+		result += "\t<rect x = \"" + (xmin-50) + "\" y=\"" +  (ymin-50) + "\" width = \"" + (xmax+50) + "\" height = \"" + (ymax + 50) + "\" fill = \"rgb(255,255,255)\" />\n";
 		
 		for(Edge e : g.getE())
 		{
 			result += "    " + SVG.of(e) + "\n";
+		}
+		for(Vertex v : g.getV())
+		{
+			result += "    " + SVG.of(v) + "\n";
 		}
 		result += "\n</svg>\n";
 		return result;
@@ -104,14 +107,13 @@ public class SVG
 		}
 		for(Graph g :g3d.getG())
 		{
-			for(Vertex v : g.getV())
-			{
-				result += "    " + SVG.of(v) + "\n";
-			}
-			
 			for(Edge e : g.getE())
 			{
 				result += "    " + SVG.of(e) + "\n";
+			}
+			for(Vertex v : g.getV())
+			{
+				result += "    " + SVG.of(v) + "\n";
 			}
 		}
 		result += "\n</svg>\n";

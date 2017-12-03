@@ -1,6 +1,6 @@
 package Graph;
 import java.util.ArrayList;
-public class Graph
+public class Graph implements Cloneable
 {
 	private ArrayList<Vertex> V;
 	private ArrayList<Edge> E;
@@ -161,7 +161,7 @@ public class Graph
 	{
 		for(Vertex v : V)
 		{
-			if (v.equals(vertex))
+			if (v.getName().equals(vertex.getName()))
 			{
 				return true;
 			}
@@ -183,8 +183,29 @@ public class Graph
 	
 	public Graph copy()
 	{
-		ArrayList<Vertex> Vertexs = new ArrayList<Vertex>(this.V);
-		ArrayList<Edge> Edges = new ArrayList<Edge>(this.E);
-		return(new Graph(Vertexs,Edges));
+		ArrayList<Vertex> copyV = new ArrayList<Vertex>();
+		ArrayList<Edge> copyE = new ArrayList<Edge>();
+		for(Vertex v : V)
+		{
+			copyV.add(new Vertex(v.getName(),v.getPosition(),Vector.ZERO,v.getColour()));
+		}
+		for(Edge e : E)
+		{
+			Vertex newV = null;
+			Vertex newU = null;
+			for(Vertex v : copyV)
+			{
+				if(v.getName().equals(e.getV1().getName()))
+				{
+					newV = v;
+				}
+				else if(v.getName().equals(e.getV2().getName()))
+				{
+					newU = v;
+				}
+			}
+			copyE.add(new Edge(newV,newU));
+		}
+		return new Graph(copyV,copyE);
 	}
 }

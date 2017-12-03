@@ -5,28 +5,15 @@ import java.util.ArrayList;
 public class Graph3D 
 {
 	private ArrayList<Graph> G;
-	private ArrayList<Edge3D> E;
+	private ArrayList<Edge> E;
 	public Graph3D(ArrayList<Graph> G)
 	{
 		this.G = new ArrayList<Graph>();
-		this.E = new ArrayList<Edge3D>();
+		this.E = new ArrayList<Edge>();
 		for(Graph g : G)
 		{
 			addGraph(g);
 		}
-//		for(int i = 0 ; i<G.size()-1; i++)
-//		{
-//			System.out.println("Im checking the " + i + "th graph");
-//			for(int j = 0; j<G.get(i).getV().size(); j++)
-//			{
-//				System.out.println("");
-//				if(G.get(i).isIn(G.get(i).getV().get(j),G.get(i+1)))
-//				{
-//					System.out.println("Im making a 3D edge");
-//					E.add(new Edge3D(G.get(i),G.get(i+1),G.get(i).getV().get(j)));
-//				}
-//			}
-//		}
 	}
 	
 	public ArrayList<Graph> getG()
@@ -34,7 +21,7 @@ public class Graph3D
 		return G;
 	}
 	
-	public ArrayList<Edge3D> getE()
+	public ArrayList<Edge> getE()
 	{
 		return E;
 	}
@@ -46,7 +33,8 @@ public class Graph3D
 			{
 				if(graph.isIn(v))
 				{
-					E.add (new Edge3D((G.get(G.size()-1)),graph,v));
+					System.out.println("I think that " + v.getId() + " is the same as " + graph.getVertex(v.getName()).getId());
+					E.add(new Edge(v,graph.getVertex(v.getName())));
 				}
 			}
 		}
