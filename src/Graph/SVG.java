@@ -31,7 +31,7 @@ public class SVG
 	 */
 	public static String of(Graph g)
 	{
-		return SVG.of(g,0,0,256,256);
+		return SVG.of(g,0,256);
 		/*String result = null;
 		try 
 		{
@@ -60,9 +60,8 @@ public class SVG
 		return result;*/
 	}
 	
-	public static String of(Graph g, double xmin, double ymin, double xmax, double ymax)
+	public static String of(Graph g, double min, double max)
 	{
-		System.out.println("here");
 		String result = null;
 		String result2 = null;
 		try 
@@ -76,9 +75,9 @@ public class SVG
 			System.err.println("Couldn't get `template-header-part-part.svg`.");
 			e.printStackTrace();
 		}
-		result += (xmin-50) + " " + (ymin-50) + " " + (xmax+50) + " " + (ymax+50);
+		result += (min-50) + " " + (min-50) + " " + (max+50) + " " + (max+50);
 		result += result2;
-		result += "\t<rect x = \"" + (xmin-50) + "\" y=\"" +  (ymin-50) + "\" width = \"" + (xmax+50) + "\" height = \"" + (ymax + 50) + "\" fill = \"rgb(255,255,255)\" />\n";
+		result += "\t<rect x = \"" + (min-50) + "\" y=\"" +  (min-50) + "\" width = \"" + (max+50) + "\" height = \"" + (max + 50) + "\" fill = \"rgb(255,255,255)\" />\n";
 		
 		for(Edge e : g.getE())
 		{

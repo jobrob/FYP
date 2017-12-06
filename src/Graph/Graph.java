@@ -61,10 +61,10 @@ public class Graph implements Cloneable
 	{
 		for(Edge e : E)
 		{
-			if(e.equals(edge))
+			/*if(e.equals(edge))
 			{
 				break;
-			}
+			}*/
 			assert(!e.equals(edge)) : "Two same Edges";
 			//if (edge.equals(e))
 			//{
@@ -96,7 +96,7 @@ public class Graph implements Cloneable
 			}
 		}
 		return neighbourhood;
-	}
+	}	
 
 	/**
 	 * Fills the graph with the vertices and edges of a
@@ -126,34 +126,30 @@ public class Graph implements Cloneable
 	
 	public double[] minMax()
 	{
-		double xmin = Double.MAX_VALUE;
-		double ymin = Double.MAX_VALUE;
-		double xmax = Double.MIN_VALUE;
-		double ymax = Double.MIN_VALUE;
+		double min = Double.MAX_VALUE;
+		double max = Double.MIN_VALUE;
 		for(Vertex v : V)
 		{
-			if(v.getX() < xmin)
+			if(v.getX() < min)
 			{
-				xmin = v.getX();
+				min = v.getX();
 			}
-			if(v.getY() < ymin)
+			if(v.getY() < min)
 			{
-				ymin = v.getY();
+				min = v.getY();
 			}
-			if(v.getX() > xmax)
+			if(v.getX() > max)
 			{
-				xmax = v.getX();
+				max = v.getX();
 			}
-			if(v.getY() > ymax)
+			if(v.getY() > max)
 			{
-				ymax = v.getY();
+				max = v.getY();
 			}
 		}
-		double[] result = new double[4];
-		result[0] = xmin;
-		result[1] = ymin;
-		result[2] = xmax;
-		result[3] = ymax;
+		double[] result = new double[2];
+		result[0] = min;
+		result[1] = max;
 		return result;
 	}
 

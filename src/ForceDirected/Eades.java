@@ -11,7 +11,7 @@ public class Eades
 	
 	private double c1 = 2;
 	private double c2 = 1;
-	private double c3 = 600;
+	private double c3 = 60000;
 	private double c4 = 0.1;
 	
 	//Attraction caused by an edge = c1*log(d/c2)
@@ -83,7 +83,14 @@ public class Eades
 			g.getV().get(i).setDisplacement(netForce(g.getV().get(i)));
 			//force[i] = netForce(g.getV().get(i));
 		}
-		
+		/*for(Vertex v : g.getV())
+		{
+			v.setDisplacement(v.getDisplacement().plus(netEForce(v)));
+		}
+		for(Edge e : g.getE())
+		{
+			netSForce(e);
+		}*/
 		for(int i = 0; i < g.getV().size(); i++)
 		{
 			g.getV().get(i).setPosition(
@@ -117,8 +124,6 @@ public class Eades
 				result = result.plus(eForce(v, v2));
 			}
 		}
-		
-		
 		return result;
 	}
 	
@@ -134,9 +139,18 @@ public class Eades
 		{
 			result = result.plus(sForce(v, v2));
 		}
-		
-		
 		return result;
+	}
+	
+	public void netSForce(Edge e)
+	{
+		Vertex by = e.getV1();
+		Vertex on = e.getV2();
+		Vector s = by.getPosition().minus(on.getPosition());
+		Vector t = on.getPosition().minus(by.getPosition());
+		double r = s.length();
+		by.setDisplacement(by.getDisplacement().plus(t.normalise().scale(2*Math.log(r/(1)))));
+		on.setDisplacement(on.getDisplacement().plus(s.normalise().scale(2*Math.log(r/(1)))));
 	}
 	
 	/**
@@ -162,6 +176,16 @@ public class Eades
 	 */
 	public Vector sForce (Vertex on, Vertex by)
 	{
+		Vector s = by.getPosition().minus(on.getPosition());
+		double r = s.length();
+		Vector force = s.normalise().scale(c1*Math.log(r/c2));
+		return force;
+	}
+	
+	public Vector sForce (Edge e)
+	{
+		Vertex on = e.getV1();
+		Vertex by = e.getV2();
 		Vector s = by.getPosition().minus(on.getPosition());
 		double r = s.length();
 		Vector force = s.normalise().scale(c1*Math.log(r/c2));

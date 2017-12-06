@@ -33,7 +33,6 @@ public class Graph3D
 			{
 				if(graph.isIn(v))
 				{
-					System.out.println("I think that " + v.getId() + " is the same as " + graph.getVertex(v.getName()).getId());
 					E.add(new Edge(v,graph.getVertex(v.getName())));
 				}
 			}

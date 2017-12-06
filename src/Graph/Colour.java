@@ -25,6 +25,18 @@ public class Colour
 		this.b = b;
 	}
 	
+	public static final Colour RED = new Colour (255,0,0);
+	
+	public static final Colour GREEN = new Colour (0,255,0);
+	
+	public static final Colour BLUE = new Colour (0,0,255);
+	
+	public static final Colour YELLOW = new Colour(255,255,0);
+	
+	public static final Colour PURPLE = new Colour(255,0,255);
+	
+	public static final Colour TEAL = new Colour(0,255,255);
+	
 	public String toString()
 	{ 
 		return "rgb(" + r + "," + g + "," + b + ")";
