@@ -7,13 +7,21 @@ public class Colour
 	int r;
 	int g;
 	int b;
-	
+	/**
+	 * Represents a colour as a 3 intergers for the red green and blue proportions
+	 * @param r
+	 * @param g
+	 * @param b
+	 */
 	public Colour(int r,int g,int b)
 	{
 		this.r = r;
 		this.g = g;
 		this.b = b;
 	}
+	/**
+	 * Creates a random colour by randomising all the interger values.
+	 */
 	public Colour()
 	{
 		Random rand = new Random();
@@ -37,6 +45,10 @@ public class Colour
 	
 	public static final Colour TEAL = new Colour(0,255,255);
 	
+	public static final Colour BLACK = new Colour(0,0,0);
+	/**
+	 * Prints out the colour values in a convienet way for the SVG
+	 */
 	public String toString()
 	{ 
 		return "rgb(" + r + "," + g + "," + b + ")";

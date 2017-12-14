@@ -6,6 +6,11 @@ public class Graph3D
 {
 	private ArrayList<Graph> G;
 	private ArrayList<Edge> E;
+	
+	/**
+	 * Creates a graph sequence and creats the edges between the graphs.
+	 * @param G
+	 */
 	public Graph3D(ArrayList<Graph> G)
 	{
 		this.G = new ArrayList<Graph>();
@@ -15,16 +20,29 @@ public class Graph3D
 			addGraph(g);
 		}
 	}
-	
+	/**
+	 * Returns the list of the graphs in the sequence
+	 * @return
+	 */
 	public ArrayList<Graph> getG()
 	{
 		return G;
 	}
 	
+	/**
+	 * Returns the list of the edges between the graphs in the sequence.
+	 * @return
+	 */
 	public ArrayList<Edge> getE()
 	{
 		return E;
 	}
+	
+	/**
+	 * Adds a graph to the sequence and checks the previous graph to place an edge between them 
+	 * whenever there is the same vertex in both graphs
+	 * @param graph
+	 */
 	public void addGraph(Graph graph)
 	{
 		if (G.size()>0)

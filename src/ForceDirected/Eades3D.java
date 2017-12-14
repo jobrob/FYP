@@ -3,7 +3,13 @@ package ForceDirected;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import Graph.*;
+import Graph.Colour;
+import Graph.Edge;
+import Graph.Graph;
+import Graph.Graph3D;
+import Graph.SVG;
+import Graph.Vector;
+import Graph.Vertex;
 
 public class Eades3D 
 {
@@ -16,6 +22,10 @@ public class Eades3D
 		this.g3d = g3d;
 	}
 
+	/**
+	 * Applies the forces to each graph in the sequence in turn.
+	 * Then applies the forces based on the edges between the graph.
+	 */
 	public void applyForces()
 	{
 		for(Graph g : g3d.getG())
@@ -43,7 +53,10 @@ public class Eades3D
 			on.setPosition(on.getPosition().plus(on.getDisplacement()));
 		}
 	}
-	
+	/**
+	 * Sets up the initial position of vertex then calls apply forces on them the requierd amounts of time. Also outputs the SVG
+	 * @param i The number of times apply forces will be called
+	 */
 	public void simulate(int i)
 	{
 		PrintWriter writer;
@@ -159,21 +172,30 @@ public class Eades3D
 							g4.getVertex("2")));
 		g4.addEdge(new Edge(
 							g4.getVertex("6"),
-							g3.getVertex("3")));
+							g4.getVertex("3")));
 		G.add(g4);
-		/*Graph graph = Graph.K(2);
-		G.add(graph);
-		for(int i = 2; i<30;i++)
-		{
-			Graph graph2 = G.get(G.size()-1).copy();
-			graph2.addVertex(new Vertex("" + i));
-			for (int j = 0;j<graph2.getV().size()-1;j++)
-			{
-				Edge e = new Edge(graph2.getVertex("" + i),graph2.getVertex("" + j));
-				graph2.addEdge(e);
-			}
-			G.add(graph2);
-		}*/
+		Graph g5 = g4.copy();
+		g5.addVertex(new Vertex("7",Vector.ZERO,Vector.ZERO,Colour.BLACK));
+		g5.addEdge(new Edge(
+							g5.getVertex("7"),
+							g5.getVertex("6")));
+		g5.addEdge(new Edge(
+							g5.getVertex("7"),
+							g5.getVertex("5")));
+		G.add(g5);
+//		Graph graph = Graph.K(2);
+//		G.add(graph);
+//		for(int i = 2; i<15;i++)
+//		{
+//			Graph graph2 = G.get(G.size()-1).copy();
+//			graph2.addVertex(new Vertex("" + i));
+//			for (int j = 0;j<graph2.getV().size()-1;j++)
+//			{
+//				Edge e = new Edge(graph2.getVertex("" + i),graph2.getVertex("" + j));
+//				graph2.addEdge(e);
+//			}
+//			G.add(graph2);
+//		}
 		Graph3D g3d = new Graph3D(G);
 		Eades3D e3d = new Eades3D(g3d);
 		e3d.simulate(5000);

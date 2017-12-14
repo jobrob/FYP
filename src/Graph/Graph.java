@@ -123,7 +123,10 @@ public class Graph implements Cloneable
 		}
 		return new Graph(V,E);
 	}
-	
+	/**
+	 * Finds the values of the minimum and maximium coodinates in the graph
+	 * @return
+	 */
 	public double[] minMax()
 	{
 		double min = Double.MAX_VALUE;
@@ -153,6 +156,9 @@ public class Graph implements Cloneable
 		return result;
 	}
 
+	/**
+	 * Checks the graph to see if a vertex is in the graph.
+	 */
 	public boolean isIn(Vertex vertex) 
 	{
 		for(Vertex v : V)
@@ -164,7 +170,12 @@ public class Graph implements Cloneable
 		}
 		return false;
 	}
-
+	
+	/**
+	 * Finds a vertex in the graph with the name passed to it. Returns null if the name isnt found 
+	 * @param name The name that will be looked for
+	 * @return The vertex with the name in the graph
+	 */
 	public Vertex getVertex(String name) 
 	{
 		for(Vertex v : V)
@@ -176,7 +187,10 @@ public class Graph implements Cloneable
 		}
 		return null;
 	}
-	
+	/**
+	 * Returns an exact copy of the graph
+	 * @return
+	 */
 	public Graph copy()
 	{
 		ArrayList<Vertex> copyV = new ArrayList<Vertex>();

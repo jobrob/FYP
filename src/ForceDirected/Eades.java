@@ -80,23 +80,23 @@ public class Eades
 		for(int i = 0; i < g.getV().size(); i++)
 		{
 			g.getV().get(i).setDisplacement(Vector.ZERO);
-			g.getV().get(i).setDisplacement(netForce(g.getV().get(i)));
+		//	g.getV().get(i).setDisplacement(netForce(g.getV().get(i)));
 			//force[i] = netForce(g.getV().get(i));
 		}
-		/*for(Vertex v : g.getV())
+		for(Vertex v : g.getV())
 		{
 			v.setDisplacement(v.getDisplacement().plus(netEForce(v)));
 		}
 		for(Edge e : g.getE())
 		{
 			netSForce(e);
-		}*/
+		}
 		for(int i = 0; i < g.getV().size(); i++)
 		{
 			g.getV().get(i).setPosition(
-				g.getV().get(i).getPosition().plus(
+				g.getV().get(i).getPosition().plus((
 					g.getV().get(i).getDisplacement()
-				)
+				).scale(c4))
 			);
 		}
 	}

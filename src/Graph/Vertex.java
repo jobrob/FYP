@@ -12,9 +12,11 @@ public class Vertex
 	UUID id;
 	
 	/**
-	 * Creates a Vertex out of a name and a vector to define it position
+	 * Creates a Vertex out of a name and a vector to define it position. gives it a random id.
 	 * @param name the name of the vertex
-	 * @param vector the position of the vertex
+	 * @param position the position of the vertex
+	 * @param displacement the displacement of the vertex
+	 * @param colour the colour values of the vertex
 	 */
 	public Vertex(String name, Vector position,Vector displacement,Colour colour)
 	{
@@ -75,23 +77,31 @@ public class Vertex
 	}
 	
 	/**
-	 * Returns the vector of the vertex
+	 * Returns the position vector of the vertex
 	 */
 	public Vector getPosition()
 	{
 		return position;
 	}
-	
+	/**
+	 * Returns the displacement vector of the vertex
+	 */
 	public Vector getDisplacement()
 	{
 		return displacement;
 	}
-	
+	/**
+	 * Returns the colour of the vertex
+	 * @return
+	 */
 	public Colour getColour()
 	{
 		return colour;
 	}
-	
+	/**
+	 * Returns the gloabaly unique id for the vertex
+	 * @return
+	 */
 	public UUID getId()
 	{
 		return id;
