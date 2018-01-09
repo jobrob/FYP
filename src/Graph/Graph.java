@@ -1,5 +1,6 @@
 package Graph;
 import java.util.ArrayList;
+import java.util.Random;
 public class Graph implements Cloneable
 {
 	private ArrayList<Vertex> V;
@@ -46,10 +47,7 @@ public class Graph implements Cloneable
 	 */
 	public void addVertex(Vertex vertex) 
 	{
-		for(Vertex v : V)
-		{
-			assert(!v.equals(vertex) && v.getZ() != vertex.getZ()) : "Vertex with same name error";
-		}
+		vertex.setName("" + V.size());
 		V.add(vertex);
 	}
 	
@@ -217,5 +215,87 @@ public class Graph implements Cloneable
 			copyE.add(new Edge(newV,newU));
 		}
 		return new Graph(copyV,copyE);
+	}
+	
+	public static Graph randomGraph()
+	{
+		ArrayList<Vertex> Ver = new ArrayList<Vertex>();
+		ArrayList<Edge> Edg = new ArrayList<Edge>();
+		Graph graph = new Graph(Ver,Edg);
+		ArrayList<Vertex> V = graph.getV();
+		ArrayList<Edge> E = graph.getE();
+		Vertex v1 = new Vertex();
+		Vertex v2 = new Vertex();
+		Vertex v3 = new Vertex();
+		graph.addVertex(v1);
+		graph.addVertex(v2);
+		graph.addVertex(v3);
+		Edge e1 = new Edge(v1,v2);
+		Edge e2 = new Edge(v2,v3);
+		graph.addEdge(e1);
+		graph.addEdge(e2);
+		Random rand = new Random();
+		int i = rand.nextInt(100);
+		while(i!= 99)
+		{
+			System.out.println("The value of the random int is " + i);
+			System.out.println("The number of vertexcies:" + graph.getV().size());
+			if (i<50)
+			{
+				Vertex newRandomVertex = new Vertex();
+				int j = rand.nextInt(V.size());
+				graph.addVertex(newRandomVertex);
+				Edge newRandomEdge = new Edge(newRandomVertex,V.get(j));
+				graph.addEdge(newRandomEdge);
+			}
+			else if(i< 75)
+			{
+				Vertex newRandomVertex = new Vertex();
+				int j = rand.nextInt(V.size());
+				int k = rand.nextInt(V.size());
+				graph.addVertex(newRandomVertex);
+				Edge newRandomEdge1 = new Edge(newRandomVertex,V.get(j));
+				Edge newRandomEdge2 = new Edge(newRandomVertex,V.get(k));
+				graph.addEdge(newRandomEdge1);
+				graph.addEdge(newRandomEdge2);
+			}
+			else if (75<= i )
+			{
+				int j = rand.nextInt(V.size());
+				int k = rand.nextInt(V.size());
+				while(k == j)
+				{
+					k = rand.nextInt(V.size());
+				}
+				Edge newRandomEdge = new Edge(V.get(j),V.get(k));
+				graph.addEdge(newRandomEdge);
+			}
+			i = rand.nextInt(100);
+		}
+		System.out.println("After generating a random graph the number of vectors is " + graph.getV().size());
+		System.out.println("After generating a random graph the number of edges is " + graph.getE().size());
+		return graph;
+	}
+	public  void randomChange()
+	{
+		Random rand = new Random();
+		int i = rand.nextInt();
+		if(i <75)
+		{
+			Vertex newRandomVertex = new Vertex();
+			int j = rand.nextInt(V.size());
+			addVertex(newRandomVertex);
+			addEdge(new Edge(newRandomVertex,V.get(j)));
+		}
+		else
+		{
+			int j = rand.nextInt(V.size());
+			int k = rand.nextInt(V.size());
+			while(k == j)
+			{
+				k = rand.nextInt(V.size());
+			}
+			addEdge(new Edge(V.get(j),V.get(k)));
+		}
 	}
 }

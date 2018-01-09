@@ -1,208 +1,104 @@
 package ForceDirected;
-
+import java.util.ArrayList;
 import java.io.PrintWriter;
-import java.lang.Math;
 import Graph.*;
 
-import java.util.ArrayList;
+//import Graph.Colour;
+//import Graph.Edge;
+//import Graph.Graph;
+//import Graph.Graph3D;
+//import Graph.SVG;
+//import Graph.Vector;
+//import Graph.Vertex;
 public class Eades
 {
-	private static String filename = null;
-	
-	private double c1 = 2;
-	private double c2 = 1;
-	private double c3 = 60000;
-	private double c4 = 0.1;
-	
-	//Attraction caused by an edge = c1*log(d/c2)
-	//Repulsion caused by two vertices = c3/d^2
-	
-	
-	private Graph g;
+	private static final double c1 = 2;
+	private static final double c2 = 1;
+	private static final double c3 = 60000;
+	private static final double c4 = 0.1;
 	
 	/**
-	 * Creates a FDD of a given graph
-	 * @param g The graph
-	 */
-	public Eades(Graph g) 
+	*Applys forces to a 2D graph a given amount of times
+	*@param simulations the number of times apply forces will be called
+	*@param g the graph wich will be used
+	*/
+	public static void simulate (int simulations,Graph g)
 	{
-		this.g = g;
-	}
-	
-	/**
-	 * Calculates the forces i times
-	 * @param i the number of times the forces will be calculated.
-	 */
-	public void simulate(int i)
-	{
-		PrintWriter writer;
-
-		for(Vertex v : g.getV())
+		for (Vertex v : g.getV())
 		{
 			v.randomise(256);
 		}
-		for(int j = 0; j < i; j++)
-		{
-			applyForces();
-			/*try 
-			{
-				writer = new PrintWriter("../" + j + ".svg", "UTF-8");
-				writer.print(SVG.of(g));
-				writer.close();
-			} 
-			catch (Exception e) 
-			{
-				e.printStackTrace();
-			}*/
+		for(int i = 0; i<simulations; i++)
+		{		
+			applyForces(g);
 		}
-		
-		try 
-		{
-			writer = new PrintWriter("../" + filename + ".svg", "UTF-8");
-			double[] minMax = g.minMax();
-			writer.print(SVG.of(g));//,minMax[0],minMax[1],minMax[2],minMax[3]));
-			writer.close();
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-		
 	}
 	
 	/**
-	 * Applies both the electrostatic and the spring force
-	 */
-	public void applyForces() 
+	*Calculates the forces present in a graph and then moves the vertexces in the graph proportinal to this.
+	*@param g the graph which will be used
+	*/
+	public static void applyForces(Graph g)
 	{
-		
-		//Vector[] force = new Vector[g.getV().size()];
-		for(int i = 0; i < g.getV().size(); i++)
-		{
-			g.getV().get(i).setDisplacement(Vector.ZERO);
-		//	g.getV().get(i).setDisplacement(netForce(g.getV().get(i)));
-			//force[i] = netForce(g.getV().get(i));
-		}
+		eForces(g.getV());
+		sForces(g.getE());
 		for(Vertex v : g.getV())
 		{
-			v.setDisplacement(v.getDisplacement().plus(netEForce(v)));
-		}
-		for(Edge e : g.getE())
-		{
-			netSForce(e);
-		}
-		for(int i = 0; i < g.getV().size(); i++)
-		{
-			g.getV().get(i).setPosition(
-				g.getV().get(i).getPosition().plus((
-					g.getV().get(i).getDisplacement()
-				).scale(c4))
-			);
+			System.out.println("The vector has poistion " + v.getPosition() + " and displacement " + v.getDisplacement() + "this results in a position vector of " + v.getPosition().plus(v.getDisplacement().scale(c4)));
+			v.setPosition(v.getPosition().plus(v.getDisplacement().scale(c4)));
+			v.setDisplacement(Vector.ZERO);
 		}
 	}
 	
 	/**
-	 * calculates the net force on a vertex
-	 * @param v the vertex which the net force will be calculated on
-	 */
-	public Vector netForce(Vertex v)
+	*Caculates the attractive forces due to edges present in a graph
+	*@param the array list of edges in the graph
+	*/
+	public static void sForces(ArrayList<Edge> E)
 	{
-		return (netEForce(v).plus(netSForce(v))).scale(c4);
+		for(Edge e : E)
+		{
+			
+			Vertex u = e.getV1();
+			Vertex v = e.getV2();
+			Vector udistance = u.getPosition().minus(v.getPosition());
+			Vector vdistance = v.getPosition().minus(u.getPosition());
+			double magnitude = udistance.length();
+			System.out.println("I belive that the magnitude between " + u + "and " + v +" is " + magnitude);
+			System.out.println("Magnitude divided by log is " + magnitude/c2);
+			System.out.println("this has log value of " + Math.log(magnitude/c2));
+			System.out.println("Times by c1 this is " + c1*Math.log(magnitude/c2));
+			System.out.println("distance is " + vdistance);
+			System.out.println("I calculate the new displacement to be " + u.getDisplacement().plus(vdistance.normalise().scale(c1*Math.log(magnitude/c2))));
+			System.out.println("I calculate the new displacement to be " + v.getDisplacement().plus(udistance.normalise().scale(c1*Math.log(magnitude/c2))));
+			u.setDisplacement(u.getDisplacement().plus(vdistance.normalise().scale(c1*Math.log(magnitude/c2))));
+			v.setDisplacement(v.getDisplacement().plus(udistance.normalise().scale(c1*Math.log(magnitude/c2))));
+		}
 	}
 	
 	/**
-	 * calculates the total electrostatic force on a given vertex from all other vertices in the graph
-	 * @param v The vertex to compute the total electrostatic force on. 
-	 */
-	public Vector netEForce(Vertex v) 
-	{	
-		Vector result = Vector.ZERO;
-		for (Vertex v2 : g.getV())
+	*Calculates the replusive forces due to verteces present in a graph
+	*@param V the list of verexces
+	*/
+	public static void eForces(ArrayList<Vertex> V)
+	{
+		for(int i = 0; i < V.size(); i++)
 		{
-			if(!v2.equals(v)) 
+			for(int j = i+1 ; j< V.size(); j++)
 			{
-				result = result.plus(eForce(v, v2));
+				Vertex u = V.get(i);
+				Vertex v = V.get(j);
+				Vector udistance = u.getPosition().minus(v.getPosition());
+				Vector vdistance = v.getPosition().minus(u.getPosition());
+				double magnitude = udistance.length();
+				u.setDisplacement(u.getDisplacement().minus(vdistance.normalise().scale(c3/(magnitude*magnitude))));
+				v.setDisplacement(v.getDisplacement().minus(udistance.normalise().scale(c3/(magnitude*magnitude))));
 			}
 		}
-		return result;
-	}
-	
-	/**
-	 * Calculates the net spring force on a vertex v
-	 * Caused by all vertices in the neighbourhood of v
-	 * @param v the vertex being considered.
-	 */
-	public Vector netSForce(Vertex v)
-	{
-		Vector result = Vector.ZERO;
-		for(Vertex v2 : g.neighbourhood(v)) 
-		{
-			result = result.plus(sForce(v, v2));
-		}
-		return result;
-	}
-	
-	public void netSForce(Edge e)
-	{
-		Vertex by = e.getV1();
-		Vertex on = e.getV2();
-		Vector s = by.getPosition().minus(on.getPosition());
-		Vector t = on.getPosition().minus(by.getPosition());
-		double r = s.length();
-		by.setDisplacement(by.getDisplacement().plus(t.normalise().scale(2*Math.log(r/(1)))));
-		on.setDisplacement(on.getDisplacement().plus(s.normalise().scale(2*Math.log(r/(1)))));
-	}
-	
-	/**
-	 * Get the "electrostatic" force induced on the
-	 * Vertex `on` as caused by the Vertex `by`. This
-	 * force follows an inverse-square law.
-	 * @param on the vertex which feels the force
-	 * @param by the vertex which exerts the force
-	 */
-	public Vector eForce(Vertex on, Vertex by)
-	{
-		Vector s = by.getPosition().minus(on.getPosition());
-		double r = s.length();
-		return s.negate().normalise().scale(c3 / (r*r));
-	}
-	
-	/**
-	 * Get the spring force induced on
-	 * the Vertex 'on' caused the Vertex 'by' 
-	 * which shares an edge with 'on'
-	 * @param on the vertex which feels the force
-	 * @param by the vertex which exerts the force
-	 */
-	public Vector sForce (Vertex on, Vertex by)
-	{
-		Vector s = by.getPosition().minus(on.getPosition());
-		double r = s.length();
-		Vector force = s.normalise().scale(c1*Math.log(r/c2));
-		return force;
-	}
-	
-	public Vector sForce (Edge e)
-	{
-		Vertex on = e.getV1();
-		Vertex by = e.getV2();
-		Vector s = by.getPosition().minus(on.getPosition());
-		double r = s.length();
-		Vector force = s.normalise().scale(c1*Math.log(r/c2));
-		return force;
 	}
 	
 	public static void main(String args[])
 	{
-		if (args.length > 0) 
-		{
-			filename = args[0];
-		} 
-		else 
-		{
-			filename = "FDD";
-		}
-		
 		ArrayList<Vertex> V = new ArrayList<Vertex>();
 		ArrayList<Edge> E = new ArrayList<Edge>();
 
@@ -272,12 +168,21 @@ public class Eades
 		
 		Graph graph = new Graph(V,E);
 		graph.addEdge(new Edge((graph.getVertex("1")),(graph.getVertex("2"))));
-		for(Vertex v : graph.neighbourhood(graph.getVertex("1")))
+		for(Vertex v : V)
 		{
+			v.randomise(256);
 		}
-		//graph.addEdge(new Edge(new Vertex("1"), new Vertex("2")));
-		//Graph graph = (Graph.K(15));
-		Eades eades = new Eades(graph);
-		eades.simulate(1000);
+		Eades.simulate(1000,graph);
+		try 
+		{
+			System.out.println("making an svg");
+			PrintWriter writer = new PrintWriter("../testing.svg", "UTF-8");
+			writer.print(SVG.of(graph));
+			writer.close();
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 }

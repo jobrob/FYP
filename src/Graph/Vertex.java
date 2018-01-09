@@ -47,6 +47,11 @@ public class Vertex
 		this(name, position, Vector.ZERO);
 	}
 	
+	public Vertex()
+	{
+		this("");
+	}
+	
 	/**
 	 * Returns the x value of the Vertex
 	 */
@@ -118,6 +123,11 @@ public class Vertex
 	public void setDisplacement(Vector displacement)
 	{
 		this.displacement = displacement;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 	
 	/**
