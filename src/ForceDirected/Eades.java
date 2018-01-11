@@ -41,10 +41,10 @@ public class Eades
 	public static void applyForces(Graph g)
 	{
 		eForces(g.getV());
+
 		sForces(g.getE());
 		for(Vertex v : g.getV())
 		{
-			System.out.println("The vector has poistion " + v.getPosition() + " and displacement " + v.getDisplacement() + "this results in a position vector of " + v.getPosition().plus(v.getDisplacement().scale(c4)));
 			v.setPosition(v.getPosition().plus(v.getDisplacement().scale(c4)));
 			v.setDisplacement(Vector.ZERO);
 		}
@@ -64,13 +64,6 @@ public class Eades
 			Vector udistance = u.getPosition().minus(v.getPosition());
 			Vector vdistance = v.getPosition().minus(u.getPosition());
 			double magnitude = udistance.length();
-			System.out.println("I belive that the magnitude between " + u + "and " + v +" is " + magnitude);
-			System.out.println("Magnitude divided by log is " + magnitude/c2);
-			System.out.println("this has log value of " + Math.log(magnitude/c2));
-			System.out.println("Times by c1 this is " + c1*Math.log(magnitude/c2));
-			System.out.println("distance is " + vdistance);
-			System.out.println("I calculate the new displacement to be " + u.getDisplacement().plus(vdistance.normalise().scale(c1*Math.log(magnitude/c2))));
-			System.out.println("I calculate the new displacement to be " + v.getDisplacement().plus(udistance.normalise().scale(c1*Math.log(magnitude/c2))));
 			u.setDisplacement(u.getDisplacement().plus(vdistance.normalise().scale(c1*Math.log(magnitude/c2))));
 			v.setDisplacement(v.getDisplacement().plus(udistance.normalise().scale(c1*Math.log(magnitude/c2))));
 		}

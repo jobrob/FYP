@@ -36,8 +36,8 @@ public class Edge
 	 */
 	public boolean equals(Edge e)
 	{
-		return( e.v1.equals(v1) && e.v2.equals(v2) ) 
-		|| ( e.v1.equals(v2) && e.v2.equals(v1) );
+		return( e.v1.getName().equals(v1.getName()) && e.v2.getName().equals(v2.getName()) ) 
+		|| ( e.v1.getName().equals(v2.getName()) && e.v2.getName().equals(v1.getName()) );
 	}
 	/**
 	 * Prints out the edge as a touple of its vectors

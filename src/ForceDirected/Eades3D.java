@@ -77,6 +77,7 @@ public class Eades3D
 		for(Graph g : g3d.getG())
 		{
 			Eades.applyForces(g);
+
 		}
 		for(Edge e : g3d.getE())
 		{
@@ -87,8 +88,11 @@ public class Eades3D
 			Vector s = by.getPosition().minus(on.getPosition());
 			Vector t = on.getPosition().minus(by.getPosition());
 			double r = s.length();
-			by.setDisplacement(by.getDisplacement().plus(t.normalise().scale(1*Math.log(r/(1)))));
-			on.setDisplacement(on.getDisplacement().plus(s.normalise().scale(1*Math.log(r/(1)))));
+			if(r != 0 )
+			{
+				by.setDisplacement(by.getDisplacement().plus(t.normalise().scale(1*Math.log(r/(1)))));
+				on.setDisplacement(on.getDisplacement().plus(s.normalise().scale(1*Math.log(r/(1)))));
+			}
 		}
 		for(Edge e : g3d.getE())
 		{
@@ -100,11 +104,13 @@ public class Eades3D
 	}
 	
 	public static void main(String[] args)
-	{
-		long starttime = System.nanoTime();
-		ArrayList<Graph> G = new ArrayList<Graph>();
-		ArrayList<Vertex> V = new ArrayList<Vertex>();
-		ArrayList<Edge> E = new ArrayList<Edge>();
+	{	
+		for(int x = 0; x < 100 ;x++)
+		{
+			long starttime = System.nanoTime();
+			ArrayList<Graph> G = new ArrayList<Graph>();
+			ArrayList<Vertex> V = new ArrayList<Vertex>();
+			ArrayList<Edge> E = new ArrayList<Edge>();
 //		Vertex v1 = new Vertex("1",Vector.ZERO,Vector.ZERO,Colour.RED);
 //		Vertex v2 = new Vertex("2",Vector.ZERO,Vector.ZERO,Colour.GREEN);
 //		Vertex v3 = new Vertex("3",Vector.ZERO,Vector.ZERO,Colour.BLUE);
@@ -177,17 +183,23 @@ public class Eades3D
 //			}
 //			G.add(graph2);
 //		}
-		Graph graph = Graph.randomGraph();
-		G.add(graph);
-//		for(int i = 0; i < 10; i++)
-//		{
-//			graph.randomChange();
-//			G.add(graph);
-//		}
-		Graph3D g3d = new Graph3D(G);
-		Eades3D.simulate(10,g3d);
-		long endtime = System.nanoTime();
-		double duration = (double)(endtime - starttime)/1000000000;
-		System.out.println("in total that took " + duration);
+			Graph graph = Graph.K(3);
+			G.add(graph);
+			for(int i = 0; i < 34; i++)
+			{
+				Graph g = Graph.mutate(G.get(i));
+				G.add(g);
+			}	
+			Graph3D g3d = new Graph3D(G);
+			Eades3D.simulate(90000,g3d);
+			long endtime = System.nanoTime();
+			double duration = (double)(endtime - starttime)/1000000000;
+			int noVertixces = g3d.totalVertices();
+			int noEdges = g3d.totalEdges();
+			int total = noVertixces + noEdges;
+			int noGraphs = g3d.getG().size();
+			System.out.println(noVertixces + "," + noEdges + "," + total + "," + noGraphs + "," + duration);
+		}
+	
 	}
 }

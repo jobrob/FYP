@@ -38,6 +38,26 @@ public class Graph3D
 		return E;
 	}
 	
+	public int totalVertices()
+	{
+		int total = 0;
+		for(Graph g : G)
+		{
+			total += g.getV().size();
+		}
+		return total;
+	}
+	
+	public int totalEdges()
+	{
+		int total = 0;
+		for(Graph g : G)
+		{
+			total += g.getE().size();
+		}
+		return total;
+	}
+	
 	/**
 	 * Adds a graph to the sequence and checks the previous graph to place an edge between them 
 	 * whenever there is the same vertex in both graphs

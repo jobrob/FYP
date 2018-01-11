@@ -47,7 +47,7 @@ public class Graph implements Cloneable
 	 */
 	public void addVertex(Vertex vertex) 
 	{
-		vertex.setName("" + V.size());
+		vertex.setName("" + V.size()+1);
 		V.add(vertex);
 	}
 	
@@ -169,6 +169,18 @@ public class Graph implements Cloneable
 		return false;
 	}
 	
+	public boolean isIn (Edge edge)
+	{
+		for (Edge e : E)
+		{
+			if(e.equals(edge))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * Finds a vertex in the graph with the name passed to it. Returns null if the name isnt found 
 	 * @param name The name that will be looked for
@@ -276,26 +288,32 @@ public class Graph implements Cloneable
 		System.out.println("After generating a random graph the number of edges is " + graph.getE().size());
 		return graph;
 	}
-	public  void randomChange()
+	public static Graph mutate(Graph g)
 	{
+		Graph graph = g.copy();
 		Random rand = new Random();
-		int i = rand.nextInt();
+		int i = rand.nextInt(100);
 		if(i <75)
 		{
 			Vertex newRandomVertex = new Vertex();
-			int j = rand.nextInt(V.size());
-			addVertex(newRandomVertex);
-			addEdge(new Edge(newRandomVertex,V.get(j)));
+			int j = rand.nextInt(graph.getV().size());
+			graph.addVertex(newRandomVertex);
+			graph.addEdge(new Edge(newRandomVertex,graph.getV().get(j)));
 		}
 		else
 		{
-			int j = rand.nextInt(V.size());
-			int k = rand.nextInt(V.size());
+			int j = rand.nextInt(graph.getV().size());
+			int k = rand.nextInt(graph.getV().size());
 			while(k == j)
 			{
-				k = rand.nextInt(V.size());
+				k = rand.nextInt(graph.getV().size());
 			}
-			addEdge(new Edge(V.get(j),V.get(k)));
+			Edge newRandomEdge = new Edge(g.getV().get(j),graph.getV().get(k));
+			if(!graph.isIn(newRandomEdge))
+			{
+				graph.addEdge(newRandomEdge);
+			}
 		}
+		return graph;
 	}
 }
