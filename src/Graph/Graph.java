@@ -128,30 +128,34 @@ public class Graph implements Cloneable
 	 */
 	public double[] minMax()
 	{
-		double min = Double.MAX_VALUE;
-		double max = Double.MIN_VALUE;
+		double xMin = Double.MAX_VALUE;
+		double xMax = Double.MIN_VALUE;
+		double yMin = Double.MAX_VALUE;
+		double yMax = Double.MIN_VALUE;
 		for(Vertex v : V)
 		{
-			if(v.getX() < min)
+			if(v.getX() < xMin)
 			{
-				min = v.getX();
+				xMin = v.getX();
 			}
-			if(v.getY() < min)
+			if(v.getY() < yMin)
 			{
-				min = v.getY();
+				yMin = v.getY();
 			}
-			if(v.getX() > max)
+			if(v.getX() > xMax)
 			{
-				max = v.getX();
+				xMax = v.getX();
 			}
-			if(v.getY() > max)
+			if(v.getY() > yMax)
 			{
-				max = v.getY();
+				yMax = v.getY();
 			}
 		}
-		double[] result = new double[2];
-		result[0] = min;
-		result[1] = max;
+		double[] result = new double[4];
+		result[0] = xMin;
+		result[1] = yMin;
+		result[2] = xMax;
+		result[3] = yMax;
 		return result;
 	}
 

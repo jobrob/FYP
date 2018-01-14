@@ -77,4 +77,40 @@ public class Graph3D
 		}
 		G.add(graph);
 	}
+	
+	public double[] minMax()
+	{
+		double xMin = Double.MAX_VALUE;
+		double xMax = Double.MIN_VALUE;
+		double yMin = Double.MAX_VALUE;
+		double yMax = Double.MIN_VALUE;
+		for(Graph g : G)
+		{
+			for(Vertex v : g.getV())
+			{
+				if (v.getX() < xMin)
+				{
+					xMin = v.getX();
+				}
+				else if(v.getX() > xMax)
+				{
+					xMax = v.getX();
+				}
+				if (v.getY() < yMin)
+				{
+					yMin = v.getY();
+				}
+				else if(v.getY() > yMax)
+				{
+					yMax = v.getY();
+				}
+			}
+		}
+		double[] result = new double[4];
+		result[0] = xMin;
+		result[1] = yMin;
+		result[2] = xMax;
+		result[3] = yMax;
+		return result;
+	}
 }

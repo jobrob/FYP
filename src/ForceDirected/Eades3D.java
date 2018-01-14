@@ -54,11 +54,12 @@ public class Eades3D
 		
 		for (int k=0; k < g3d.getG().size(); k++)
 		{
+			double[] minMax = g3d.minMax();
 			try 
 			{
 				writer = new PrintWriter("../" + k + ".svg", "UTF-8");
-				double[] minMax = g3d.getG().get(k).minMax();
-				writer.print(SVG.of((g3d.getG().get(k)),minMax[0],minMax[1]));
+				//double[] minMax = g3d.getG().get(k).minMax();
+				writer.print(SVG.of((g3d.getG().get(k)),minMax[0],minMax[1],minMax[2],minMax[3]));
 				writer.close();
 			}
 			catch (Exception e) 

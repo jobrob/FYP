@@ -10,19 +10,19 @@ public class SVG
 	 * Converts a vertex into a string for displaying with SVG
 	 * @param v the vertex being converted to SVG
 	 */
-	public static String of(Vertex v,double min)
+	public static String of(Vertex v,double xMin,double yMin)
 	{
-		return "<circle class=\"node\" cx=\"" + (v.getX() + min + 50) + "\" cy=\"" + (v.getY() + min + 50) + "\" r=\"" + NODE_RADIUS + "\"" + " fill=\"" + v.getColour() + "\" />";	
+		return "<circle class=\"node\" cx=\"" + (v.getX() - xMin + 50) + "\" cy=\"" + (v.getY() - yMin + 50) + "\" r=\"" + NODE_RADIUS + "\"" + " fill=\"" + v.getColour() + "\" />";	
 	}
 	
 	/**
 	 * Converts an edge into a string for displaying with SVG 
 	 * @param e the edge being converted
 	 */
-	public static String of(Edge e,double min)
+	public static String of(Edge e,double xMin,double yMin)
 	{
-		return "<line class=\"edge\" x1=\"" + (e.getV1().getX() + min + 50) + "\" y1=\"" + (e.getV1().getY() + min + 50) + "\" x2=\""
-											+ (e.getV2().getX() + min + 50) + "\" y2=\"" + (e.getV2().getY() + min + 50) + "\" />";
+		return "<line class=\"edge\" x1=\"" + (e.getV1().getX() - xMin + 50) + "\" y1=\"" + (e.getV1().getY() - yMin + 50) + "\" x2=\""
+											+ (e.getV2().getX() - xMin + 50) + "\" y2=\"" + (e.getV2().getY() - yMin + 50) + "\" />";
 	}
 	
 	/**
@@ -31,7 +31,7 @@ public class SVG
 	 */
 	public static String of(Graph g)
 	{
-		return SVG.of(g,0,256);
+		return SVG.of(g,0,0,256,256);
 		/*String result = null;
 		try 
 		{
@@ -60,10 +60,8 @@ public class SVG
 		return result;*/
 	}
 	
-	public static String of(Graph g, double min, double max)
+	public static String of(Graph g, double xMin, double yMin, double xMax,double yMax)
 	{
-		System.out.println("min = " + min);
-		System.out.println("max = " + max);
 		String result = null;
 		String result2 = null;
 		try 
@@ -77,18 +75,17 @@ public class SVG
 			System.err.println("Couldn't get `template-header-part-part.svg`.");
 			e.printStackTrace();
 		}
-		double absMin = Math.abs(min);
-		result += (0) + " " +(0) + " " + (max+100+absMin) + " " + (max+100+absMin);
+		result += (0) + " " +(0) + " " + (xMax + 100 - xMin) + " " + (yMax + 100 - yMin);
 		result += result2;
-		result += "\t<rect x = \"" + (0) + "\" y=\"" +  (0) + "\" width = \"" + (max+100+absMin) + "\" height = \"" + (max + 100 +absMin) + "\" fill = \"rgb(255,255,255)\" />\n";
+		result += "\t<rect x = \"" + (0) + "\" y=\"" +  (0) + "\" width = \"" + (xMax + 100 - xMin) + "\" height = \"" + (yMax + 100 - yMin) + "\" fill = \"rgb(255,255,255)\" />\n";
 		
 		for(Edge e : g.getE())
 		{
-			result += "    " + SVG.of(e,absMin) + "\n";
+			result += "    " + SVG.of(e,xMin,yMin) + "\n";
 		}
 		for(Vertex v : g.getV())
 		{
-			result += "    " + SVG.of(v,absMin) + "\n";
+			result += "    " + SVG.of(v,xMin,yMin) + "\n";
 		}
 		result += "\n</svg>\n";
 		return result;
