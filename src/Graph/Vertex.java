@@ -130,6 +130,12 @@ public class Vertex
 		this.name = name;
 	}
 	
+	public void setX(double x)
+	{
+		Vector newPosition = new Vector(x,getY(),getZ());
+		setPosition(newPosition);
+	}
+	
 	/**
 	 * Checks to see if two vertices have the same id.
 	 * @param v The other vertex.

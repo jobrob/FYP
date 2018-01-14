@@ -105,7 +105,7 @@ public class Eades3D
 	
 	public static void main(String[] args)
 	{	
-		for(int x = 0; x < 100 ;x++)
+		for(int x = 0; x < 1 ;x++)
 		{
 			long starttime = System.nanoTime();
 			ArrayList<Graph> G = new ArrayList<Graph>();
@@ -185,7 +185,7 @@ public class Eades3D
 //		}
 			Graph graph = Graph.K(3);
 			G.add(graph);
-			for(int i = 0; i < 34; i++)
+			for(int i = 0; i < 20; i++)
 			{
 				Graph g = Graph.mutate(G.get(i));
 				G.add(g);
@@ -200,6 +200,5 @@ public class Eades3D
 			int noGraphs = g3d.getG().size();
 			System.out.println(noVertixces + "," + noEdges + "," + total + "," + noGraphs + "," + duration);
 		}
-	
 	}
 }

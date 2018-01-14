@@ -121,6 +121,7 @@ public class Graph implements Cloneable
 		}
 		return new Graph(V,E);
 	}
+	
 	/**
 	 * Finds the values of the minimum and maximium coodinates in the graph
 	 * @return
@@ -168,7 +169,9 @@ public class Graph implements Cloneable
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks a graph to see if it contains an edge.
+	 */
 	public boolean isIn (Edge edge)
 	{
 		for (Edge e : E)
@@ -197,6 +200,7 @@ public class Graph implements Cloneable
 		}
 		return null;
 	}
+	
 	/**
 	 * Returns an exact copy of the graph
 	 * @return
@@ -229,6 +233,9 @@ public class Graph implements Cloneable
 		return new Graph(copyV,copyE);
 	}
 	
+	/**
+	 * Genarates a random graph with a random amounts of nodes and vertices. 
+	 */
 	public static Graph randomGraph()
 	{
 		ArrayList<Vertex> Ver = new ArrayList<Vertex>();
@@ -288,6 +295,11 @@ public class Graph implements Cloneable
 		System.out.println("After generating a random graph the number of edges is " + graph.getE().size());
 		return graph;
 	}
+	
+	/**
+	 * Randomly mutates a graph with a 3/4 chance of adding a node and a 1/4 chance of adding a edge. Returns a new graph which is * a copy of the graph mutated
+	 * @param Graph g the graph provided
+	 */
 	public static Graph mutate(Graph g)
 	{
 		Graph graph = g.copy();
@@ -315,5 +327,13 @@ public class Graph implements Cloneable
 			}
 		}
 		return graph;
+	}
+	
+	public void shift (double min)
+	{
+		for(Vertex v : V)
+		{
+			v.setX(v.getX() + min);
+		}
 	}
 }
