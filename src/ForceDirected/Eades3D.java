@@ -70,7 +70,7 @@ public class Eades3D
 					v.setPosition(new Vector(0,0,k));
 					v.randomise(256);
 				}
-//				Eades.simulate(1000,g3d.getG().get(k));
+				Eades.simulate(1000,g3d.getG().get(k+1));
 			}
 		}
 		
@@ -214,7 +214,7 @@ public class Eades3D
 //		}
 			Graph graph = Graph.K(3);
 			G.add(graph);
-			for(int i = 0; i < 20; i++)
+			for(int i = 0; i < 30; i++)
 			{
 				Graph g = Graph.mutate(G.get(i));
 				G.add(g);

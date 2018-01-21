@@ -14,7 +14,7 @@ public class Eades
 {
 	private static final double c1 = 2;
 	private static final double c2 = 1;
-	private static final double c3 = 6000;
+	private static final double c3 = 60000;
 	private static final double c4 = 0.1;
 	
 	/**

@@ -322,7 +322,7 @@ public class Graph implements Cloneable
 		int i = rand.nextInt(100);
 		if(i <75)
 		{
-			Vertex newRandomVertex = new Vertex("" + (g.getV().size() + 1));
+			Vertex newRandomVertex = new Vertex("" + (graph.getV().size() + 1));
 			int j = rand.nextInt(graph.getV().size());
 			graph.addVertex(newRandomVertex);
 			graph.addEdge(new Edge(newRandomVertex,graph.getV().get(j)));
@@ -335,9 +335,10 @@ public class Graph implements Cloneable
 			{
 				k = rand.nextInt(graph.getV().size());
 			}
-			Edge newRandomEdge = new Edge(g.getV().get(j),graph.getV().get(k));
+			Edge newRandomEdge = new Edge(graph.getV().get(j),graph.getV().get(k));
 			if(!graph.isIn(newRandomEdge))
 			{
+				System.out.println("dont think that " + newRandomEdge + " is in ");
 				graph.addEdge(newRandomEdge);
 			}
 		}

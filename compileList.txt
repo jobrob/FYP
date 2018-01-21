@@ -1,10 +1,10 @@
-./src/ForceDirected/Eades.java
-./src/ForceDirected/Eades3D.java
-./src/ForceDirected/Far.java
+./src/Graph/Graph.java
+./src/Graph/Vector.java
+./src/Graph/Graph3D.java
 ./src/Graph/Colour.java
 ./src/Graph/Edge.java
-./src/Graph/Graph.java
-./src/Graph/Graph3D.java
 ./src/Graph/SVG.java
-./src/Graph/Vector.java
 ./src/Graph/Vertex.java
+./src/ForceDirected/Eades3D.java
+./src/ForceDirected/Eades.java
+./src/ForceDirected/Far.java

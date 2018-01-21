@@ -1,3 +1,4 @@
 #!/bin/sh
-javac -sourcepath ./src -d ./bin @compileList.txt
+find . -name *.java > compileList.txt
+javac -d ./bin @compileList.txt
 
