@@ -24,26 +24,53 @@ public class Eades3D
 	public static void simulate(int i,Graph3D g3d)
 	{
 		PrintWriter writer;
-		for(Vertex v : g3d.getG().get(0).getV())
+//		for(Vertex v : g3d.getG().get(0).getV())
+//		{
+//			v.setPosition(Vector.ZERO);
+//			v.randomise(256);
+//		}
+//		Eades.simulate(1000,g3d.getG().get(0));
+//		for(int k = 1; k<g3d.getG().size(); k++)
+//		{
+//			for(int j=0; j < g3d.getG().get(k).getV().size(); j++)
+//			{
+//				if(g3d.getG().get(k-1).isIn(g3d.getG().get(k).getV().get(j)))
+//				{
+//					System.out.println("I think that " +  g3d.getG().get(k).getV().get(j) + " is in  the " + (k-1) + " graph ");
+//					double x = g3d.getG().get(k-1).getV().get(j).getPosition().getX();
+//					double y = g3d.getG().get(k-1).getV().get(j).getPosition().getY();
+//					g3d.getG().get(k).getV().get(j).setPosition(new Vector(x,y,k));
+//				}
+//				else
+//				{
+//					g3d.getG().get(k).getV().get(j).setPosition(new Vector(0,0,k));
+//					g3d.getG().get(k).getV().get(j).randomise(256);
+//				}
+//			}
+//				Eades.simulate(1000,g3d.getG().get(k));
+//		}
+		for(Vertex v : g3d.getG().get(g3d.getG().size()-1).getV())
 		{
 			v.setPosition(Vector.ZERO);
 			v.randomise(256);
 		}
-		for(int k = 1; k<g3d.getG().size(); k++)
+		Eades.simulate(1000,g3d.getG().get(g3d.getG().size()-1));
+		for(int k  = g3d.getG().size() - 2; k > -1; k--)
 		{
-			for(int j=0; j < g3d.getG().get(k).getV().size(); j++)
+			for(Vertex v : g3d.getG().get(k).getV())
 			{
-				if(g3d.getG().get(k-1).isIn(g3d.getG().get(k).getV().get(j)))
+				if (g3d.getG().get(k+1).isIn(v))
 				{
-					double x = g3d.getG().get(k-1).getV().get(j).getPosition().getX();
-					double y = g3d.getG().get(k-1).getV().get(j).getPosition().getY();
-					g3d.getG().get(k).getV().get(j).setPosition(new Vector(x,y,k));
+					double x = g3d.getG().get(k+1).getVertex(v.getName()).getX();
+					double y = g3d.getG().get(k+1).getVertex(v.getName()).getY();
+					v.setPosition(new Vector(x,y,k));
 				}
 				else
 				{
-					g3d.getG().get(k).getV().get(j).setPosition(new Vector(0,0,k));
-					g3d.getG().get(k).getV().get(j).randomise(256);
+					v.setPosition(new Vector(0,0,k));
+					v.randomise(256);
 				}
+//				Eades.simulate(1000,g3d.getG().get(k));
 			}
 		}
 		
@@ -112,68 +139,69 @@ public class Eades3D
 			ArrayList<Graph> G = new ArrayList<Graph>();
 			ArrayList<Vertex> V = new ArrayList<Vertex>();
 			ArrayList<Edge> E = new ArrayList<Edge>();
-//		Vertex v1 = new Vertex("1",Vector.ZERO,Vector.ZERO,Colour.RED);
-//		Vertex v2 = new Vertex("2",Vector.ZERO,Vector.ZERO,Colour.GREEN);
-//		Vertex v3 = new Vertex("3",Vector.ZERO,Vector.ZERO,Colour.BLUE);
-//		Edge e1 = new Edge(v1,v2);
-//		Edge e2 = new Edge(v2,v3);
-//		Graph g = new Graph(V,E);
-//		g.addVertex(v1);
-//		g.addVertex(v2);
-//		g.addVertex(v3);
-//		g.addEdge(e1);
-//		g.addEdge(e2);
-//		G.add(g);
+//			Vertex v1 = new Vertex("1",Vector.ZERO,Vector.ZERO,Colour.RED);
+//			Vertex v2 = new Vertex("2",Vector.ZERO,Vector.ZERO,Colour.GREEN);
+//			Vertex v3 = new Vertex("3",Vector.ZERO,Vector.ZERO,Colour.BLUE);
+//			Edge e1 = new Edge(v1,v2);
+//			Edge testing = new Edge(v2,v1);
+//			Edge e2 = new Edge(v2,v3);
+//			Graph g = new Graph(V,E);
+//			g.addVertex(v1);
+//			g.addVertex(v2);
+//			g.addVertex(v3);
+//			g.addEdge(e1);
+//			g.addEdge(e2);
+//			G.add(g);
+//			
+//			Graph g2 = g.copy();
+//			G.add(g2);
 //		
-//		Graph g2 = g.copy();
-//		G.add(g2);
-//		
-//		G.get(1).getV().add(new Vertex("4",Vector.ZERO,Vector.ZERO,Colour.YELLOW));
-//		G.get(1).getE().add(
-//			new Edge(
-//				G.get(1).getVertex("1"),
-//				G.get(1).getVertex("4")
-//			)
-//		);
-//		G.get(1).getE().add(
+//			G.get(1).getV().add(new Vertex("4",Vector.ZERO,Vector.ZERO,Colour.YELLOW));
+//			G.get(1).getE().add(
+//				new Edge(
+//					G.get(1).getVertex("1"),
+//					G.get(1).getVertex("4")
+//				)
+//			);
+//			G.get(1).getE().add(
 //				new Edge(
 //						G.get(1).getVertex("2"),
 //						G.get(1).getVertex("4")
 //						)
 //				);
 //		
-//		Graph g3 = g2.copy();
-//		g3.addVertex(new Vertex("5",Vector.ZERO,Vector.ZERO,Colour.PURPLE));
-//		g3.addEdge(new Edge(
+//			Graph g3 = g2.copy();
+//			g3.addVertex(new Vertex("5",Vector.ZERO,Vector.ZERO,Colour.PURPLE));
+//			g3.addEdge(new Edge(
 //							g3.getVertex("5"),
 //							g3.getVertex("1")));
-//		g3.addEdge(new Edge(
+//			g3.addEdge(new Edge(
 //							g3.getVertex("5"),
 //							g3.getVertex("2")));
 //		
-//		G.add(g3);
+//			G.add(g3);
 //		
-//		Graph g4 = g3.copy();
-//		g4.addVertex(new Vertex("6",Vector.ZERO,Vector.ZERO,Colour.TEAL));
-//		g4.addEdge(new Edge(
+//			Graph g4 = g3.copy();
+//			g4.addVertex(new Vertex("6",Vector.ZERO,Vector.ZERO,Colour.TEAL));
+//			g4.addEdge(new Edge(
 //							g4.getVertex("6"),
 //							g4.getVertex("2")));
-//		g4.addEdge(new Edge(
+//			g4.addEdge(new Edge(
 //							g4.getVertex("6"),
 //							g4.getVertex("3")));
-//		G.add(g4);
-//		Graph g5 = g4.copy();
-//		g5.addVertex(new Vertex("7",Vector.ZERO,Vector.ZERO,Colour.BLACK));
-//		g5.addEdge(new Edge(
+//			G.add(g4);
+//			Graph g5 = g4.copy();
+//			g5.addVertex(new Vertex("7",Vector.ZERO,Vector.ZERO,Colour.BLACK));
+//			g5.addEdge(new Edge(
 //							g5.getVertex("7"),
 //							g5.getVertex("6")));
-//		g5.addEdge(new Edge(
+//			g5.addEdge(new Edge(
 //							g5.getVertex("7"),
 //							g5.getVertex("5")));
-//		G.add(g5);
+//			G.add(g5);
 //		Graph graph = Graph.K(2);
 //		G.add(graph);
-//		for(int i = 2; i<15;i++)
+//		for(int i = 2; i<25;i++)
 //		{
 //			Graph graph2 = G.get(G.size()-1).copy();
 //			graph2.addVertex(new Vertex("" + i));

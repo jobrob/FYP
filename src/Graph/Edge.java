@@ -12,6 +12,10 @@ public class Edge
 	{
 		this.v1 = v1;
 		this.v2 = v2;
+        if (v1.equals(v2))
+        {
+            System.out.println(" Edges must have 2 unique vertices" + v1 + " is equal to " + v2);
+        }
 	}
 	
 	/**
@@ -36,15 +40,14 @@ public class Edge
 	 */
 	public boolean equals(Edge e)
 	{
-		return( e.v1.getName().equals(v1.getName()) && e.v2.getName().equals(v2.getName()) ) 
-		|| ( e.v1.getName().equals(v2.getName()) && e.v2.getName().equals(v1.getName()) );
+        return(((e.getV1().equals(this.v1)) && (e.getV2().equals(this.v2))) || ((e.getV2().equals(this.v1) &&  (e.getV1().equals(this.v2)))));
 	}
 	/**
 	 * Prints out the edge as a touple of its vectors
 	 */
 	public String toString()
 	{
-		return("(" + v1 + "," + v2 + ")");
+		return("( Name:" + v1.getName() + ", Id:" + v1.getId() + "Name:" + v2.getName() + ",Id:" + v2.getId() + ")");
 	}
 	
 	/**

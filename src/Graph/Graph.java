@@ -21,7 +21,14 @@ public class Graph implements Cloneable
 		}
 		for(Edge e : E)
 		{
-			addEdge(e);
+			if(!isIn(e))
+			{
+				addEdge(e);
+			}
+			else
+			{
+				System.out.println("Someone tried to add a extra edge " + e );
+			}
 		}
 	}
 	
@@ -47,7 +54,10 @@ public class Graph implements Cloneable
 	 */
 	public void addVertex(Vertex vertex) 
 	{
-		vertex.setName("" + V.size()+1);
+		if(vertex.getName().equals(" "))
+		{
+			vertex.setName("" + V.size()+1);
+		}
 		V.add(vertex);
 	}
 	
@@ -59,15 +69,13 @@ public class Graph implements Cloneable
 	{
 		for(Edge e : E)
 		{
-			/*if(e.equals(edge))
-			{
-				break;
-			}*/
-			assert(!e.equals(edge)) : "Two same Edges";
-			//if (edge.equals(e))
-			//{
-			//	throw new Exception("Edge " + edge + " already exists in this graph");
-			//}
+			if(e.equals(edge))
+            {
+				new Exception().printStackTrace();
+                System.out.println("Error two edges " + e + " and " + edge + " are equal ");
+                System.exit(0);
+            }
+		
 		}
 		E.add(edge);
 	}
@@ -232,7 +240,12 @@ public class Graph implements Cloneable
 					newU = v;
 				}
 			}
-			copyE.add(new Edge(newV,newU));
+//			Edge copyEdge = e;
+//			copyE.add(copyEdge);
+			if(!isIn(new Edge(newV,newU)))
+			{
+				copyE.add(new Edge(newV,newU));
+			}
 		}
 		return new Graph(copyV,copyE);
 	}
@@ -261,8 +274,6 @@ public class Graph implements Cloneable
 		int i = rand.nextInt(100);
 		while(i!= 99)
 		{
-			System.out.println("The value of the random int is " + i);
-			System.out.println("The number of vertexcies:" + graph.getV().size());
 			if (i<50)
 			{
 				Vertex newRandomVertex = new Vertex();
@@ -311,7 +322,7 @@ public class Graph implements Cloneable
 		int i = rand.nextInt(100);
 		if(i <75)
 		{
-			Vertex newRandomVertex = new Vertex();
+			Vertex newRandomVertex = new Vertex("" + (g.getV().size() + 1));
 			int j = rand.nextInt(graph.getV().size());
 			graph.addVertex(newRandomVertex);
 			graph.addEdge(new Edge(newRandomVertex,graph.getV().get(j)));

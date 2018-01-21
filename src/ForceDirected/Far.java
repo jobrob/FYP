@@ -75,7 +75,6 @@ public class Far
 		Vertex u = e.getV2();
 		Vector s = v.getPosition().minus(u.getPosition());
 		double r = s.length();
-		System.out.println("The atractive force of " + v + " and " + u +  " is equal to "+ Math.pow(r,2)/k);
 		v.setDisplacement(v.getDisplacement().plus(s.normalise().scale(Math.pow(r,2)/k)));
 		u.setDisplacement(u.getDisplacement().minus(s.normalise().scale(Math.pow(r,2)/k)));
 	}
