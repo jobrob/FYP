@@ -5,7 +5,10 @@ import java.nio.file.*;
 
 public class SVG
 {
-	final static String NODE_RADIUS = "4";
+	private static final double CANVAS_MARGIN 	= 50;
+	private static final double NODE_RADIUS		= 5;
+	private static final double BOX_MARGIN		= 1;
+	
 	/**
 	 * Converts a vertex into a string for displaying with SVG
 	 * @param v the vertex being converted to SVG
@@ -23,6 +26,40 @@ public class SVG
 	{
 		return "<line class=\"edge\" x1=\"" + (e.getV1().getX() - xMin + 50) + "\" y1=\"" + (e.getV1().getY() - yMin + 50) + "\" x2=\""
 											+ (e.getV2().getX() - xMin + 50) + "\" y2=\"" + (e.getV2().getY() - yMin + 50) + "\" />";
+	}
+	
+	public static String of(Subgraph sg, double xMin,double yMin)
+	{
+		
+		double[] coords = sg.minMax();
+		double originX 	= coords[0] - xMin 			- (BOX_MARGIN + NODE_RADIUS) + CANVAS_MARGIN;
+		double originY 	= coords[1] - yMin 			- (BOX_MARGIN + NODE_RADIUS) + CANVAS_MARGIN;
+		double width;
+		if(coords[0] == xMin)
+		{
+			System.out.println("True");
+			width = coords[2] - coords[0] + 2 * (BOX_MARGIN + NODE_RADIUS);
+		}
+		else
+		{
+			System.out.println("False");
+			width = coords[2] - coords[0] + 2 * (BOX_MARGIN + NODE_RADIUS);
+		}
+		double height;
+		if(coords[1] == yMin)
+		{
+			height = coords[3] - coords[1] + 2 * (BOX_MARGIN + NODE_RADIUS);
+		}
+		else
+		{
+			height = coords[3] - coords[1] + 2 * (BOX_MARGIN + NODE_RADIUS);
+		}
+		
+		System.err.println("The height in svg " + height);
+		System.err.println("The width in svg" + width);
+//		System.err.println(" ");
+		
+		return "<rect class=\"box\" x=\"" + originX + "\" y=\"" + originY +"\" width=\"" + width + "\" height=\"" + height +"\" />";
 	}
 	
 	/**
@@ -75,10 +112,15 @@ public class SVG
 			System.err.println("Couldn't get `template-header-part-part.svg`.");
 			e.printStackTrace();
 		}
+		System.out.println("The value of yMin as i have it in SVG is " + yMin);
 		result += (0) + " " +(0) + " " + (xMax + 100 - xMin) + " " + (yMax + 100 - yMin);
 		result += result2;
 		result += "\t<rect x = \"" + (0) + "\" y=\"" +  (0) + "\" width = \"" + (xMax + 100 - xMin) + "\" height = \"" + (yMax + 100 - yMin) + "\" fill = \"rgb(255,255,255)\" />\n";
 		
+		for(Subgraph sg : g.getSg())
+		{
+			result += "    " + SVG.of(sg,xMin,yMin) + "\n";
+		}
 		for(Edge e : g.getE())
 		{
 			result += "    " + SVG.of(e,xMin,yMin) + "\n";

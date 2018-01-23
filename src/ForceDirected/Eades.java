@@ -40,8 +40,11 @@ public class Eades
 	*/
 	public static void applyForces(Graph g)
 	{
+		for(Subgraph sg : g.getSg())
+		{
+			sg.applyForces();
+		}
 		eForces(g.getV());
-
 		sForces(g.getE());
 		for(Vertex v : g.getV())
 		{
@@ -58,7 +61,6 @@ public class Eades
 	{
 		for(Edge e : E)
 		{
-			
 			Vertex u = e.getV1();
 			Vertex v = e.getV2();
 			Vector udistance = u.getPosition().minus(v.getPosition());
@@ -158,19 +160,29 @@ public class Eades
 		E.add(e14);
 		E.add(e15);
 		//E.add(new Edge(new Vertex("1"), new Vertex("2")));
+		ArrayList<Vertex> SgV = new ArrayList<Vertex>();
+		SgV.add(v12);
+		SgV.add(v13);
+		SgV.add(v14);
+		SgV.add(v15);
+		SgV.add(v16);
+		Subgraph sub = new Subgraph(SgV);
+		ArrayList<Subgraph> Sg = new ArrayList<Subgraph>();
+		Sg.add(sub);
 		
-		Graph graph = new Graph(V,E);
+		Graph graph = new Graph(V,E,Sg);
 		graph.addEdge(new Edge((graph.getVertex("1")),(graph.getVertex("2"))));
 		for(Vertex v : V)
 		{
 			v.randomise(256);
 		}
-		Eades.simulate(1000,graph);
+		Eades.simulate(9000,graph);
 		try 
 		{
 			System.out.println("making an svg");
 			PrintWriter writer = new PrintWriter("../testing.svg", "UTF-8");
-			writer.print(SVG.of(graph));
+			double[] minMax = graph.minMax();
+			writer.print(SVG.of(graph,minMax[0],minMax[1],minMax[2],minMax[3]));
 			writer.close();
 		}
 		catch (Exception e) 

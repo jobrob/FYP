@@ -5,6 +5,7 @@ public class Graph implements Cloneable
 {
 	private ArrayList<Vertex> V;
 	private ArrayList<Edge> E;
+	private ArrayList<Subgraph> Sg;
 	
 	/**
 	 *Constructs a graph out of a collection of vertices and edges
@@ -15,6 +16,29 @@ public class Graph implements Cloneable
 	{
 		this.V = new ArrayList<Vertex>();
 		this.E = new ArrayList<Edge>();
+		this.Sg = new ArrayList<Subgraph>();
+		for(Vertex v : V)
+		{
+			addVertex(v);
+		}
+		for(Edge e : E)
+		{
+			if(!isIn(e))
+			{
+				addEdge(e);
+			}
+			else
+			{
+				System.out.println("Someone tried to add a extra edge " + e );
+			}
+		}
+	}
+	
+	public Graph(ArrayList<Vertex> V, ArrayList<Edge> E,ArrayList<Subgraph> Sg)
+	{
+		this.V = new ArrayList<Vertex>();
+		this.E = new ArrayList<Edge>();
+		this.Sg = Sg;
 		for(Vertex v : V)
 		{
 			addVertex(v);
@@ -46,6 +70,11 @@ public class Graph implements Cloneable
 	public ArrayList<Edge> getE()
 	{
 		return E;
+	}
+	
+	public ArrayList<Subgraph> getSg()
+	{
+		return Sg;
 	}
 	
 	/**
