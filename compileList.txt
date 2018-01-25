@@ -3,8 +3,10 @@
 ./src/Graph/Graph3D.java
 ./src/Graph/Colour.java
 ./src/Graph/Edge.java
+./src/Graph/Subgraph.java
 ./src/Graph/SVG.java
 ./src/Graph/Vertex.java
+./src/GUI/Visualiser.java
 ./src/ForceDirected/Eades3D.java
 ./src/ForceDirected/Eades.java
 ./src/ForceDirected/Far.java

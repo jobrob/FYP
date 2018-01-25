@@ -14,7 +14,7 @@ public class Eades
 {
 	private static final double c1 = 2;
 	private static final double c2 = 1;
-	private static final double c3 = 60000;
+	private static final double c3 = 600000;
 	private static final double c4 = 0.1;
 	
 	/**
@@ -32,6 +32,7 @@ public class Eades
 		{		
 			applyForces(g);
 		}
+		g.removeSubgraphs();
 	}
 	
 	/**
@@ -40,6 +41,7 @@ public class Eades
 	*/
 	public static void applyForces(Graph g)
 	{
+		double disAverage = 0.0;
 		for(Subgraph sg : g.getSg())
 		{
 			sg.applyForces();
@@ -91,6 +93,7 @@ public class Eades
 			}
 		}
 	}
+	
 	
 	public static void main(String args[])
 	{

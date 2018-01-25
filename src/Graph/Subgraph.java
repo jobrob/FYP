@@ -27,6 +27,11 @@ public class Subgraph
 		V.add(newVertex);
 	}
 	
+	public ArrayList<Vertex> getV()
+	{
+		return V;
+	}
+	
 	public void applyForces()
 	{
 		for(Edge e : E)
@@ -36,8 +41,8 @@ public class Subgraph
 			Vector udistance = u.getPosition().minus(v.getPosition());
 			Vector vdistance = v.getPosition().minus(u.getPosition());
 			double magnitude = udistance.length();
-			u.setDisplacement(u.getDisplacement().plus(vdistance.normalise().scale(1*Math.log(magnitude/1))));
-			v.setDisplacement(v.getDisplacement().plus(udistance.normalise().scale(1*Math.log(magnitude/1))));
+			u.setDisplacement(u.getDisplacement().plus(vdistance.normalise().scale(0.1*Math.log(magnitude/1))));
+			v.setDisplacement(v.getDisplacement().plus(udistance.normalise().scale(0.1*Math.log(magnitude/1))));
 		}
 		for(Vertex v : V)
 		{
@@ -74,12 +79,61 @@ public class Subgraph
 				yMax = v.getY();
 			}
 		}
-		System.out.println("Width = " + (xMax - xMin));
-		System.out.println("Height = " + (yMax - yMin));
-		System.out.println("The xMin, yMin, xMax, yMax values are " + xMin + " " +  yMin + " " + xMax + " " + yMax);
 		
 		return new double[]{xMin, yMin, xMax, yMax};
 	}
+	
+	public void containedIn(Vertex v)
+	{
+		double[] coorods = minMax();
+		double xMin = coorods[0];
+		double xMax = coorods[2];
+		double yMin = coorods[1];
+		double yMax = coorods[3];
+		System.out.println("Checking contained");
+		if((xMin<=v.getX()) && (v.getX()<=xMax) && (yMin<=v.getY()) && (v.getY()<=yMax))
+		{
+			if(!V.contains(v))
+			{
+				System.out.println("I think "  + v + " is in the box ");
+				move(v,xMin,xMax,yMin,yMax);
+			}
+		}
+	}
+	
+	public void move(Vertex v,double xMin,double xMax,double yMin,double yMax)
+	{
+		System.out.println("Im moving " + v);
+		System.out.println("The value of minMax " + xMin + "," + xMax + "," + yMin + "," + yMax);
+		double x = v.getX();
+		double y = v.getY();
+		System.out.println("diff " + (x-xMin) + ", " + (x-xMax) + ", " + (y-yMin) + ", " + (y-yMax));	
+		double[] d = new double[] {x-xMin,x-xMax,y-yMin,y-yMax};
+		int i = 0;
+		for(int j = 1;j<d.length;j++)
+		{
+			if(d[j] <d[i])
+			{
+				i = j;
+			}
+		}
+		int sign = (i+1)%2;
+		System.out.println("i is " + i);
+		if(i < 2)
+		{
+			System.out.println("Set x to " + (d[i] + sign*1));
+			v.setX(v.getX() + d[i] + sign*1);
+		}
+		else
+		{
+			System.out.println("Set y to " + (d[i] + sign*1));
+			v.setY(v.getY() + d[i] + sign*1);
+		}
+		System.out.println("I have moved " + v);
+	}
+	
+	
+	
 }
 
 /**

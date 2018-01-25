@@ -159,6 +159,13 @@ public class Vector {
     public double length() {
         return Math.sqrt(x*x + y*y);
     }
+	
+	/**
+	 * Returns length()
+	 */
+	public double magntiude(){
+		return length();
+	}
 
     /**
      * Get the unit vector in the same direction as this one.

@@ -112,7 +112,6 @@ public class SVG
 			System.err.println("Couldn't get `template-header-part-part.svg`.");
 			e.printStackTrace();
 		}
-		System.out.println("The value of yMin as i have it in SVG is " + yMin);
 		result += (0) + " " +(0) + " " + (xMax + 100 - xMin) + " " + (yMax + 100 - yMin);
 		result += result2;
 		result += "\t<rect x = \"" + (0) + "\" y=\"" +  (0) + "\" width = \"" + (xMax + 100 - xMin) + "\" height = \"" + (yMax + 100 - yMin) + "\" fill = \"rgb(255,255,255)\" />\n";

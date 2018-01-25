@@ -136,6 +136,12 @@ public class Vertex
 		setPosition(newPosition);
 	}
 	
+	public void setY(double y)
+	{
+		Vector newPosition = new Vector(getX(),y,getZ());
+		setPosition(newPosition);
+	}
+	
 	/**
 	 * Checks to see if two vertices have the same id.
 	 * @param v The other vertex.

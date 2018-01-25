@@ -10,12 +10,13 @@ import Graph.Graph3D;
 import Graph.SVG;
 import Graph.Vector;
 import Graph.Vertex;
+import Graph.Subgraph;
 
 public class Eades3D 
 {
 	
 	public double temperature = 100;
-
+	private static int ORDER = 90;
 
 	/**
 	 * Sets up the initial position of vertex then calls apply forces on them the requierd amounts of time. Also outputs the SVG
@@ -24,37 +25,12 @@ public class Eades3D
 	public static void simulate(int i,Graph3D g3d)
 	{
 		PrintWriter writer;
-//		for(Vertex v : g3d.getG().get(0).getV())
-//		{
-//			v.setPosition(Vector.ZERO);
-//			v.randomise(256);
-//		}
-//		Eades.simulate(1000,g3d.getG().get(0));
-//		for(int k = 1; k<g3d.getG().size(); k++)
-//		{
-//			for(int j=0; j < g3d.getG().get(k).getV().size(); j++)
-//			{
-//				if(g3d.getG().get(k-1).isIn(g3d.getG().get(k).getV().get(j)))
-//				{
-//					System.out.println("I think that " +  g3d.getG().get(k).getV().get(j) + " is in  the " + (k-1) + " graph ");
-//					double x = g3d.getG().get(k-1).getV().get(j).getPosition().getX();
-//					double y = g3d.getG().get(k-1).getV().get(j).getPosition().getY();
-//					g3d.getG().get(k).getV().get(j).setPosition(new Vector(x,y,k));
-//				}
-//				else
-//				{
-//					g3d.getG().get(k).getV().get(j).setPosition(new Vector(0,0,k));
-//					g3d.getG().get(k).getV().get(j).randomise(256);
-//				}
-//			}
-//				Eades.simulate(1000,g3d.getG().get(k));
-//		}
 		for(Vertex v : g3d.getG().get(g3d.getG().size()-1).getV())
 		{
 			v.setPosition(Vector.ZERO);
 			v.randomise(256);
 		}
-		Eades.simulate(1000,g3d.getG().get(g3d.getG().size()-1));
+		Eades.simulate(100,g3d.getG().get(g3d.getG().size()-1));
 		for(int k  = g3d.getG().size() - 2; k > -1; k--)
 		{
 			for(Vertex v : g3d.getG().get(k).getV())
@@ -70,14 +46,16 @@ public class Eades3D
 					v.setPosition(new Vector(0,0,k));
 					v.randomise(256);
 				}
-				Eades.simulate(1000,g3d.getG().get(k+1));
+				Eades.simulate(100,g3d.getG().get(k+1));
 			}
 		}
-		
-		for(int j = 0; j < i; j++)
+		int j = 0;
+		while(j<i)
 		{
 			applyForces(g3d);
+			j++;
 		}
+		System.out.println(j);
 		
 		for (int k=0; k < g3d.getG().size(); k++)
 		{
@@ -105,7 +83,6 @@ public class Eades3D
 		for(Graph g : g3d.getG())
 		{
 			Eades.applyForces(g);
-
 		}
 		for(Edge e : g3d.getE())
 		{
@@ -199,28 +176,143 @@ public class Eades3D
 //							g5.getVertex("7"),
 //							g5.getVertex("5")));
 //			G.add(g5);
-//		Graph graph = Graph.K(2);
-//		G.add(graph);
-//		for(int i = 2; i<25;i++)
-//		{
-//			Graph graph2 = G.get(G.size()-1).copy();
-//			graph2.addVertex(new Vertex("" + i));
-//			for (int j = 0;j<graph2.getV().size()-1;j++)
-//			{
-//				Edge e = new Edge(graph2.getVertex("" + i),graph2.getVertex("" + j));
-//				graph2.addEdge(e);
-//			}
-//			G.add(graph2);
-//		}
-			Graph graph = Graph.K(3);
-			G.add(graph);
-			for(int i = 0; i < 30; i++)
+		Graph graph = Graph.K(2);
+		G.add(graph);
+		for(int i = 2; i< ORDER ;i++)
+		{
+			Graph graph2 = G.get(G.size()-1).copy();
+			graph2.addVertex(new Vertex("" + i));
+			for (int j = 0;j<graph2.getV().size()-1;j++)
 			{
-				Graph g = Graph.mutate(G.get(i));
-				G.add(g);
-			}	
+				Edge e = new Edge(graph2.getVertex("" + i),graph2.getVertex("" + j));
+				graph2.addEdge(e);
+			}
+			G.add(graph2);
+		}
+//			Graph graph = Graph.K(3);
+//			G.add(graph);
+//			for(int i = 0; i < 29; i++)
+//			{
+//				Graph g = Graph.mutate(G.get(i));
+//				G.add(g);
+//			}	
+//			
+//			Vertex v1 = new Vertex("1");
+//			Vertex v2 = new Vertex("2");
+//			Edge e1 = new Edge(v1,v2);
+//			Graph g2 = new Graph(V,E);
+//			g2.addVertex(v1);
+//			g2.addVertex(v2);
+//			g2.addEdge(e1);
+//			G.add(g2);
+//			
+//			Vertex v3 = new Vertex("3");
+//			Graph g3 = g2.copy();
+//			g3.addVertex(v3);
+//			g3.addEdge(new Edge(g3.getVertex("3"),g3.getVertex("1")));
+//			G.add(g3);
+//			
+//			Vertex v4 = new Vertex("4");
+//			Graph g4 = g3.copy();
+//			g4.addVertex(v4);
+//			g4.addEdge(new Edge(g4.getVertex("4"),g4.getVertex("1")));
+//			G.add(g4);
+//			
+//			Vertex v5 = new Vertex("5");
+//			Graph g5 = g4.copy();
+//			g5.addVertex(v5);
+//			g5.addEdge(new Edge(g5.getVertex("2"),g5.getVertex("5")));
+//			G.add(g5);
+//			
+//			Vertex v6 = new Vertex("6");
+//			Graph g6 = g5.copy();
+//			g6.addVertex(v6);
+//			g6.addEdge(new Edge(g6.getVertex("2"),g6.getVertex("6")));
+//			G.add(g6);
+//			
+//			Vertex v7 = new Vertex("7");
+//			Graph g7 = g6.copy();
+//			g7.addVertex(v7);
+//			g7.addEdge(new Edge(g7.getVertex("2"),g7.getVertex("7")));
+//			G.add(g7);
+//			
+//			Vertex v8 = new Vertex("8");
+//			Graph g8 = g7.copy();
+//			g8.addVertex(v8);
+//			g8.addEdge(new Edge(g8.getVertex("2"),g8.getVertex("8")));
+//			G.add(g8);
+//			
+//			Vertex v9 = new Vertex("9");
+//			Graph g9 = g8.copy();
+//			g9.addVertex(v9);
+//			g9.addEdge(new Edge(g9.getVertex("3"),g9.getVertex("9")));
+//			G.add(g9);
+//			
+//			ArrayList<Vertex> SgV = new ArrayList<Vertex>();
+//			SgV.add(v9);
+//			SgV.add(v8);
+//			Subgraph sub = new Subgraph(SgV);
+//			g9.addSubgraph(sub);
+//
+//			
+//			Vertex v10 = new Vertex("10");
+//			Graph g10 = g9.copy();
+//			g10.addVertex(v10);
+//			g10.addEdge(new Edge(g10.getVertex("3"),g10.getVertex("10")));
+//			G.add(g10);
+//			
+//			Vertex v11 = new Vertex("11");
+//			Graph g11 = g10.copy();
+//			g11.addVertex(v11);
+//			g11.addEdge(new Edge(g11.getVertex("3"),g11.getVertex("11")));
+//			G.add(g11);
+//			
+//			Vertex v12 = new Vertex("12");
+//			Edge e11 = new Edge(v4,v12);
+//			Graph g12 = g11.copy();
+//			g12.addVertex(v12);
+//			g12.addEdge(new Edge(g12.getVertex("4"),g12.getVertex("12")));
+//			G.add(g12);
+//			
+//			Vertex v13 = new Vertex("13");
+//			Graph g13 = g12.copy();
+//			g13.addVertex(v13);
+//			g13.addEdge(new Edge(g13.getVertex("4"),g13.getVertex("13")));
+//			G.add(g13);
+//			
+//			Vertex v14 = new Vertex("14");
+//			Edge e13 = new Edge(v4,v14);
+//			Graph g14 = g13.copy();
+//			g14.addVertex(v14);
+//			g14.addEdge(new Edge(g14.getVertex("4"),g14.getVertex("14")));
+//			G.add(g14);
+//			
+//			Vertex v15 = new Vertex("15");
+//			Graph g15 = g14.copy();
+//			g15.addVertex(v15);
+//			g15.addEdge(new Edge(g15.getVertex("4"),g15.getVertex("15")));
+//			G.add(g15);
+//			
+//			Vertex v16 = new Vertex("16");
+//			Graph g16 = g15.copy();
+//			g16.addVertex(v16);
+//			g16.addEdge(new Edge(g16.getVertex("4"),g16.getVertex("16")));
+//			G.add(g16);
+//			
+			
+
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			Graph3D g3d = new Graph3D(G);
-			Eades3D.simulate(90000,g3d);
+			Eades3D.simulate(10000,g3d);
 			long endtime = System.nanoTime();
 			double duration = (double)(endtime - starttime)/1000000000;
 			int noVertixces = g3d.totalVertices();

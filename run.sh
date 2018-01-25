@@ -1,3 +1,3 @@
 cd bin
 
-java ForceDirected.Eades3D
+java ForceDirected.Eades

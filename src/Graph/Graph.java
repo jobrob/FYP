@@ -77,6 +77,11 @@ public class Graph implements Cloneable
 		return Sg;
 	}
 	
+	public void addSubgraph(Subgraph sg)
+	{
+		Sg.add(sg);
+	}
+	
 	/**
 	 *Adds a vertex to the collection of vertices and asserts that its not already in V
 	 *@param vertex the vertex being added
@@ -242,6 +247,16 @@ public class Graph implements Cloneable
 		return null;
 	}
 	
+	public void removeSubgraphs()
+	{
+		for(Subgraph sg : Sg)
+		{
+			for(Vertex v : V)
+			{
+				sg.containedIn(v);
+			}
+		}
+	}
 	/**
 	 * Returns an exact copy of the graph
 	 * @return
@@ -250,6 +265,7 @@ public class Graph implements Cloneable
 	{
 		ArrayList<Vertex> copyV = new ArrayList<Vertex>();
 		ArrayList<Edge> copyE = new ArrayList<Edge>();
+		ArrayList<Subgraph> copySg = new ArrayList<Subgraph>();
 		for(Vertex v : V)
 		{
 			copyV.add(new Vertex(v.getName(),v.getPosition(),Vector.ZERO,v.getColour()));
@@ -269,14 +285,35 @@ public class Graph implements Cloneable
 					newU = v;
 				}
 			}
-//			Edge copyEdge = e;
-//			copyE.add(copyEdge);
-			if(!isIn(new Edge(newV,newU)))
+			if(newV!=null && newU != null)
 			{
-				copyE.add(new Edge(newV,newU));
+				if(!isIn(new Edge(newV,newU)))
+				{
+					copyE.add(new Edge(newV,newU));
+				}
 			}
 		}
-		return new Graph(copyV,copyE);
+		for(Subgraph sg : Sg)
+		{
+			ArrayList<Vertex> tempV = new ArrayList<Vertex>();
+			for(Vertex v : sg.getV())
+			{
+				Vertex newVertex = null;
+				for(Vertex vertex : copyV)
+				{
+					if(vertex.getName().equals(v.getName()))
+					{
+						newVertex = vertex;
+					}
+				}
+				if(newVertex != null)
+				{
+					tempV.add(newVertex);
+				}
+			}
+			Subgraph copySub = new Subgraph(tempV);
+		}
+		return new Graph(copyV,copyE,copySg);
 	}
 	
 	/**
@@ -352,7 +389,8 @@ public class Graph implements Cloneable
 		if(i <75)
 		{
 			Vertex newRandomVertex = new Vertex("" + (graph.getV().size() + 1));
-			int j = rand.nextInt(graph.getV().size());
+			int j = rand.nextInt(((graph.getV().size())/2));
+			j += (graph.getV().size())/2;
 			graph.addVertex(newRandomVertex);
 			graph.addEdge(new Edge(newRandomVertex,graph.getV().get(j)));
 		}
@@ -362,12 +400,12 @@ public class Graph implements Cloneable
 			int k = rand.nextInt(graph.getV().size());
 			while(k == j)
 			{
-				k = rand.nextInt(graph.getV().size());
+				k = rand.nextInt(((graph.getV().size())/2)) ;
+				k += (graph.getV().size())/2;
 			}
 			Edge newRandomEdge = new Edge(graph.getV().get(j),graph.getV().get(k));
 			if(!graph.isIn(newRandomEdge))
 			{
-				System.out.println("dont think that " + newRandomEdge + " is in ");
 				graph.addEdge(newRandomEdge);
 			}
 		}
