@@ -1,12 +1,13 @@
 package Graph;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Iterator;
 public class Graph implements Cloneable
 {
 	private ArrayList<Vertex> V;
 	private ArrayList<Edge> E;
 	private ArrayList<Subgraph> Sg;
-	
+
 	/**
 	 *Constructs a graph out of a collection of vertices and edges
 	 *@param V the collection of vertices
@@ -34,6 +35,12 @@ public class Graph implements Cloneable
 		}
 	}
 	
+	/**
+	 * Contructs a graph out of a collection of vertices, edges and subgraphs
+ 	 *@param V the list of vertices
+	 *@param E the list of edges
+	 *@param Sg the list of subgraphs
+	 */
 	public Graph(ArrayList<Vertex> V, ArrayList<Edge> E,ArrayList<Subgraph> Sg)
 	{
 		this.V = new ArrayList<Vertex>();
@@ -55,33 +62,32 @@ public class Graph implements Cloneable
 			}
 		}
 	}
-	
+
 	/**
-	 *Returns the collection of vertices
+	 *Returns the list of vertices
 	 */
 	public ArrayList<Vertex> getV()
 	{
 		return V;
 	}
-	
+
 	/**
-	 *Returns the collection of edges
+	 *Returns the list of edges
 	 */
 	public ArrayList<Edge> getE()
 	{
 		return E;
 	}
 	
+	/**
+	 *Returns the list of subgraphs
+	 */
 	public ArrayList<Subgraph> getSg()
 	{
 		return Sg;
 	}
-	
-	public void addSubgraph(Subgraph sg)
-	{
-		Sg.add(sg);
-	}
-	
+
+
 	/**
 	 *Adds a vertex to the collection of vertices and asserts that its not already in V
 	 *@param vertex the vertex being added
@@ -94,7 +100,7 @@ public class Graph implements Cloneable
 		}
 		V.add(vertex);
 	}
-	
+
 	/**
 	 * Adds an edge to the collection of edges and asserts that its not already in E
 	 * @param edge the edge to be added
@@ -109,14 +115,23 @@ public class Graph implements Cloneable
                 System.out.println("Error two edges " + e + " and " + edge + " are equal ");
                 System.exit(0);
             }
-		
+
 		}
 		E.add(edge);
 	}
 	
 	/**
-	 * Returns the arraylist of neighbours to v
-	 * @param v the vertex to have its neighbours computed
+	 *Adds a subgraph to the list of subgraphs
+	 *@param sg the subgraph being added 
+	 */
+	public void addSubgraph(Subgraph sg)
+	{
+		Sg.add(sg);
+	}
+	
+	/**
+	 *Returns the arraylist of neighbours to v
+	 *@param v the vertex to have its neighbours computed
 	 */
 	public ArrayList<Vertex> neighbourhood(Vertex v)
 	{
@@ -146,10 +161,10 @@ public class Graph implements Cloneable
 	public static Graph K(int n)
 	{
 		assert n > 0;
-		
+
 		ArrayList<Vertex>	V = new ArrayList<Vertex>();
 		ArrayList<Edge>		E = new ArrayList<Edge>();
-		
+
 		for(int i = 0; i < n; i++)
 		{
 			V.add(new Vertex(""+i));
@@ -163,7 +178,7 @@ public class Graph implements Cloneable
 		}
 		return new Graph(V,E);
 	}
-	
+
 	/**
 	 * Finds the values of the minimum and maximium coodinates in the graph
 	 * @return
@@ -229,7 +244,7 @@ public class Graph implements Cloneable
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Finds a vertex in the graph with the name passed to it. Returns null if the name isnt found 
 	 * @param name The name that will be looked for
@@ -246,7 +261,7 @@ public class Graph implements Cloneable
 		}
 		return null;
 	}
-	
+
 	public void removeSubgraphs()
 	{
 		for(Subgraph sg : Sg)
@@ -300,7 +315,32 @@ public class Graph implements Cloneable
 		}
 		return new Graph(copyV,copyE,copySg);
 	}
-	
+
+	public void removeVertex(Vertex vertex)
+	{
+		Iterator<Edge> Edges = E.iterator();
+		while(Edges.hasNext())
+		{
+			if (Edges.next().contains(vertex))
+			{
+				System.out.println("Removeing edge");
+				Edges.remove();
+			}
+			else
+			{
+				System.out.println("not deleting");
+			}
+		}
+		V.remove(vertex);
+	}
+
+	public void removeEdge(Edge edge)
+	{
+		V.remove(edge.getV1());
+		V.remove(edge.getV2());
+		E.remove(edge);
+	}
+
 	public Subgraph copySubgraph(Subgraph sg,ArrayList<Vertex> copyV)
 	{
 		if(!sg.isLeaf())
@@ -351,7 +391,7 @@ public class Graph implements Cloneable
 			return copySub;
 		}
 	}
-	
+
 	/**
 	 * Genarates a random graph with a random amounts of nodes and vertices. 
 	 */
@@ -390,7 +430,7 @@ public class Graph implements Cloneable
 				int j = rand.nextInt(V.size());
 				int k = rand.nextInt(V.size());
 				graph.addVertex(newRandomVertex);
-				
+
 				Edge newRandomEdge1 = new Edge(newRandomVertex,V.get(j));
 				Edge newRandomEdge2 = new Edge(newRandomVertex,V.get(k));
 				if(!graph.isIn(newRandomEdge1))
@@ -422,7 +462,7 @@ public class Graph implements Cloneable
 		System.out.println("After generating a random graph the number of edges is " + graph.getE().size());
 		return graph;
 	}
-	
+
 	/**
 	 * Randomly mutates a graph with a 3/4 chance of adding a node and a 1/4 chance of adding a edge. Returns a new graph which is * a copy of the graph mutated
 	 * @param Graph g the graph provided
@@ -457,7 +497,7 @@ public class Graph implements Cloneable
 		}
 		return graph;
 	}
-	
+
 	public void shift (double min)
 	{
 		for(Vertex v : V)

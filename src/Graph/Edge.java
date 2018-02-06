@@ -56,6 +56,8 @@ public class Edge
 	 */
 	public boolean contains(Vertex v)
 	{
+		System.out.println(" does " + toString() + " contain " + v);
+		System.out.println(v1.equals(v) || v2.equals(v));
 		return(v1.equals(v) || v2.equals(v));
 	}
 } 

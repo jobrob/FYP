@@ -186,6 +186,7 @@ public class Eades
 		subSgs.add(subSg);
 		Subgraph sg = new Subgraph(tempV,subSgs);
 		graph.addSubgraph(sg);
+		graph.removeVertex(graph.getV().get(4));
 		
 //		Graph graph = Graph.randomGraph(50);
 		for(Vertex v : graph.getV())
