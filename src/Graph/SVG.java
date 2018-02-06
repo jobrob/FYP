@@ -30,36 +30,78 @@ public class SVG
 	
 	public static String of(Subgraph sg, double xMin,double yMin)
 	{
-		
-		double[] coords = sg.minMax();
-		double originX 	= coords[0] - xMin 			- (BOX_MARGIN + NODE_RADIUS) + CANVAS_MARGIN;
-		double originY 	= coords[1] - yMin 			- (BOX_MARGIN + NODE_RADIUS) + CANVAS_MARGIN;
-		double width;
-		if(coords[0] == xMin)
+		String result = "";
+		if(sg.isLeaf())
 		{
-			System.out.println("True");
-			width = coords[2] - coords[0] + 2 * (BOX_MARGIN + NODE_RADIUS);
+			System.out.println(" the subgraph is a leaf it has a subgraph size of " + sg.getSg().size());
+			double[] coords = sg.minMax();
+			double originX 	= coords[0] - xMin 			- (BOX_MARGIN + NODE_RADIUS) + CANVAS_MARGIN;
+			double originY 	= coords[1] - yMin 			- (BOX_MARGIN + NODE_RADIUS) + CANVAS_MARGIN;
+			double width;
+			if(coords[0] == xMin)
+			{
+				System.out.println("True");
+				width = coords[2] - coords[0] + 2 * (BOX_MARGIN + NODE_RADIUS);
+			}
+			else
+			{
+				System.out.println("False");
+				width = coords[2] - coords[0] + 2 * (BOX_MARGIN + NODE_RADIUS);
+			}
+			double height;
+			if(coords[1] == yMin)
+			{
+				height = coords[3] - coords[1] + 2 * (BOX_MARGIN + NODE_RADIUS);
+			}
+			else
+			{
+				height = coords[3] - coords[1] + 2 * (BOX_MARGIN + NODE_RADIUS);
+			}
+
+			System.err.println("The height in svg " + height);
+			System.err.println("The width in svg" + width);
+	//		System.err.println(" ");
+
+			return "<rect class=\"box\" x=\"" + originX + "\" y=\"" + originY +"\" width=\"" + width + "\" height=\"" + height +"\" fill = \"" + sg.getColour() + "\" />" + "\n";
 		}
 		else
 		{
-			System.out.println("False");
-			width = coords[2] - coords[0] + 2 * (BOX_MARGIN + NODE_RADIUS);
-		}
-		double height;
-		if(coords[1] == yMin)
-		{
-			height = coords[3] - coords[1] + 2 * (BOX_MARGIN + NODE_RADIUS);
-		}
-		else
-		{
-			height = coords[3] - coords[1] + 2 * (BOX_MARGIN + NODE_RADIUS);
+			System.out.println(" The subgraph is not a leaf");
+			for(Subgraph subSg : sg.getSg())
+			{
+				result = result + SVG.of(subSg,xMin,yMin);
+			}
+			double[] coords = sg.minMax();
+			double originX 	= coords[0] - xMin 			- (BOX_MARGIN + NODE_RADIUS) + CANVAS_MARGIN;
+			double originY 	= coords[1] - yMin 			- (BOX_MARGIN + NODE_RADIUS) + CANVAS_MARGIN;
+			double width;
+			if(coords[0] == xMin)
+			{
+				System.out.println("True");
+				width = coords[2] - coords[0] + 2 * (BOX_MARGIN + NODE_RADIUS);
+			}
+			else
+			{
+				System.out.println("False");
+				width = coords[2] - coords[0] + 2 * (BOX_MARGIN + NODE_RADIUS);
+			}
+			double height;
+			if(coords[1] == yMin)
+			{
+				height = coords[3] - coords[1] + 2 * (BOX_MARGIN + NODE_RADIUS);
+			}
+			else
+			{
+				height = coords[3] - coords[1] + 2 * (BOX_MARGIN + NODE_RADIUS);
+			}
+
+			System.err.println("The height in svg " + height);
+			System.err.println("The width in svg" + width);
+	//		System.err.println(" ");
+
+			return result + "<rect class=\"box\" x=\"" + originX + "\" y=\"" + originY +"\" width=\"" + width + "\" height=\"" + height +"\" fill = \"" + sg.getColour() + "\" />" + "\n";
 		}
 		
-		System.err.println("The height in svg " + height);
-		System.err.println("The width in svg" + width);
-//		System.err.println(" ");
-		
-		return "<rect class=\"box\" x=\"" + originX + "\" y=\"" + originY +"\" width=\"" + width + "\" height=\"" + height +"\" />";
 	}
 	
 	/**
@@ -118,6 +160,7 @@ public class SVG
 		
 		for(Subgraph sg : g.getSg())
 		{
+			System.out.println("Making a svg subgraph");
 			result += "    " + SVG.of(sg,xMin,yMin) + "\n";
 		}
 		for(Edge e : g.getE())

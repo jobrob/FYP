@@ -295,7 +295,23 @@ public class Graph implements Cloneable
 		}
 		for(Subgraph sg : Sg)
 		{
+			Subgraph copySub = copySubgraph(sg,copyV);
+			copySg.add(copySub);
+		}
+		return new Graph(copyV,copyE,copySg);
+	}
+	
+	public Subgraph copySubgraph(Subgraph sg,ArrayList<Vertex> copyV)
+	{
+		if(!sg.isLeaf())
+		{
 			ArrayList<Vertex> tempV = new ArrayList<Vertex>();
+			Subgraph copySub = new Subgraph(tempV);
+			for(Subgraph subSg : sg.getSg())
+			{
+				Subgraph copy = copySubgraph(subSg,copyV);
+				copySub.addSubgraph(copy);
+			}
 			for(Vertex v : sg.getV())
 			{
 				Vertex newVertex = null;
@@ -308,18 +324,38 @@ public class Graph implements Cloneable
 				}
 				if(newVertex != null)
 				{
-					tempV.add(newVertex);
+					copySub.addVertex(newVertex);
 				}
 			}
-			Subgraph copySub = new Subgraph(tempV);
+			return copySub;
 		}
-		return new Graph(copyV,copyE,copySg);
+		else
+		{
+			ArrayList<Vertex> tempV = new ArrayList<Vertex>();
+			Subgraph copySub = new Subgraph(tempV);
+			for(Vertex v : sg.getV())
+			{
+				Vertex newVertex = null;
+				for(Vertex vertex : copyV)
+				{
+					if(vertex.getName().equals(v.getName()))
+					{
+						newVertex = vertex;
+					}
+				}
+				if(newVertex != null)
+				{
+					copySub.addVertex(newVertex);
+				}
+			}
+			return copySub;
+		}
 	}
 	
 	/**
 	 * Genarates a random graph with a random amounts of nodes and vertices. 
 	 */
-	public static Graph randomGraph()
+	public static Graph randomGraph(int size)
 	{
 		ArrayList<Vertex> Ver = new ArrayList<Vertex>();
 		ArrayList<Edge> Edg = new ArrayList<Edge>();
@@ -337,10 +373,10 @@ public class Graph implements Cloneable
 		graph.addEdge(e1);
 		graph.addEdge(e2);
 		Random rand = new Random();
-		int i = rand.nextInt(100);
-		while(i!= 99)
+		int i = rand.nextInt(size);
+		while(i!= size-1)
 		{
-			if (i<50)
+			if (i<2*(size/4))
 			{
 				Vertex newRandomVertex = new Vertex();
 				int j = rand.nextInt(V.size());
@@ -348,18 +384,25 @@ public class Graph implements Cloneable
 				Edge newRandomEdge = new Edge(newRandomVertex,V.get(j));
 				graph.addEdge(newRandomEdge);
 			}
-			else if(i< 75)
+			else if(i< 3*(size/4))
 			{
 				Vertex newRandomVertex = new Vertex();
 				int j = rand.nextInt(V.size());
 				int k = rand.nextInt(V.size());
 				graph.addVertex(newRandomVertex);
+				
 				Edge newRandomEdge1 = new Edge(newRandomVertex,V.get(j));
 				Edge newRandomEdge2 = new Edge(newRandomVertex,V.get(k));
-				graph.addEdge(newRandomEdge1);
-				graph.addEdge(newRandomEdge2);
+				if(!graph.isIn(newRandomEdge1))
+				{
+					graph.addEdge(newRandomEdge1);
+				}
+				if(!graph.isIn(newRandomEdge1))
+				{
+					graph.addEdge(newRandomEdge2);
+				}
 			}
-			else if (75<= i )
+			else if (3*(size/4)<= i )
 			{
 				int j = rand.nextInt(V.size());
 				int k = rand.nextInt(V.size());
@@ -368,9 +411,12 @@ public class Graph implements Cloneable
 					k = rand.nextInt(V.size());
 				}
 				Edge newRandomEdge = new Edge(V.get(j),V.get(k));
-				graph.addEdge(newRandomEdge);
+				if(!graph.isIn(newRandomEdge))
+				{
+					graph.addEdge(newRandomEdge);
+				}
 			}
-			i = rand.nextInt(100);
+			i = rand.nextInt(size);
 		}
 		System.out.println("After generating a random graph the number of vectors is " + graph.getV().size());
 		System.out.println("After generating a random graph the number of edges is " + graph.getE().size());

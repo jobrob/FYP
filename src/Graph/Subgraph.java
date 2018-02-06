@@ -5,11 +5,13 @@ public class Subgraph
 	private ArrayList<Vertex> V;
 	private ArrayList<Edge> E;
 	private Colour colour;
+	private ArrayList<Subgraph> Sg;
 	
-	public Subgraph(ArrayList<Vertex> V)
+	public Subgraph(ArrayList<Vertex> V, ArrayList<Subgraph> Sg)
 	{
 		this.V = new ArrayList<Vertex>();
 		this.E = new ArrayList<Edge>();
+		this.Sg = Sg;
 		for(Vertex v : V)
 		{
 			addVertex(v);
@@ -17,7 +19,19 @@ public class Subgraph
 		this.colour = new Colour();
 	}
 	
-	private void addVertex(Vertex newVertex)
+	public Subgraph(ArrayList<Vertex> V)
+	{
+		this.V = new ArrayList<Vertex>();
+		this.E = new ArrayList<Edge>();
+		this.Sg = new ArrayList<Subgraph>();
+		for(Vertex v : V)
+		{
+			addVertex(v);
+		}
+		this.colour = new Colour();
+	}
+	
+	public void addVertex(Vertex newVertex)
 	{
 		for(Vertex v : V)
 		{
@@ -27,13 +41,35 @@ public class Subgraph
 		V.add(newVertex);
 	}
 	
+	public void addSubgraph(Subgraph newSub)
+	{
+		Sg.add(newSub);
+	}
+	
 	public ArrayList<Vertex> getV()
 	{
 		return V;
 	}
 	
+	public ArrayList<Subgraph> getSg()
+	{
+		return Sg;
+	}
+	
+	public Colour getColour()
+	{
+		return colour;
+	}
+	
 	public void applyForces()
 	{
+		if(Sg.size() > 0)
+		{
+			for(Subgraph sub : Sg)
+			{
+				sub.applyForces();
+			}
+		}
 		for(Edge e : E)
 		{
 			Vertex u = e.getV1();
@@ -56,6 +92,10 @@ public class Subgraph
 	
 	public double[] minMax()
 	{
+		for(Subgraph sub : Sg)
+		{
+			sub.minMax();
+		}
 		double xMin = Double.MAX_VALUE;
 		double xMax = Double.MIN_VALUE;
 		double yMin = Double.MAX_VALUE;
@@ -132,8 +172,14 @@ public class Subgraph
 		System.out.println("I have moved " + v);
 	}
 	
-	
-	
+	public boolean isLeaf()
+	{
+		if(Sg.size() == 0)
+		{
+			return true;
+		}
+		return false;
+	}
 }
 
 /**
