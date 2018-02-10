@@ -42,6 +42,10 @@ public class Vertex
 		this(name, Vector.ZERO, Vector.ZERO);
 	}
 	
+	public Vertex(String name,Colour colour)
+	{
+		this(name,Vector.ZERO,Vector.ZERO,colour);
+	}
 	public Vertex(String name, Vector position)
 	{
 		this(name, position, Vector.ZERO);

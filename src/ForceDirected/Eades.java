@@ -14,8 +14,9 @@ public class Eades
 {
 	private static final double c1 = 2;
 	private static final double c2 = 1;
-	private static final double c3 = 600000;
+	private static final double c3 = 60000;
 	private static final double c4 = 0.1;
+	private static final double optDistance = 82.5;
 	
 	/**
 	*Applys forces to a 2D graph a given amount of times
@@ -88,6 +89,8 @@ public class Eades
 				Vector udistance = u.getPosition().minus(v.getPosition());
 				Vector vdistance = v.getPosition().minus(u.getPosition());
 				double magnitude = udistance.length();
+				//u.setDisplacement(u.getDisplacement().plus(new Vector(1,1,0).scale(Math.log(optDistance/magnitude))));
+				//v.setDisplacement(v.getDisplacement().plus(new Vector(1,1,0).scale(Math.log(optDistance/magnitude))));										   
 				u.setDisplacement(u.getDisplacement().minus(vdistance.normalise().scale(c3/(magnitude*magnitude))));
 				v.setDisplacement(v.getDisplacement().minus(udistance.normalise().scale(c3/(magnitude*magnitude))));
 			}
@@ -173,33 +176,54 @@ public class Eades
 //		
 //		Graph graph = new Graph(V,E,Sg);
 //		graph.addEdge(new Edge((graph.getVertex("1")),(graph.getVertex("2"))));
-		Graph graph = Graph.K(5);
-		ArrayList<Vertex> tempV = new ArrayList<Vertex>();
-		tempV.add(graph.getV().get(1));
-		tempV.add(graph.getV().get(2));
-		tempV.add(graph.getV().get(3));
-		ArrayList<Vertex> tempV2 = new ArrayList<Vertex>();
-		tempV2.add(graph.getV().get(1));
-		tempV2.add(graph.getV().get(2));
-		Subgraph subSg = new Subgraph(tempV2);
-		ArrayList<Subgraph> subSgs = new ArrayList<Subgraph>();
-		subSgs.add(subSg);
-		Subgraph sg = new Subgraph(tempV,subSgs);
-		graph.addSubgraph(sg);
-		graph.removeVertex(graph.getV().get(4));
+//		Graph graph = Graph.K(5);
+//		ArrayList<Vertex> tempV = new ArrayList<Vertex>();
+//		tempV.add(graph.getV().get(1));
+//		tempV.add(graph.getV().get(2));
+//		tempV.add(graph.getV().get(3));
+//		ArrayList<Vertex> tempV2 = new ArrayList<Vertex>();
+//		tempV2.add(graph.getV().get(1));
+//		tempV2.add(graph.getV().get(2));
+//		Subgraph subSg = new Subgraph(tempV2);
+//		ArrayList<Subgraph> subSgs = new ArrayList<Subgraph>();
+//		subSgs.add(subSg);
+//		Subgraph sg = new Subgraph(tempV,subSgs);
+//		graph.addSubgraph(sg);
+//		graph.removeVertex(graph.getV().get(4));
+//		graph.removeEdge(graph.getE().get(1));
+//		graph.removeEdge(graph.getE().get(2));	
 		
+		//Graph chapter1 = new Graph(V,E);
+		//chapter1.addVertex(new Vertex("Zhang Jue",Colour.YELLOW));
+		//chapter1.addVertex(new Vertex("Zhang Lian",Colour.BLUE));
+		//chapter1.addEdge(new Edge(chapter1.getVertex("Zhang Jue"),chapter1.getVertex("Zhang Lian")));
+		//chapter1.addVertex(new Vertex("Zhang Bao",Colour.BLUE));
+		//chapter1.addEdge(new Edge(chapter1.getVertex("Zhang Jue"),chapter1.getVertex("Zhang Bao")));
+		//chapter1.addVertex(new Vertex("Cheng Yuanzhi",Colour.BLUE));
+		//chapter1.addEdge(new Edge(chapter1.getVertex("Zhang Jue"),chapter1.getVertex("Cheng Yuanzhi")));
+		//chapter1.addVertex(new Vertex("Deng Mao",Colour.BLUE));
+		//chapter1.addEdge(new Edge(chapter1.getVertex("Cheng Yuanzhi"),chapter1.getVertex("Deng Mao")));
+		Graph test = new Graph(V,E);
+		for(int i = 0; i < 4 ; i ++)
+		{
+			test.addVertex(new Vertex("" + i));
+		}
+		//test.addEdge(new Edge(test.getVertex("" + 1),test.getVertex("" + 0)));
+//		G.add(chapter1);
+
 //		Graph graph = Graph.randomGraph(50);
-		for(Vertex v : graph.getV())
+		for(Vertex v : test.getV())
 		{
 			v.randomise(256);
 		}
-		Eades.simulate(9000,graph);
+		Eades.simulate(9000,test);
+		System.out.println((test.getVertex("" + 0).getPosition().minus(test.getVertex("" + 1).getPosition())).length());
 		try 
 		{
 			System.out.println("making an svg");
 			PrintWriter writer = new PrintWriter("../testing.svg", "UTF-8");
-			double[] minMax = graph.minMax();
-			writer.print(SVG.of(graph,minMax[0],minMax[1],minMax[2],minMax[3]));
+			double[] minMax = test.minMax();
+			writer.print(SVG.of(test,minMax[0],minMax[1],minMax[2],minMax[3]));
 			writer.close();
 		}
 		catch (Exception e) 

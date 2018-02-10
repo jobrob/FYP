@@ -59,12 +59,20 @@ public class Colour
 					System.err.println("WHAT HAPPENED HERE?");
 			}
 		} else {
-			new Colour();
+			System.err.println("You spelled 'saturated' incorrectly, doofus.");
 		}
 	}
 	
-	public Colour(String type) {
-		new Colour(type, 0);
+	public Colour(String colour) {
+		assert colour.charAt(0) == '#';
+		assert colour.length() == 7;
+		String red = colour.substring(1,3);
+		String green = colour.substring(3,5);
+		String blue = colour.substring(5,7);
+		
+		r =	Integer.parseInt(red, 16);
+		g =	Integer.parseInt(green, 16);
+		b =	Integer.parseInt(blue, 16);
 	}
 	
 	public static final Colour RED = new Colour (255,0,0);

@@ -3,6 +3,7 @@ public class Edge
 {
 	private Vertex v1;
 	private Vertex v2;
+	
 	/**
 	 * Creates an edge from vertex one to vertex 2
 	 * @param v1 the first vertex
@@ -10,6 +11,9 @@ public class Edge
 	 */
 	public Edge (Vertex v1, Vertex v2)
 	{
+		if (v1 == null || v2 == null) {
+			System.err.println("Some vertex in edge is `null`.");
+		}
 		this.v1 = v1;
 		this.v2 = v2;
         if (v1.equals(v2))
@@ -56,8 +60,6 @@ public class Edge
 	 */
 	public boolean contains(Vertex v)
 	{
-		System.out.println(" does " + toString() + " contain " + v);
-		System.out.println(v1.equals(v) || v2.equals(v));
 		return(v1.equals(v) || v2.equals(v));
 	}
 } 

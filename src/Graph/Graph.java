@@ -1,7 +1,5 @@
 package Graph;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Iterator;
+import java.util.*;
 public class Graph implements Cloneable
 {
 	private ArrayList<Vertex> V;
@@ -34,7 +32,7 @@ public class Graph implements Cloneable
 			}
 		}
 	}
-	
+
 	/**
 	 * Contructs a graph out of a collection of vertices, edges and subgraphs
  	 *@param V the list of vertices
@@ -78,7 +76,7 @@ public class Graph implements Cloneable
 	{
 		return E;
 	}
-	
+
 	/**
 	 *Returns the list of subgraphs
 	 */
@@ -119,7 +117,7 @@ public class Graph implements Cloneable
 		}
 		E.add(edge);
 	}
-	
+
 	/**
 	 *Adds a subgraph to the list of subgraphs
 	 *@param sg the subgraph being added 
@@ -128,7 +126,7 @@ public class Graph implements Cloneable
 	{
 		Sg.add(sg);
 	}
-	
+
 	/**
 	 *Returns the arraylist of neighbours to v
 	 *@param v the vertex to have its neighbours computed
@@ -321,14 +319,10 @@ public class Graph implements Cloneable
 		Iterator<Edge> Edges = E.iterator();
 		while(Edges.hasNext())
 		{
-			if (Edges.next().contains(vertex))
+			if(Edges.next().contains(vertex))
 			{
-				System.out.println("Removeing edge");
+				//System.out.println("Removeing edge");
 				Edges.remove();
-			}
-			else
-			{
-				System.out.println("not deleting");
 			}
 		}
 		V.remove(vertex);
@@ -336,8 +330,9 @@ public class Graph implements Cloneable
 
 	public void removeEdge(Edge edge)
 	{
-		V.remove(edge.getV1());
-		V.remove(edge.getV2());
+		System.out.println("removing " + edge);
+//		V.remove(edge.getV1());
+//		V.remove(edge.getV2());
 		E.remove(edge);
 	}
 
@@ -367,6 +362,7 @@ public class Graph implements Cloneable
 					copySub.addVertex(newVertex);
 				}
 			}
+			copySub.setColour(sg.getColour());
 			return copySub;
 		}
 		else
@@ -388,7 +384,36 @@ public class Graph implements Cloneable
 					copySub.addVertex(newVertex);
 				}
 			}
+			copySub.setColour(sg.getColour());
 			return copySub;
+		}
+	}
+	
+	public void addRandomEdge()
+	{
+		Random rand = new Random();
+		int i = rand.nextInt(V.size());
+		int j = rand.nextInt(V.size());
+		while(j == i)
+		{
+			j = rand.nextInt(V.size());
+		}
+		if(isIn(new Edge(V.get(i),V.get(j))))
+		{
+		}
+		else
+		{
+			addEdge(new Edge(V.get(i),V.get(j)));
+		}
+	}
+	
+	public void removeRandomEdge()
+	{
+		Random rand = new Random();
+		if(E.size() > 0 )
+		{
+			int i = rand.nextInt(E.size());
+			removeEdge(E.get(i));
 		}
 	}
 
@@ -418,7 +443,7 @@ public class Graph implements Cloneable
 		{
 			if (i<2*(size/4))
 			{
-				Vertex newRandomVertex = new Vertex();
+				Vertex newRandomVertex = new Vertex("" + graph.getV().size()+ 1);
 				int j = rand.nextInt(V.size());
 				graph.addVertex(newRandomVertex);
 				Edge newRandomEdge = new Edge(newRandomVertex,V.get(j));
@@ -426,7 +451,7 @@ public class Graph implements Cloneable
 			}
 			else if(i< 3*(size/4))
 			{
-				Vertex newRandomVertex = new Vertex();
+				Vertex newRandomVertex = new Vertex("" + graph.getV().size() + 1);
 				int j = rand.nextInt(V.size());
 				int k = rand.nextInt(V.size());
 				graph.addVertex(newRandomVertex);
@@ -504,5 +529,102 @@ public class Graph implements Cloneable
 		{
 			v.setX(v.getX() + min);
 		}
+	}
+
+	// Parser method
+
+	public static Graph of(List<String> lines,Graph graph) {
+
+		int i = 0;
+		String line = lines.get(i);
+		
+		//ArrayList<Vertex> V = new ArrayList<Vertex>();
+		//ArrayList<Edge> E = new ArrayList<Edge>();
+		//Graph G = new Graph(V, E);
+		
+		
+		while(!line.equals("")) 
+		{
+			System.err.println("Parsing vertex: "+line);
+			// Add all vertices to `V`./
+			String[] vertexEntry = line.split("\\|");
+			switch (vertexEntry.length)
+			{
+				case 1:
+					graph.addVertex(new Vertex(vertexEntry[0]));
+					break;
+				case 2:
+					graph.addVertex(new Vertex(vertexEntry[0], new Colour(vertexEntry[1])));
+					break;
+				default:
+					System.err.println("Cannot parse vertex entry \""+ line +"\"; too many parameters.");
+					break;
+			}
+			line = lines.get(++i);
+		}
+		line = lines.get(++i);
+		
+		while(!line.equals(""))
+		{
+			System.err.println("Parsing the vertex removal " +line);
+			String[] vertexRemoval = line.split("\\|");
+			switch (vertexRemoval.length)
+			{
+				case 1:
+					System.out.println("TRYING TO DELETE THE VERTEX " + vertexRemoval[0]);
+					if (graph.getVertex(vertexRemoval[0]) != null)
+					{
+						graph.removeVertex(graph.getVertex(vertexRemoval[0]));
+					}
+					break;
+				default:
+					System.err.println("Cannot parse vertex removal \"" + line + "\"; invalid number of parameters.");
+					break;
+			}
+			line = lines.get(++i);
+		}
+		line = lines.get(++i);
+		System.err.println("Parsed all vertices.");
+		
+		while(!line.equals(""))
+		{
+			System.err.println("Parsing the edge removal " + line );
+			String[] edgeRemoval = line.split("\\|");
+			switch (edgeRemoval.length)
+			{
+				case 2:
+					graph.removeEdge(new Edge(graph.getVertex(edgeRemoval[0]),graph.getVertex(edgeRemoval[1])));
+					break;
+				default:
+					System.err.println("Cannot parse edge removal \"" + line + "\";invalid number of parameters.");
+			}
+			line = lines.get(++i);
+		}
+		line = lines.get(++i);
+		
+		
+		while(!line.equals("") && i < lines.size()) 
+		{
+			System.out.println("Parsing edge: "+line);
+			String[] edgeEntry = line.split("\\|");
+			switch (edgeEntry.length) 
+			{
+				case 2:
+					graph.addEdge(new Edge(graph.getVertex(edgeEntry[0]), graph.getVertex(edgeEntry[1])));
+					break;
+				default:
+					System.err.println("Cannot parse edge entry \""+ line +"\"; invalid number of parameters.");
+					break;
+			}
+			if (++i < lines.size())
+			{
+				line = lines.get(i);
+			}
+		}
+		i++;
+		
+		System.err.println("Parsed all edges.");
+
+		return graph;
 	}
 }

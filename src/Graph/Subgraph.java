@@ -61,6 +61,11 @@ public class Subgraph
 		return colour;
 	}
 	
+	public void setColour(Colour colour)
+	{
+		this.colour = colour;
+	}
+	
 	public void applyForces()
 	{
 		if(Sg.size() > 0)
