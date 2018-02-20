@@ -6,7 +6,7 @@
 ./src/Graph/Subgraph.java
 ./src/Graph/SVG.java
 ./src/Graph/Vertex.java
-./src/GUI/Visualiser.java
+./src/Util/CharacterEscape.java
 ./src/ForceDirected/Eades3D.java
 ./src/ForceDirected/Eades.java
 ./src/ForceDirected/Far.java

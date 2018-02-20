@@ -31,7 +31,7 @@ public class Eades3D
 			v.setPosition(Vector.ZERO);
 			v.randomise(256);
 		}
-		Eades.simulate(100,g3d.getG().get(g3d.getG().size()-1));
+		Eades.simulate(1000,g3d.getG().get(g3d.getG().size()-1));
 		for(int k  = g3d.getG().size() - 2; k > -1; k--)
 		{
 			for(Vertex v : g3d.getG().get(k).getV())
@@ -40,6 +40,7 @@ public class Eades3D
 				{
 					double x = g3d.getG().get(k+1).getVertex(v.getName()).getX();
 					double y = g3d.getG().get(k+1).getVertex(v.getName()).getY();
+					v.setColour(g3d.getG().get(k+1).getVertex(v.getName()).getColour());
 					v.setPosition(new Vector(x,y,k));
 				}
 				else
@@ -47,7 +48,7 @@ public class Eades3D
 					v.setPosition(new Vector(0,0,k));
 					v.randomise(256);
 				}
-				Eades.simulate(100,g3d.getG().get(k+1));
+				//Eades.simulate(1000,g3d.getG().get(k+1));
 			}
 		}
 		int j = 0;
@@ -96,8 +97,8 @@ public class Eades3D
 			double r = s.length();
 			if(r != 0 )
 			{
-				by.setDisplacement(by.getDisplacement().plus(t.normalise().scale(1*Math.log(r/(1)))));
-				on.setDisplacement(on.getDisplacement().plus(s.normalise().scale(1*Math.log(r/(1)))));
+				by.setDisplacement(by.getDisplacement().plus(t.normalise().scale((1)*Math.log(r/(1)))));
+				on.setDisplacement(on.getDisplacement().plus(s.normalise().scale((1)*Math.log(r/(1)))));
 			}
 		}
 		for(Edge e : g3d.getE())
@@ -120,23 +121,26 @@ public class Eades3D
 			ArrayList<Vertex> V = new ArrayList<Vertex>();
 			ArrayList<Edge> E = new ArrayList<Edge>();
 //
-//			try 
-//			{
-//				Graph chapter1 = Graph.of(Files.readAllLines(Paths.get("../newGraph.txt")),new Graph(V,E));
-//				G.add(chapter1);
-//				Graph chapter2 = chapter1.copy();
-//				chapter2 = Graph.of(Files.readAllLines(Paths.get("../newGraph2.txt")),chapter2);
-//				Graph chapter3 = Graph.of(Files.readAllLines(Paths.get("../newGraph3.txt")),new Graph(V,E));
-//				G.add(chapter2);
-//				System.out.println(chapter2.neighbourhood(chapter2.getVertex("Liu Bei")));
-//				G.add(chapter3);
-//				
-//			}
-//			catch (IOException e) 
-//			{
-//				e.printStackTrace();
-//				System.err.println("\nCouldn't get file at path `"+args[0]+"`.");
-//			}
+			try 
+			{
+				for(int i = 0; i <14 ; i++)
+				{
+					Graph graph  = Graph.convertDot(Files.readAllLines(Paths.get("../dotGraphs/state-" + i + ".dot")));
+					G.add(graph);
+				}
+				//Graph chapter2 = chapter1.copy();
+				//chapter2 = Graph.of(Files.readAllLines(Paths.get("../newGraph2.txt")),chapter2);
+				//Graph chapter3 = Graph.of(Files.readAllLines(Paths.get("../newGraph3.txt")),new Graph(V,E));
+				//G.add(chapter2);
+				//System.out.println(chapter2.neighbourhood(chapter2.getVertex("Liu Bei")));
+				//G.add(chapter3);
+				
+			}
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+				System.err.println("\nCouldn't get file at path `"+args[0]+"`.");
+			}
 
 
 			//Vertex v1 = new Vertex("1",Vector.ZERO,Vector.ZERO,Colour.RED);
@@ -213,28 +217,28 @@ public class Eades3D
 			//	G.add(graph2);
 			//}
 			////
-			Graph graph = Graph.randomGraph(100);
-			G.add(graph);
+			//Graph graph = Graph.randomGraph(100);
+			//G.add(graph);
 			//for(int i = 0; i < 50; i++)
 			//{
 			//	Graph copy = Graph.mutate(G.get(G.size()-1).copy());
 			//	G.add(copy);
 			//}
-			for(int j = 0; j < 10; j++)
-			{
-				for(int i = 0; i < 10; i++)
-				{
-					Graph copy = G.get(G.size()-1).copy();
-					copy.addRandomEdge();
-					G.add(copy);
-				}
-				for(int i = 0; i < 5; i++)
-				{
-					Graph copy = G.get(G.size()-1).copy();
-					copy.removeRandomEdge();
-					G.add(copy);
-				}
-			}
+			//for(int j = 0; j < 10; j++)
+			//{
+			//	for(int i = 0; i < 10; i++)
+			//	{
+			//		Graph copy = G.get(G.size()-1).copy();
+			//		copy.addRandomEdge();
+			//		G.add(copy);
+			//	}
+			//	for(int i = 0; i < 5; i++)
+			//	{
+			//		Graph copy = G.get(G.size()-1).copy();
+			//		copy.removeRandomEdge();
+			//		G.add(copy);
+			//	}
+			//}
 			//G.add(graph);
 			//Graph graph2 = graph.copy();
 			//System.out.println(graph2.getE().size());

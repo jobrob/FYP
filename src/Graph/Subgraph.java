@@ -31,6 +31,9 @@ public class Subgraph
 		this.colour = new Colour();
 	}
 	
+	/**
+	 * Adds a vertex to the subgraph and creates the inter subgraph edges between it and the other vertices
+	 */
 	public void addVertex(Vertex newVertex)
 	{
 		for(Vertex v : V)
@@ -41,21 +44,33 @@ public class Subgraph
 		V.add(newVertex);
 	}
 	
+	/**
+	 * Adds a subgraph to the list of subgraphs
+	 */
 	public void addSubgraph(Subgraph newSub)
 	{
 		Sg.add(newSub);
 	}
 	
+	/**
+	 * Returns the list of vertices
+	 */
 	public ArrayList<Vertex> getV()
 	{
 		return V;
 	}
 	
+	/**
+	 * Returns the list of subgraphs
+	 */
 	public ArrayList<Subgraph> getSg()
 	{
 		return Sg;
 	}
 	
+	/**
+	 * Returns the colour of of the subgraph
+	 */
 	public Colour getColour()
 	{
 		return colour;
@@ -66,6 +81,9 @@ public class Subgraph
 		this.colour = colour;
 	}
 	
+	/**
+	 * Moves the nodes in the subgraphs based on the intersubgraph atraction.
+	 */
 	public void applyForces()
 	{
 		if(Sg.size() > 0)
@@ -95,6 +113,9 @@ public class Subgraph
 		}
 	}
 	
+	/**
+	 * calculates the minimum and maximum x and y coordiantes of all the vertexies in hte subgraph
+	 */
 	public double[] minMax()
 	{
 		for(Subgraph sub : Sg)
@@ -128,6 +149,9 @@ public class Subgraph
 		return new double[]{xMin, yMin, xMax, yMax};
 	}
 	
+	/**
+	 * Checks if a vertex is containd in the subgraphs area.
+	 */
 	public void containedIn(Vertex v)
 	{
 		double[] coorods = minMax();
@@ -146,6 +170,9 @@ public class Subgraph
 		}
 	}
 	
+	/**
+	 * Removes the vertex from the subgraph by moving it to the nearist side 
+	 */
 	public void move(Vertex v,double xMin,double xMax,double yMin,double yMax)
 	{
 		System.out.println("Im moving " + v);
@@ -177,6 +204,9 @@ public class Subgraph
 		System.out.println("I have moved " + v);
 	}
 	
+	/**
+	 *Returns true if the subgraph contains no 
+	 */
 	public boolean isLeaf()
 	{
 		if(Sg.size() == 0)

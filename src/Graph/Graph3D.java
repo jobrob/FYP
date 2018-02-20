@@ -38,6 +38,9 @@ public class Graph3D
 		return E;
 	}
 	
+	/**
+	 * Returns the total number of vertices in all of the graphs
+	 */
 	public int totalVertices()
 	{
 		int total = 0;
@@ -48,6 +51,9 @@ public class Graph3D
 		return total;
 	}
 	
+	/**
+	 * Returns the total number of edges in all of the graphs
+	 */
 	public int totalEdges()
 	{
 		int total = 0;
@@ -78,6 +84,9 @@ public class Graph3D
 		G.add(graph);
 	}
 	
+	/**
+	 * returns the smallest and largest x and y coordinates in an array
+	 */
 	public double[] minMax()
 	{
 		double xMin = Double.MAX_VALUE;

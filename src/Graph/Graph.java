@@ -1,10 +1,14 @@
 package Graph;
 import java.util.*;
+import Util.CharacterEscape;
+
+
 public class Graph implements Cloneable
 {
 	private ArrayList<Vertex> V;
 	private ArrayList<Edge> E;
 	private ArrayList<Subgraph> Sg;
+	
 
 	/**
 	 *Constructs a graph out of a collection of vertices and edges
@@ -96,6 +100,15 @@ public class Graph implements Cloneable
 		{
 			vertex.setName("" + V.size()+1);
 		}
+		for(Vertex v : V)
+		{
+			if(v.getName().equals(vertex.getName()))
+			{
+				new Exception().printStackTrace();
+                System.out.println("Error two vertices " + v.getName() + " and " + vertex.getName() + " are the same");
+                System.exit(0);	
+			}
+		}
 		V.add(vertex);
 	}
 
@@ -113,7 +126,18 @@ public class Graph implements Cloneable
                 System.out.println("Error two edges " + e + " and " + edge + " are equal ");
                 System.exit(0);
             }
-
+		}
+		if(!V.contains(edge.getV1()))
+		{
+				new Exception().printStackTrace();
+                System.out.println("Error edge not in graph " + edge.getV1());
+                System.exit(0);		
+		}
+		if(!V.contains(edge.getV2()))
+		{
+				new Exception().printStackTrace();
+                System.out.println("Error edge not in graph " + edge.getV2());
+                System.exit(0);		
 		}
 		E.add(edge);
 	}
@@ -228,6 +252,19 @@ public class Graph implements Cloneable
 		}
 		return false;
 	}
+	
+	public boolean isIn(String name)
+	{
+		for (Vertex v : V)
+		{
+			if(v.getName().equals(name))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Checks a graph to see if it contains an edge.
 	 */
@@ -260,6 +297,9 @@ public class Graph implements Cloneable
 		return null;
 	}
 
+	/**
+	 * Moves all vertexces out of subgraphs that they are not a part of.
+	 */
 	public void removeSubgraphs()
 	{
 		for(Subgraph sg : Sg)
@@ -270,6 +310,7 @@ public class Graph implements Cloneable
 			}
 		}
 	}
+
 	/**
 	 * Returns an exact copy of the graph
 	 * @return
@@ -313,29 +354,7 @@ public class Graph implements Cloneable
 		}
 		return new Graph(copyV,copyE,copySg);
 	}
-
-	public void removeVertex(Vertex vertex)
-	{
-		Iterator<Edge> Edges = E.iterator();
-		while(Edges.hasNext())
-		{
-			if(Edges.next().contains(vertex))
-			{
-				//System.out.println("Removeing edge");
-				Edges.remove();
-			}
-		}
-		V.remove(vertex);
-	}
-
-	public void removeEdge(Edge edge)
-	{
-		System.out.println("removing " + edge);
-//		V.remove(edge.getV1());
-//		V.remove(edge.getV2());
-		E.remove(edge);
-	}
-
+	
 	public Subgraph copySubgraph(Subgraph sg,ArrayList<Vertex> copyV)
 	{
 		if(!sg.isLeaf())
@@ -388,7 +407,42 @@ public class Graph implements Cloneable
 			return copySub;
 		}
 	}
-	
+
+	/**
+	 * Removes a vertrex from the graph. Removes any edges that were based of the vertex as well
+	 */
+	public void removeVertex(Vertex vertex)
+	{
+		Iterator<Edge> Edges = E.iterator();
+		while(Edges.hasNext())
+		{
+			if(Edges.next().contains(vertex))
+			{
+				//System.out.println("Removeing edge");
+				Edges.remove();
+			}
+		}
+		V.remove(vertex);
+	}
+
+	/**
+	 * Removes an edge from th graph
+	 */
+	public void removeEdge(Edge edge)
+	{
+		System.out.println("removing " + edge);
+//		V.remove(edge.getV1());
+//		V.remove(edge.getV2());
+		E.remove(edge);
+	}
+
+	/**
+	 * Returns a new copy of a subgraph
+	 */
+
+	/**
+	 * Creates a random edge between random vertices in the graph
+	 */
 	public void addRandomEdge()
 	{
 		Random rand = new Random();
@@ -406,7 +460,7 @@ public class Graph implements Cloneable
 			addEdge(new Edge(V.get(i),V.get(j)));
 		}
 	}
-	
+
 	public void removeRandomEdge()
 	{
 		Random rand = new Random();
@@ -523,26 +577,24 @@ public class Graph implements Cloneable
 		return graph;
 	}
 
-	public void shift (double min)
-	{
-		for(Vertex v : V)
-		{
-			v.setX(v.getX() + min);
-		}
-	}
-
-	// Parser method
-
+	/**
+	 * Crates a graph based of a input string and a graph from which to work on
+	 * Vertex addition is NAME||COLOUR
+	 * Vertex removal is NAME
+	 * Edge removal is U1NAME||U2NAME
+	 * Edge addition is U1NAME||U2NAME
+	 * Eeach section is ended with a blank line
+	 */
 	public static Graph of(List<String> lines,Graph graph) {
 
 		int i = 0;
 		String line = lines.get(i);
-		
+
 		//ArrayList<Vertex> V = new ArrayList<Vertex>();
 		//ArrayList<Edge> E = new ArrayList<Edge>();
 		//Graph G = new Graph(V, E);
-		
-		
+
+
 		while(!line.equals("")) 
 		{
 			System.err.println("Parsing vertex: "+line);
@@ -563,7 +615,7 @@ public class Graph implements Cloneable
 			line = lines.get(++i);
 		}
 		line = lines.get(++i);
-		
+
 		while(!line.equals(""))
 		{
 			System.err.println("Parsing the vertex removal " +line);
@@ -585,7 +637,7 @@ public class Graph implements Cloneable
 		}
 		line = lines.get(++i);
 		System.err.println("Parsed all vertices.");
-		
+
 		while(!line.equals(""))
 		{
 			System.err.println("Parsing the edge removal " + line );
@@ -601,8 +653,8 @@ public class Graph implements Cloneable
 			line = lines.get(++i);
 		}
 		line = lines.get(++i);
-		
-		
+
+
 		while(!line.equals("") && i < lines.size()) 
 		{
 			System.out.println("Parsing edge: "+line);
@@ -622,9 +674,89 @@ public class Graph implements Cloneable
 			}
 		}
 		i++;
-		
+
 		System.err.println("Parsed all edges.");
 
 		return graph;
+	}
+
+	public static Graph convertDot(List<String> strings)
+	{
+		Iterator lines = strings.iterator();
+		ArrayList<Vertex> V = new ArrayList<Vertex>();
+		ArrayList<Edge> E = new ArrayList<Edge>();
+		Graph newGraph = new Graph(V,E);
+		while(lines.hasNext())
+		{
+			String line = "" + lines.next();
+		//	System.out.println(line);
+			if(line.contains("label=") && !line.contains("->"))
+			{
+				
+				int nameEnd = line.indexOf("[");
+				int labelStart = line.indexOf("label=\"");
+				int labelEnd = line.indexOf("\"",labelStart+7);
+				String label = line.substring(labelStart+7,labelEnd);
+				if(label.trim().isEmpty())
+				{
+				
+				}
+				else
+				{
+					System.out.println(label);
+					System.out.println("Escaped to " + CharacterEscape.escapeHtml(label));
+					Vertex u1 = new Vertex(line.substring(0,nameEnd).trim(),CharacterEscape.escapeHtml(label));
+					newGraph.addVertex(u1);
+				}
+			}
+			if (line.contains("->"))
+			{
+				String[] split = line.split("->");
+				int stringEnd = split[1].indexOf("[");
+				String u1Name = split[0].trim();
+				String u2Name = split[1].substring(0,stringEnd);
+				if (newGraph.isIn(u1Name))
+				{
+					if(newGraph.isIn(u2Name))
+					{
+						Edge newEdge = new Edge(newGraph.getVertex(u1Name),newGraph.getVertex(u2Name));
+						if(!newGraph.isIn(newEdge))
+						{
+							newGraph.addEdge(newEdge);
+						}
+					}
+					else
+					{
+						Vertex u2 = new Vertex(u2Name);
+						newGraph.addVertex(u2);
+						newGraph.addEdge(new Edge(newGraph.getVertex(u1Name),newGraph.getVertex(u2Name),"red","blank"));
+					}
+				}
+				else
+				{
+					//Vertex u1 = new Vertex(u1Name);
+					//newGraph.addVertex(u1);
+					if(newGraph.isIn(u2Name))
+					{
+						//System.out.println(u1);
+						//System.out.println(newGraph.getVertex(u2Name));
+						newGraph.addVertex(new Vertex(u1Name));
+						newGraph.addEdge(new Edge(newGraph.getVertex(u1Name),newGraph.getVertex(u2Name)));
+					}
+					else
+					{
+						Vertex u2 = new Vertex(u2Name);
+						newGraph.addVertex(new Vertex(u1Name));
+						newGraph.addVertex(new Vertex(u2Name));
+						newGraph.addEdge(new Edge(newGraph.getVertex(u1Name),newGraph.getVertex(u2Name)));
+					}
+				}
+			}
+			else
+			{
+			
+			}
+		}
+		return newGraph;
 	}
 }

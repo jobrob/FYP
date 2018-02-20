@@ -15,7 +15,15 @@ public class SVG
 	 */
 	public static String of(Vertex v,double xMin,double yMin)
 	{
-		return "<circle class=\"node\" cx=\"" + (v.getX() - xMin + 50) + "\" cy=\"" + (v.getY() - yMin + 50) + "\" r=\"" + NODE_RADIUS + "\"" + " fill=\"" + v.getColour() + "\" />";	
+		if(v.getLabel().isEmpty())
+		{
+			return "<circle class=\"node\" cx=\"" + (v.getX() - xMin + 50) + "\" cy=\"" + (v.getY() - yMin + 50) + "\" r=\"" + NODE_RADIUS + "\"" + " fill=\"" + v.getColour() + "\" />  <!--" + v.getName() + "-->";	
+		}
+		else
+		{
+			return "<circle class= \"node\" fill=\"white\" stroke=\"#000000\" cx=\"" + (v.getX() - xMin + 50) + "\" cy=\"" + (v.getY() - yMin + 50) +  "\" r=\"" + 20 + "\"/>" + "\n"
+					+ "\t<text text-anchor=\" middle\" x=\"" + (v.getX() - xMin + 48) +  "\" y=\"" + (v.getY() - yMin + 50) +  "\" font-family=\"Times,serif\" font-size=\"14.00\">" + v.getLabel() + "</text>";
+		}
 	}
 
 	/**
@@ -24,8 +32,19 @@ public class SVG
 	 */
 	public static String of(Edge e,double xMin,double yMin)
 	{
-		return "<line class=\"edge\" x1=\"" + (e.getV1().getX() - xMin + 50) + "\" y1=\"" + (e.getV1().getY() - yMin + 50) + "\" x2=\""
-			+ (e.getV2().getX() - xMin + 50) + "\" y2=\"" + (e.getV2().getY() - yMin + 50) + "\" />";
+		String result = "<line class=\"edge\"";
+		
+		if(!e.getColour().isEmpty())
+		{
+			result += " stroke = \"" + e.getColour() + "\" ";
+		}
+		else
+		{
+			result += " stroke = \"black\" ";
+		}
+		result +="x1=\"" + (e.getV1().getX() - xMin + 50) + "\" y1=\"" + (e.getV1().getY() - yMin + 50) + "\" x2=\"" + (e.getV2().getX() - xMin + 50) + "\" y2=\"" + (e.getV2().getY() - yMin + 50) + "\""; 
+		result += "/> <!--" + e.getV1().getName() + "," + e.getV2().getName() + "-->";
+		return result;
 	}
 
 	public static String of(Subgraph sg, double xMin,double yMin)

@@ -10,6 +10,23 @@ public class Vertex
 	String name;
 	Colour colour;
 	UUID id;
+	String label;
+	
+	
+	
+	public Vertex(String name,Vector position,Vector displacement,Colour colour,String label)
+	{
+		this.displacement = displacement;
+		this.name = name;
+		this.colour = colour;
+		this.id = UUID.randomUUID();
+		this.label = label;
+	}
+	
+	public Vertex(String name,String label)
+	{
+		this(name,Vector.ZERO,Vector.ZERO,new Colour(),label);
+	}
 	
 	/**
 	 * Creates a Vertex out of a name and a vector to define it position. gives it a random id.
@@ -20,11 +37,7 @@ public class Vertex
 	 */
 	public Vertex(String name, Vector position,Vector displacement,Colour colour)
 	{
-		this.position = position;
-		this.displacement = displacement;
-		this.name = name;
-		this.colour = colour;
-		this.id = UUID.randomUUID();
+		this(name,position,displacement,colour,"");
 	}
 	
 	public Vertex(String name,Vector position,Vector displacement)
@@ -115,6 +128,11 @@ public class Vertex
 	{
 		return id;
 	}
+	
+	public String getLabel()
+	{
+		return label;
+	}
 	/**
 	 * Sets the vector of the vertex to the one given
 	 * @param postion the new position vector
@@ -145,6 +163,17 @@ public class Vertex
 		Vector newPosition = new Vector(getX(),y,getZ());
 		setPosition(newPosition);
 	}
+	
+	public void setColour(Colour colour)
+	{
+		this.colour = colour;
+	}
+	
+	public void setLabel(String label)
+	{
+		this.label = label;
+	}
+	
 	
 	/**
 	 * Checks to see if two vertices have the same id.
