@@ -8,7 +8,7 @@ public class Graph implements Cloneable
 	private ArrayList<Vertex> V;
 	private ArrayList<Edge> E;
 	private ArrayList<Subgraph> Sg;
-	
+
 
 	/**
 	 *Constructs a graph out of a collection of vertices and edges
@@ -252,7 +252,7 @@ public class Graph implements Cloneable
 		}
 		return false;
 	}
-	
+
 	public boolean isIn(String name)
 	{
 		for (Vertex v : V)
@@ -354,7 +354,7 @@ public class Graph implements Cloneable
 		}
 		return new Graph(copyV,copyE,copySg);
 	}
-	
+
 	public Subgraph copySubgraph(Subgraph sg,ArrayList<Vertex> copyV)
 	{
 		if(!sg.isLeaf())
@@ -692,19 +692,17 @@ public class Graph implements Cloneable
 		//	System.out.println(line);
 			if(line.contains("label=") && !line.contains("->"))
 			{
-				
+
 				int nameEnd = line.indexOf("[");
 				int labelStart = line.indexOf("label=\"");
 				int labelEnd = line.indexOf("\"",labelStart+7);
 				String label = line.substring(labelStart+7,labelEnd);
 				if(label.trim().isEmpty())
 				{
-				
+
 				}
 				else
 				{
-					System.out.println(label);
-					System.out.println("Escaped to " + CharacterEscape.escapeHtml(label));
 					Vertex u1 = new Vertex(line.substring(0,nameEnd).trim(),CharacterEscape.escapeHtml(label));
 					newGraph.addVertex(u1);
 				}
@@ -729,7 +727,7 @@ public class Graph implements Cloneable
 					{
 						Vertex u2 = new Vertex(u2Name);
 						newGraph.addVertex(u2);
-						newGraph.addEdge(new Edge(newGraph.getVertex(u1Name),newGraph.getVertex(u2Name),"red","blank"));
+						newGraph.addEdge(new Edge(newGraph.getVertex(u1Name),newGraph.getVertex(u2Name)));
 					}
 				}
 				else
@@ -751,10 +749,19 @@ public class Graph implements Cloneable
 						newGraph.addEdge(new Edge(newGraph.getVertex(u1Name),newGraph.getVertex(u2Name)));
 					}
 				}
-			}
-			else
-			{
-			
+				if(split[1].contains("color"))
+				{
+					int colourStart = split[1].indexOf("color") + 7;
+					int colourEnd = split[1].indexOf("\"",colourStart);
+					if(colourEnd == -1)
+					{
+						newGraph.getE().get(newGraph.getE().size()-1).setColour(split[1].substring(colourStart-1,split[1].indexOf(",",colourStart-1)));
+					}
+					else
+					{
+						newGraph.getE().get(newGraph.getE().size()-1).setColour(split[1].substring(colourStart,colourEnd));
+					}
+				}
 			}
 		}
 		return newGraph;

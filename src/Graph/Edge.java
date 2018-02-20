@@ -57,6 +57,11 @@ public class Edge
 		return label;
 	}
 	
+	public void setColour(String colour)
+	{
+		this.colour = colour;
+	}
+	
 	/**
 	 * Checks to see if two edges are equal.
 	 * The edges are unordered so (v1,v2)==(v2,v1)

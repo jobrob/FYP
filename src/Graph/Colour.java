@@ -65,7 +65,8 @@ public class Colour
 		}
 	}
 	
-	public Colour(String colour) {
+	public Colour(String colour) 
+	{
 		assert colour.charAt(0) == '#';
 		assert colour.length() == 7;
 		String red = colour.substring(1,3);

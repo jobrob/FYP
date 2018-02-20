@@ -31,7 +31,7 @@ public class Eades3D
 			v.setPosition(Vector.ZERO);
 			v.randomise(256);
 		}
-		Eades.simulate(1000,g3d.getG().get(g3d.getG().size()-1));
+		Eades.simulate(100,g3d.getG().get(g3d.getG().size()-1));
 		for(int k  = g3d.getG().size() - 2; k > -1; k--)
 		{
 			for(Vertex v : g3d.getG().get(k).getV())
@@ -48,7 +48,7 @@ public class Eades3D
 					v.setPosition(new Vector(0,0,k));
 					v.randomise(256);
 				}
-				//Eades.simulate(1000,g3d.getG().get(k+1));
+				Eades.simulate(100,g3d.getG().get(k+1));
 			}
 		}
 		int j = 0;
@@ -97,8 +97,8 @@ public class Eades3D
 			double r = s.length();
 			if(r != 0 )
 			{
-				by.setDisplacement(by.getDisplacement().plus(t.normalise().scale((1)*Math.log(r/(1)))));
-				on.setDisplacement(on.getDisplacement().plus(s.normalise().scale((1)*Math.log(r/(1)))));
+				by.setDisplacement(by.getDisplacement().plus(t.normalise().scale((1.0/10.0)*Math.log(r/(1)))));
+				on.setDisplacement(on.getDisplacement().plus(s.normalise().scale((1.0/10.0)*Math.log(r/(1)))));
 			}
 		}
 		for(Edge e : g3d.getE())
@@ -123,7 +123,7 @@ public class Eades3D
 //
 			try 
 			{
-				for(int i = 0; i <14 ; i++)
+				for(int i = 0; i <100 ; i++)
 				{
 					Graph graph  = Graph.convertDot(Files.readAllLines(Paths.get("../dotGraphs/state-" + i + ".dot")));
 					G.add(graph);
