@@ -44,6 +44,10 @@ public class SVG
 		}
 		result +="x1=\"" + (e.getV1().getX() - xMin + 50) + "\" y1=\"" + (e.getV1().getY() - yMin + 50) + "\" x2=\"" + (e.getV2().getX() - xMin + 50) + "\" y2=\"" + (e.getV2().getY() - yMin + 50) + "\""; 
 		result += "/> <!--" + e.getV1().getName() + "," + e.getV2().getName() + "-->";
+		if(!e.getLabel().isEmpty())
+		{
+			result += "\t<text text-anchor=\" middle\" x=\"" + (e.xMid() - xMin + 48) +  "\" y=\"" + (e.yMid() - yMin + 50) +  "\" font-family=\"Times,serif\" font-size=\"14.00\">" + e.getLabel() + "</text>";
+		}
 		return result;
 	}
 

@@ -762,6 +762,12 @@ public class Graph implements Cloneable
 						newGraph.getE().get(newGraph.getE().size()-1).setColour(split[1].substring(colourStart,colourEnd));
 					}
 				}
+				if(split[1].contains("label"))
+				{
+					int labelStart = split[1].indexOf("label") +7;
+					int labelEnd = split[1].indexOf("\"",labelStart);
+					newGraph.getE().get(newGraph.getE().size()-1).setLabel(split[1].substring(labelStart,labelEnd));
+				}
 			}
 		}
 		return newGraph;

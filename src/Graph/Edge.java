@@ -62,6 +62,25 @@ public class Edge
 		this.colour = colour;
 	}
 	
+	public void setLabel(String label)
+	{
+		this.label = label;
+	}
+	
+	public double xMid()
+	{
+		System.out.println("X values " + v1.getX() + " and " + v2.getX());
+		System.out.println("Returning " + (v1.getX() + v2.getX())/2);
+		return (v1.getX() + v2.getX())/2;
+	}
+	
+	public double yMid()
+	{
+		System.out.println("X values " + v1.getY() + " and " + v2.getY());
+		System.out.println("Returning " + (v1.getY() + v2.getY())/2);
+		return (v1.getY() + v2.getY())/2;
+	}
+	
 	/**
 	 * Checks to see if two edges are equal.
 	 * The edges are unordered so (v1,v2)==(v2,v1)

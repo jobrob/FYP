@@ -31,7 +31,7 @@ public class Eades3D
 			v.setPosition(Vector.ZERO);
 			v.randomise(256);
 		}
-		Eades.simulate(100,g3d.getG().get(g3d.getG().size()-1));
+		//Eades.simulate(100,g3d.getG().get(g3d.getG().size()-1));
 		for(int k  = g3d.getG().size() - 2; k > -1; k--)
 		{
 			for(Vertex v : g3d.getG().get(k).getV())
@@ -48,7 +48,7 @@ public class Eades3D
 					v.setPosition(new Vector(0,0,k));
 					v.randomise(256);
 				}
-				Eades.simulate(100,g3d.getG().get(k+1));
+				//Eades.simulate(100,g3d.getG().get(k+1));
 			}
 		}
 		int j = 0;
