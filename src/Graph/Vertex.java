@@ -9,7 +9,7 @@ public class Vertex
 	Vector displacement;
 	String name;
 	Colour colour;
-	UUID id;
+	final UUID id;
 	String label;
 	
 	
@@ -113,16 +113,14 @@ public class Vertex
 		return displacement;
 	}
 	/**
-	 * Returns the colour of the vertex
-	 * @return
+	 * @return The colour of the Vertex
 	 */
 	public Colour getColour()
 	{
 		return colour;
 	}
 	/**
-	 * Returns the gloabaly unique id for the vertex
-	 * @return
+	 * @return The gloably unique Id for the Vertex
 	 */
 	public UUID getId()
 	{
@@ -135,7 +133,7 @@ public class Vertex
 	}
 	/**
 	 * Sets the vector of the vertex to the one given
-	 * @param postion the new position vector
+	 * @param position the new position vector
 	 */
 	public void setPosition(Vector position)
 	{

@@ -54,7 +54,7 @@ public class SVG
 	public static String of(Subgraph sg, double xMin,double yMin)
 	{
 		System.out.println(sg.getColour());
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		if(sg.isLeaf())
 		{
 			System.out.println(" the subgraph is a leaf it has a subgraph size of " + sg.getSg().size());
@@ -94,7 +94,7 @@ public class SVG
 			System.out.println(" The subgraph is not a leaf");
 			for(Subgraph subSg : sg.getSg())
 			{
-				result = result + SVG.of(subSg,xMin,yMin);
+				result.append(SVG.of(subSg, xMin, yMin));
 			}
 			double[] coords = sg.minMax();
 			double originX 	= coords[0] - xMin 			- (BOX_MARGIN + NODE_RADIUS) + CANVAS_MARGIN;
@@ -124,12 +124,12 @@ public class SVG
 			System.err.println("The width in svg" + width);
 			//		System.err.println(" ");
 
-			result +=  "<rect class=\"box\" x=\"" + originX + "\" y=\"" + originY +"\" width=\"" + width + "\" height=\"" + height +"\" fill = \"" + sg.getColour() + "\" />" + "\n";
+			result.append("<rect class=\"box\" x=\"").append(originX).append("\" y=\"").append(originY).append("\" width=\"").append(width).append("\" height=\"").append(height).append("\" fill = \"").append(sg.getColour()).append("\" />").append("\n");
 			for(Subgraph subSg : sg.getSg())
 			{
-				result += SVG.of(subSg,xMin,yMin);
+				result.append(SVG.of(subSg, xMin, yMin));
 			}
-			return result;
+			return result.toString();
 		}
 	}
 
@@ -170,11 +170,11 @@ public class SVG
 
 	public static String of(Graph g, double xMin, double yMin, double xMax,double yMax)
 	{
-		String result = null;
+		StringBuilder result = null;
 		String result2 = null;
 		try 
 		{
-			result = new String(Files.readAllBytes(Paths.get("../assets/template-header-part1.svg")));
+			result = new StringBuilder(new String(Files.readAllBytes(Paths.get("../assets/template-header-part1.svg"))));
 			result2 = new String(Files.readAllBytes(Paths.get("../assets/template-header-part2.svg")));
 			//	System.out.println(result);
 		} 
@@ -183,25 +183,25 @@ public class SVG
 			System.err.println("Couldn't get `template-header-part-part.svg`.");
 			e.printStackTrace();
 		}
-		result += (0) + " " +(0) + " " + (xMax + 100 - xMin) + " " + (yMax + 100 - yMin);
-		result += result2;
-		result += "\t<rect x = \"" + (0) + "\" y=\"" +  (0) + "\" width = \"" + (xMax + 100 - xMin) + "\" height = \"" + (yMax + 100 - yMin) + "\" fill = \"rgb(255,255,255)\" />\n";
+		result.append((0) + " " + (0) + " ").append(xMax + 100 - xMin).append(" ").append(yMax + 100 - yMin);
+		result.append(result2);
+		result.append("\t<rect x = \"" + (0) + "\" y=\"" + (0) + "\" width = \"").append(xMax + 100 - xMin).append("\" height = \"").append(yMax + 100 - yMin).append("\" fill = \"rgb(255,255,255)\" />\n");
 
 		for(Subgraph sg : g.getSg())
 		{
 			System.out.println("Making a svg subgraph");
-			result += "    " + SVG.of(sg,xMin,yMin) + "\n";
+			result.append("    ").append(SVG.of(sg, xMin, yMin)).append("\n");
 		}
 		for(Edge e : g.getE())
 		{
-			result += "    " + SVG.of(e,xMin,yMin) + "\n";
+			result.append("    ").append(SVG.of(e, xMin, yMin)).append("\n");
 		}
 		for(Vertex v : g.getV())
 		{
-			result += "    " + SVG.of(v,xMin,yMin) + "\n";
+			result.append("    ").append(SVG.of(v, xMin, yMin)).append("\n");
 		}
-		result += "\n</svg>\n";
-		return result;
+		result.append("\n</svg>\n");
+		return result.toString();
 	}
 
 	/*public static String of(Graph3D g3d)

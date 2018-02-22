@@ -4,14 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.nio.file.*;
 
-import Graph.Colour;
-import Graph.Edge;
-import Graph.Graph;
-import Graph.Graph3D;
-import Graph.SVG;
-import Graph.Vector;
-import Graph.Vertex;
-import Graph.Subgraph;
+import Graph.*;
 
 public class Eades3D 
 {

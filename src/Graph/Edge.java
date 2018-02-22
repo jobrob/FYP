@@ -1,8 +1,8 @@
 package Graph;
 public class Edge
 {
-	private Vertex v1;
-	private Vertex v2;
+	private final Vertex v1;
+	private final Vertex v2;
 	private String colour;
 	private String label;
 	

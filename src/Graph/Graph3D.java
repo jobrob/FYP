@@ -69,7 +69,7 @@ public class Graph3D
 	 * whenever there is the same vertex in both graphs
 	 * @param graph
 	 */
-	public void addGraph(Graph graph)
+	private void addGraph(Graph graph)
 	{
 		if (G.size()>0)
 		{

@@ -1,5 +1,7 @@
 package Graph;
 import java.util.*;
+import java.util.function.Predicate;
+
 import Util.CharacterEscape;
 
 
@@ -17,9 +19,9 @@ public class Graph implements Cloneable
 	 */
 	public Graph(ArrayList<Vertex> V,ArrayList<Edge> E) 
 	{
-		this.V = new ArrayList<Vertex>();
-		this.E = new ArrayList<Edge>();
-		this.Sg = new ArrayList<Subgraph>();
+		this.V = new ArrayList<>();
+		this.E = new ArrayList<>();
+		this.Sg = new ArrayList<>();
 		for(Vertex v : V)
 		{
 			addVertex(v);
@@ -203,7 +205,7 @@ public class Graph implements Cloneable
 
 	/**
 	 * Finds the values of the minimum and maximium coodinates in the graph
-	 * @return
+	 * @returns [xmin,ymin,xmax,ymax]
 	 */
 	public double[] minMax()
 	{
@@ -313,7 +315,7 @@ public class Graph implements Cloneable
 
 	/**
 	 * Returns an exact copy of the graph
-	 * @return
+	 * @return the graph copy
 	 */
 	public Graph copy()
 	{
@@ -413,15 +415,17 @@ public class Graph implements Cloneable
 	 */
 	public void removeVertex(Vertex vertex)
 	{
-		Iterator<Edge> Edges = E.iterator();
-		while(Edges.hasNext())
-		{
-			if(Edges.next().contains(vertex))
-			{
-				//System.out.println("Removeing edge");
-				Edges.remove();
-			}
-		}
+//		Iterator<Edge> Edges = E.iterator();
+//		while(Edges.hasNext())
+//		{
+//			if(Edges.next().contains(vertex))
+//			{
+//				//System.out.println("Removeing edge");
+//				Edges.remove();
+//			}
+//		}
+		Predicate<Edge> edgePredicate = e -> e.contains(vertex);
+		E.removeIf(edgePredicate);
 		V.remove(vertex);
 	}
 
@@ -436,9 +440,6 @@ public class Graph implements Cloneable
 		E.remove(edge);
 	}
 
-	/**
-	 * Returns a new copy of a subgraph
-	 */
 
 	/**
 	 * Creates a random edge between random vertices in the graph
@@ -452,10 +453,7 @@ public class Graph implements Cloneable
 		{
 			j = rand.nextInt(V.size());
 		}
-		if(isIn(new Edge(V.get(i),V.get(j))))
-		{
-		}
-		else
+		if(!isIn(new Edge(V.get(i),V.get(j))))
 		{
 			addEdge(new Edge(V.get(i),V.get(j)));
 		}
@@ -544,7 +542,7 @@ public class Graph implements Cloneable
 
 	/**
 	 * Randomly mutates a graph with a 3/4 chance of adding a node and a 1/4 chance of adding a edge. Returns a new graph which is * a copy of the graph mutated
-	 * @param Graph g the graph provided
+	 * @param g the graph provided
 	 */
 	public static Graph mutate(Graph g)
 	{
@@ -673,7 +671,6 @@ public class Graph implements Cloneable
 				line = lines.get(i);
 			}
 		}
-		i++;
 
 		System.err.println("Parsed all edges.");
 
@@ -697,11 +694,7 @@ public class Graph implements Cloneable
 				int labelStart = line.indexOf("label=\"");
 				int labelEnd = line.indexOf("\"",labelStart+7);
 				String label = line.substring(labelStart+7,labelEnd);
-				if(label.trim().isEmpty())
-				{
-
-				}
-				else
+				if(!label.trim().isEmpty())
 				{
 					Vertex u1 = new Vertex(line.substring(0,nameEnd).trim(),CharacterEscape.escapeHtml(label));
 					newGraph.addVertex(u1);

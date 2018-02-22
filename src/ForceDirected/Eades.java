@@ -3,13 +3,7 @@ import java.util.ArrayList;
 import java.io.PrintWriter;
 import Graph.*;
 
-//import Graph.Colour;
-//import Graph.Edge;
-//import Graph.Graph;
-//import Graph.Graph3D;
-//import Graph.SVG;
-//import Graph.Vector;
-//import Graph.Vertex;
+
 public class Eades
 {
 	private static final double c1 = 2;
@@ -58,9 +52,9 @@ public class Eades
 	
 	/**
 	*Caculates the attractive forces due to edges present in a graph
-	*@param the array list of edges in the graph
+	*@param E the array list of edges in the graph
 	*/
-	public static void sForces(ArrayList<Edge> E)
+	private static void sForces(ArrayList<Edge> E)
 	{
 		for(Edge e : E)
 		{
@@ -78,7 +72,7 @@ public class Eades
 	*Calculates the replusive forces due to verteces present in a graph
 	*@param V the list of verexces
 	*/
-	public static void eForces(ArrayList<Vertex> V)
+	private static void eForces(ArrayList<Vertex> V)
 	{
 		for(int i = 0; i < V.size(); i++)
 		{

@@ -86,7 +86,7 @@ public class Far
 	}
 
 	/**
-	 * @param argsa
+	 * @param args
 	 */
 	public static void main(String[] args) 
 	{

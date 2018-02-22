@@ -193,13 +193,13 @@ public class Subgraph
 		System.out.println("i is " + i);
 		if(i < 2)
 		{
-			System.out.println("Set x to " + (d[i] + sign*1));
-			v.setX(v.getX() + d[i] + sign*1);
+			System.out.println("Set x to " + (d[i] + sign));
+			v.setX(v.getX() + d[i] + sign);
 		}
 		else
 		{
-			System.out.println("Set y to " + (d[i] + sign*1));
-			v.setY(v.getY() + d[i] + sign*1);
+			System.out.println("Set y to " + (d[i] + sign));
+			v.setY(v.getY() + d[i] + sign);
 		}
 		System.out.println("I have moved " + v);
 	}
@@ -209,17 +209,6 @@ public class Subgraph
 	 */
 	public boolean isLeaf()
 	{
-		if(Sg.size() == 0)
-		{
-			return true;
-		}
-		return false;
-	}
+        return Sg.size() == 0;
+    }
 }
-
-/**
- Graphs contain a list of subgraphs
- These subgraphs have a list of vertices
- These Vertices have extra invisible "subgraph edges"
- Draw boxes
- */
