@@ -47,8 +47,8 @@ public class Graph implements Cloneable
 	 */
 	public Graph(ArrayList<Vertex> V, ArrayList<Edge> E,ArrayList<Subgraph> Sg)
 	{
-		this.V = new ArrayList<Vertex>();
-		this.E = new ArrayList<Edge>();
+		this.V = new ArrayList<>();
+		this.E = new ArrayList<>();
 		this.Sg = Sg;
 		for(Vertex v : V)
 		{
@@ -124,9 +124,8 @@ public class Graph implements Cloneable
 		{
 			if(e.equals(edge))
             {
-				new Exception().printStackTrace();
-                System.out.println("Error two edges " + e + " and " + edge + " are equal ");
-                System.exit(0);
+            	e.setRepeats(e.getRepeats() + 1);
+            	return;
             }
 		}
 		if(!V.contains(edge.getV1()))
@@ -159,7 +158,7 @@ public class Graph implements Cloneable
 	 */
 	public ArrayList<Vertex> neighbourhood(Vertex v)
 	{
-		ArrayList<Vertex> neighbourhood = new ArrayList<Vertex>();
+		ArrayList<Vertex> neighbourhood = new ArrayList<>();
 		for(Edge e : E)
 		{
 			if(e.contains(v))
@@ -186,8 +185,8 @@ public class Graph implements Cloneable
 	{
 		assert n > 0;
 
-		ArrayList<Vertex>	V = new ArrayList<Vertex>();
-		ArrayList<Edge>		E = new ArrayList<Edge>();
+		ArrayList<Vertex>	V = new ArrayList<>();
+		ArrayList<Edge>		E = new ArrayList<>();
 
 		for(int i = 0; i < n; i++)
 		{
@@ -205,7 +204,7 @@ public class Graph implements Cloneable
 
 	/**
 	 * Finds the values of the minimum and maximium coodinates in the graph
-	 * @returns [xmin,ymin,xmax,ymax]
+	 * @returns double[xmin,ymin,xmax,ymax]
 	 */
 	public double[] minMax()
 	{
@@ -319,9 +318,9 @@ public class Graph implements Cloneable
 	 */
 	public Graph copy()
 	{
-		ArrayList<Vertex> copyV = new ArrayList<Vertex>();
-		ArrayList<Edge> copyE = new ArrayList<Edge>();
-		ArrayList<Subgraph> copySg = new ArrayList<Subgraph>();
+		ArrayList<Vertex> copyV = new ArrayList<>();
+		ArrayList<Edge> copyE = new ArrayList<>();
+		ArrayList<Subgraph> copySg = new ArrayList<>();
 		for(Vertex v : V)
 		{
 			copyV.add(new Vertex(v.getName(),v.getPosition(),Vector.ZERO,v.getColour()));
@@ -361,7 +360,7 @@ public class Graph implements Cloneable
 	{
 		if(!sg.isLeaf())
 		{
-			ArrayList<Vertex> tempV = new ArrayList<Vertex>();
+			ArrayList<Vertex> tempV = new ArrayList<>();
 			Subgraph copySub = new Subgraph(tempV);
 			for(Subgraph subSg : sg.getSg())
 			{
@@ -388,7 +387,7 @@ public class Graph implements Cloneable
 		}
 		else
 		{
-			ArrayList<Vertex> tempV = new ArrayList<Vertex>();
+			ArrayList<Vertex> tempV = new ArrayList<>();
 			Subgraph copySub = new Subgraph(tempV);
 			for(Vertex v : sg.getV())
 			{
@@ -474,8 +473,8 @@ public class Graph implements Cloneable
 	 */
 	public static Graph randomGraph(int size)
 	{
-		ArrayList<Vertex> Ver = new ArrayList<Vertex>();
-		ArrayList<Edge> Edg = new ArrayList<Edge>();
+		ArrayList<Vertex> Ver = new ArrayList<>();
+		ArrayList<Edge> Edg = new ArrayList<>();
 		Graph graph = new Graph(Ver,Edg);
 		ArrayList<Vertex> V = graph.getV();
 		ArrayList<Edge> E = graph.getE();
@@ -680,8 +679,8 @@ public class Graph implements Cloneable
 	public static Graph convertDot(List<String> strings)
 	{
 		Iterator lines = strings.iterator();
-		ArrayList<Vertex> V = new ArrayList<Vertex>();
-		ArrayList<Edge> E = new ArrayList<Edge>();
+		ArrayList<Vertex> V = new ArrayList<>();
+		ArrayList<Edge> E = new ArrayList<>();
 		Graph newGraph = new Graph(V,E);
 		while(lines.hasNext())
 		{
@@ -711,10 +710,7 @@ public class Graph implements Cloneable
 					if(newGraph.isIn(u2Name))
 					{
 						Edge newEdge = new Edge(newGraph.getVertex(u1Name),newGraph.getVertex(u2Name));
-						if(!newGraph.isIn(newEdge))
-						{
-							newGraph.addEdge(newEdge);
-						}
+						newGraph.addEdge(newEdge);
 					}
 					else
 					{

@@ -110,9 +110,9 @@ public class Eades3D
 			long starttime = System.nanoTime();
 
 
-			ArrayList<Graph> G = new ArrayList<Graph>();
-			ArrayList<Vertex> V = new ArrayList<Vertex>();
-			ArrayList<Edge> E = new ArrayList<Edge>();
+			ArrayList<Graph> G = new ArrayList<>();
+			ArrayList<Vertex> V = new ArrayList<>();
+			ArrayList<Edge> E = new ArrayList<>();
 //
 			try 
 			{

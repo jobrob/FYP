@@ -5,10 +5,30 @@ public class Edge
 	private final Vertex v2;
 	private String colour;
 	private String label;
+	private int repeats;
+
+
+	public Edge(Vertex v1, Vertex v2, String colour, String label, int repeats)
+    {
+        if (v1 == null || v2 == null)
+        {
+            System.err.println("Some vertex in edge is `null`.");
+        }
+        this.v1 = v1;
+        this.v2 = v2;
+        if (v1.equals(v2))
+        {
+            System.out.println(" Edges must have 2 unique vertices" + v1 + " is equal to " + v2);
+        }
+        this.colour = colour;
+        this.label = label;
+        this.repeats = repeats;
+    }
 	
 	public Edge (Vertex v1, Vertex v2, String colour, String label)
 	{
-		if (v1 == null || v2 == null) {
+		if (v1 == null || v2 == null)
+		{
 			System.err.println("Some vertex in edge is `null`.");
 		}
 		this.v1 = v1;
@@ -56,6 +76,11 @@ public class Edge
 	{
 		return label;
 	}
+
+	public int getRepeats()
+    {
+        return repeats;
+    }
 	
 	public void setColour(String colour)
 	{
@@ -66,18 +91,19 @@ public class Edge
 	{
 		this.label = label;
 	}
-	
-	public double xMid()
+
+    public void setRepeats (int repeats)
+    {
+        this.repeats = repeats;
+    }
+
+    public double xMid()
 	{
-		System.out.println("X values " + v1.getX() + " and " + v2.getX());
-		System.out.println("Returning " + (v1.getX() + v2.getX())/2);
 		return (v1.getX() + v2.getX())/2;
 	}
 	
 	public double yMid()
 	{
-		System.out.println("X values " + v1.getY() + " and " + v2.getY());
-		System.out.println("Returning " + (v1.getY() + v2.getY())/2);
 		return (v1.getY() + v2.getY())/2;
 	}
 	
@@ -107,4 +133,14 @@ public class Edge
 	{
 		return(v1.equals(v) || v2.equals(v));
 	}
+
+    /**
+     * Make duplicate with curves
+     * Parameter int called number of edges
+     * Use cubic beziers curves with control points directly above the edge points
+     * scale the distance of the control points proporitnal to the number of repte edges
+     *
+     */
+
+
 } 

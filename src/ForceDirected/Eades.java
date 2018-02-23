@@ -94,8 +94,8 @@ public class Eades
 	
 	public static void main(String args[])
 	{
-		ArrayList<Vertex> V = new ArrayList<Vertex>();
-		ArrayList<Edge> E = new ArrayList<Edge>();
+		ArrayList<Vertex> V = new ArrayList<>();
+		ArrayList<Edge> E = new ArrayList<>();
 
 //		Vertex v1 = new Vertex("1");
 //		Vertex v2 = new Vertex("2");

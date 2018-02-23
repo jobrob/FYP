@@ -13,8 +13,8 @@ public class Graph3D
 	 */
 	public Graph3D(ArrayList<Graph> G)
 	{
-		this.G = new ArrayList<Graph>();
-		this.E = new ArrayList<Edge>();
+		this.G = new ArrayList<>();
+		this.E = new ArrayList<>();
 		for(Graph g : G)
 		{
 			addGraph(g);

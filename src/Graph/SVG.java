@@ -32,18 +32,34 @@ public class SVG
 	 */
 	public static String of(Edge e,double xMin,double yMin)
 	{
-		String result = "<line class=\"edge\"";
-		
-		if(!e.getColour().isEmpty())
-		{
-			result += " stroke = \"" + e.getColour() + "\" ";
+		String result = "";
+		if(e.getRepeats() != 0)
+        {
+			for(int i = 0; i<e.getRepeats() + 1 ; i++)
+            {
+				double gradient = (e.getV2().getX() - e.getV1().getX())/(e.getV2().getY() - e.getV1().getY());
+				double newGradient = -1/(gradient);
+				double xMid = (e.getV1().getX() + e.getV2().getX())/2;
+				double yMid = (e.getV1().getY() + e.getV2().getY())/2;
+				double newX = xMid + (i*10);
+				double newY = yMid + (i*10)*newGradient;
+				result += "\n<path d =\"M" +  (e.getV1().getX() - xMin + 50) + " " + (e.getV1().getY() - yMin +50) + " Q" + (newX - xMin + 50) + " " + (newY - yMin + 50) + " " + (e.getV2().getX() - xMin + 50) + " " + (e.getV2().getY() - yMin + 50) + "\" stroke = \"black\" fill=\"transparent\" />";
+			}
 		}
-		else
-		{
-			result += " stroke = \"black\" ";
-		}
-		result +="x1=\"" + (e.getV1().getX() - xMin + 50) + "\" y1=\"" + (e.getV1().getY() - yMin + 50) + "\" x2=\"" + (e.getV2().getX() - xMin + 50) + "\" y2=\"" + (e.getV2().getY() - yMin + 50) + "\""; 
-		result += "/> <!--" + e.getV1().getName() + "," + e.getV2().getName() + "-->";
+        else
+        {
+        	result += "<line class=\"edge\"";
+			if(!e.getColour().isEmpty())
+			{
+				result += " stroke = \"" + e.getColour() + "\" ";
+			}
+			else
+			{
+				result += " stroke = \"black\" ";
+			}
+			result +="x1=\"" + (e.getV1().getX() - xMin + 50) + "\" y1=\"" + (e.getV1().getY() - yMin + 50) + "\" x2=\"" + (e.getV2().getX() - xMin + 50) + "\" y2=\"" + (e.getV2().getY() - yMin + 50) + "\"";
+			result += "/> <!--" + e.getV1().getName() + "," + e.getV2().getName() + "-->";
+        }
 		if(!e.getLabel().isEmpty())
 		{
 			result += "\t<text text-anchor=\" middle\" x=\"" + (e.xMid() - xMin + 48) +  "\" y=\"" + (e.yMid() - yMin + 50) +  "\" font-family=\"Times,serif\" font-size=\"14.00\">" + e.getLabel() + "</text>";
@@ -183,6 +199,7 @@ public class SVG
 			System.err.println("Couldn't get `template-header-part-part.svg`.");
 			e.printStackTrace();
 		}
+		assert result != null;
 		result.append((0) + " " + (0) + " ").append(xMax + 100 - xMin).append(" ").append(yMax + 100 - yMin);
 		result.append(result2);
 		result.append("\t<rect x = \"" + (0) + "\" y=\"" + (0) + "\" width = \"").append(xMax + 100 - xMin).append("\" height = \"").append(yMax + 100 - yMin).append("\" fill = \"rgb(255,255,255)\" />\n");
