@@ -8,6 +8,7 @@ public class SVG
 	private static final double CANVAS_MARGIN 	= 50;
 	private static final double NODE_RADIUS		= 5;
 	private static final double BOX_MARGIN		= 1;
+	private static final double SCALE_FACTOR	= 20;
 
 	/**
 	 * Converts a vertex into a string for displaying with SVG
@@ -22,7 +23,7 @@ public class SVG
 		else
 		{
 			return "<circle class= \"node\" fill=\"white\" stroke=\"#000000\" cx=\"" + (v.getX() - xMin + 50) + "\" cy=\"" + (v.getY() - yMin + 50) +  "\" r=\"" + 20 + "\"/>" + "\n"
-					+ "\t<text text-anchor=\" middle\" x=\"" + (v.getX() - xMin + 48) +  "\" y=\"" + (v.getY() - yMin + 50) +  "\" font-family=\"Times,serif\" font-size=\"14.00\">" + v.getLabel() + "</text>";
+					+ "\t<text text-anchor=\"middle\" x=\"" + (v.getX() - xMin + 48) +  "\" y=\"" + (v.getY() - yMin + 50) +  "\" font-family=\"Times,serif\" font-size=\"14.00\">" + v.getLabel() + "</text>";
 		}
 	}
 
@@ -35,15 +36,35 @@ public class SVG
 		String result = "";
 		if(e.getRepeats() != 0)
         {
-			for(int i = 0; i<e.getRepeats() + 1 ; i++)
+			for(int i = 0; i <= e.getRepeats() ; i++)
             {
-				double gradient = (e.getV2().getX() - e.getV1().getX())/(e.getV2().getY() - e.getV1().getY());
-				double newGradient = -1/(gradient);
-				double xMid = (e.getV1().getX() + e.getV2().getX())/2;
-				double yMid = (e.getV1().getY() + e.getV2().getY())/2;
-				double newX = xMid + (i*10);
-				double newY = yMid + (i*10)*newGradient;
-				result += "\n<path d =\"M" +  (e.getV1().getX() - xMin + 50) + " " + (e.getV1().getY() - yMin +50) + " Q" + (newX - xMin + 50) + " " + (newY - yMin + 50) + " " + (e.getV2().getX() - xMin + 50) + " " + (e.getV2().getY() - yMin + 50) + "\" stroke = \"black\" fill=\"transparent\" />";
+				double v1X = e.getV1().getX();
+				double v1Y = e.getV1().getY();
+				double v2X = e.getV2().getX();
+				double v2Y = e.getV2().getY();
+				double xMid = ((v1X + v2X)/2);
+				double yMid = ((v1Y + v2Y)/2);
+//				Vector direction = e.getV1().getPosition().minus(e.getV2().getPosition());
+				double[][] rotationMatrix = new double[][]{{0,-1},{1,0}};
+//				Vector newDirection = direction.matrixMultiplication(rotationMatrix).normalise();
+//				double newX = xMid + newDirection.getX() * (Math.pow(-1,i)) * (i*20);
+//				double newY = yMid + newDirection.getY() * (Math.pow(-1,i)) * (i*20);
+//				result += "\n<path d =\"M" +  (e.getV1().getX() - xMin + 50) + " " + (e.getV1().getY() - yMin +50) + " Q" + (newX - xMin + 50) + " " + (newY - yMin + 50) + " " + (e.getV2().getX() - xMin + 50) + " " + (e.getV2().getY() - yMin + 50) + "\" stroke = \"black\" stroke-width = \"1\" fill=\"none\" />";
+
+				Vector midpoint = e.getV2().getPosition().plus( e.getV1().getPosition() ).scale(0.5);
+				Vector direction = e.getV2().getPosition().minus( e.getV1().getPosition() );
+				if (i % 2 == 0) {
+					direction = direction.negate();
+				}
+				Vector orthogonalDirection = direction.matrixMultiplication(rotationMatrix).normalise().scale(SCALE_FACTOR);
+
+				int separation = (int)Math.ceil(i/2.0);
+				Vector controlPoint = midpoint.plus(orthogonalDirection.scale(separation));
+				result += "\n<path d =\"M" +  (e.getV1().getX() - xMin + 50) + " " + (e.getV1().getY() - yMin +50) + " Q" + (controlPoint.getX() - xMin + 50) + " " + (controlPoint.getY() - yMin + 50) + " " + (e.getV2().getX() - xMin + 50) + " " + (e.getV2().getY() - yMin + 50) + "\" stroke = \"black\" stroke-width = \"1\" fill=\"none\" />";
+				if(e.getLabels().size() > i && !e.getLabels().get(i).isEmpty())
+				{
+					result += "\t<text text-anchor=\"middle\" x=\"" + (controlPoint.getX() - xMin + 50) +  "\" y=\"" + (controlPoint.getY() - yMin + 50) +  "\" font-family=\"Times,serif\" font-size=\"14.00\">" + e.getLabels().get(i) + "</text>";
+				}
 			}
 		}
         else
@@ -59,10 +80,10 @@ public class SVG
 			}
 			result +="x1=\"" + (e.getV1().getX() - xMin + 50) + "\" y1=\"" + (e.getV1().getY() - yMin + 50) + "\" x2=\"" + (e.getV2().getX() - xMin + 50) + "\" y2=\"" + (e.getV2().getY() - yMin + 50) + "\"";
 			result += "/> <!--" + e.getV1().getName() + "," + e.getV2().getName() + "-->";
-        }
-		if(!e.getLabel().isEmpty())
-		{
-			result += "\t<text text-anchor=\" middle\" x=\"" + (e.xMid() - xMin + 48) +  "\" y=\"" + (e.yMid() - yMin + 50) +  "\" font-family=\"Times,serif\" font-size=\"14.00\">" + e.getLabel() + "</text>";
+			if(!e.getLabels().get(0).isEmpty())
+			{
+				result += "\t<text text-anchor=\"middle\" x=\"" + (e.xMid() - xMin + 48) +  "\" y=\"" + (e.yMid() - yMin + 50) +  "\" font-family=\"Times,serif\" font-size=\"14.00\">" + e.getLabels().get(0) + "</text>";
+			}
 		}
 		return result;
 	}
@@ -200,9 +221,19 @@ public class SVG
 			e.printStackTrace();
 		}
 		assert result != null;
-		result.append((0) + " " + (0) + " ").append(xMax + 100 - xMin).append(" ").append(yMax + 100 - yMin);
+		double width = xMax + 100 - xMin;
+		double height = yMax + 100 - yMin;
+		if(width<100)
+		{
+			width = 100;
+		}
+		if(height <100)
+		{
+			height = 100;
+		}
+		result.append((0) + " " + (0) + " ").append(width).append(" ").append(height);
 		result.append(result2);
-		result.append("\t<rect x = \"" + (0) + "\" y=\"" + (0) + "\" width = \"").append(xMax + 100 - xMin).append("\" height = \"").append(yMax + 100 - yMin).append("\" fill = \"rgb(255,255,255)\" />\n");
+		result.append("\t<rect x = \"" + (0) + "\" y=\"" + (0) + "\" width = \"").append(width).append("\" height = \"").append(height).append("\" fill = \"rgb(255,255,255)\" />\n");
 
 		for(Subgraph sg : g.getSg())
 		{

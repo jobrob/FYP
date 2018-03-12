@@ -59,7 +59,10 @@ public class Graph3D
 		int total = 0;
 		for(Graph g : G)
 		{
-			total += g.getE().size();
+			for(Edge e : g.getE())
+			{
+				total += e.getRepeats() + 1;
+			}
 		}
 		return total;
 	}

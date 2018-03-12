@@ -28,14 +28,7 @@ public class Graph implements Cloneable
 		}
 		for(Edge e : E)
 		{
-			if(!isIn(e))
-			{
-				addEdge(e);
-			}
-			else
-			{
-				System.out.println("Someone tried to add a extra edge " + e );
-			}
+			addEdge(e);
 		}
 	}
 
@@ -56,14 +49,7 @@ public class Graph implements Cloneable
 		}
 		for(Edge e : E)
 		{
-			if(!isIn(e))
-			{
-				addEdge(e);
-			}
-			else
-			{
-				System.out.println("Someone tried to add a extra edge " + e );
-			}
+			addEdge(e);
 		}
 	}
 
@@ -125,6 +111,7 @@ public class Graph implements Cloneable
 			if(e.equals(edge))
             {
             	e.setRepeats(e.getRepeats() + 1);
+            	e.addLabel(e.getLabels().get(0));
             	return;
             }
 		}
@@ -478,16 +465,6 @@ public class Graph implements Cloneable
 		Graph graph = new Graph(Ver,Edg);
 		ArrayList<Vertex> V = graph.getV();
 		ArrayList<Edge> E = graph.getE();
-		Vertex v1 = new Vertex();
-		Vertex v2 = new Vertex();
-		Vertex v3 = new Vertex();
-		graph.addVertex(v1);
-		graph.addVertex(v2);
-		graph.addVertex(v3);
-		Edge e1 = new Edge(v1,v2);
-		Edge e2 = new Edge(v2,v3);
-		graph.addEdge(e1);
-		graph.addEdge(e2);
 		Random rand = new Random();
 		int i = rand.nextInt(size);
 		while(i!= size-1)
@@ -685,7 +662,6 @@ public class Graph implements Cloneable
 		while(lines.hasNext())
 		{
 			String line = "" + lines.next();
-		//	System.out.println(line);
 			if(line.contains("label=") && !line.contains("->"))
 			{
 
@@ -755,7 +731,7 @@ public class Graph implements Cloneable
 				{
 					int labelStart = split[1].indexOf("label") +7;
 					int labelEnd = split[1].indexOf("\"",labelStart);
-					newGraph.getE().get(newGraph.getE().size()-1).setLabel(split[1].substring(labelStart,labelEnd));
+					newGraph.getE().get(newGraph.getE().size()-1).addLabel(split[1].substring(labelStart,labelEnd));
 				}
 			}
 		}

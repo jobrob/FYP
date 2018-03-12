@@ -17,7 +17,7 @@ public class Eades
 	*@param simulations the number of times apply forces will be called
 	*@param g the graph wich will be used
 	*/
-	public static void simulate (int simulations,Graph g)
+	public static void simulate (int simulations,Graph g,double springForces1,double springForces2, double electrostaticForces)
 	{
 //		for (Vertex v : g.getV())
 //		{
@@ -25,7 +25,7 @@ public class Eades
 //		}
 		for(int i = 0; i<simulations; i++)
 		{		
-			applyForces(g);
+			applyForces(g,springForces1,springForces2,electrostaticForces);
 		}
 		g.removeSubgraphs();
 	}
@@ -34,15 +34,14 @@ public class Eades
 	*Calculates the forces present in a graph and then moves the vertexces in the graph proportinal to this.
 	*@param g the graph which will be used
 	*/
-	public static void applyForces(Graph g)
+	public static void applyForces(Graph g,double springForces1,double springForces2,double electrostaticForces)
 	{
-		double disAverage = 0.0;
 		for(Subgraph sg : g.getSg())
 		{
 			sg.applyForces();
 		}
-		eForces(g.getV());
-		sForces(g.getE());
+		eForces(g.getV(),electrostaticForces);
+		sForces(g.getE(),springForces1,springForces2);
 		for(Vertex v : g.getV())
 		{
 			v.setPosition(v.getPosition().plus(v.getDisplacement().scale(c4)));
@@ -54,7 +53,7 @@ public class Eades
 	*Caculates the attractive forces due to edges present in a graph
 	*@param E the array list of edges in the graph
 	*/
-	private static void sForces(ArrayList<Edge> E)
+	private static void sForces(ArrayList<Edge> E,double springForces1,double springForces2)
 	{
 		for(Edge e : E)
 		{
@@ -63,8 +62,8 @@ public class Eades
 			Vector udistance = u.getPosition().minus(v.getPosition());
 			Vector vdistance = v.getPosition().minus(u.getPosition());
 			double magnitude = udistance.length();
-			u.setDisplacement(u.getDisplacement().plus(vdistance.normalise().scale(c1*Math.log(magnitude/c2))));
-			v.setDisplacement(v.getDisplacement().plus(udistance.normalise().scale(c1*Math.log(magnitude/c2))));
+			u.setDisplacement(u.getDisplacement().plus(vdistance.normalise().scale((e.getRepeats()+1)*springForces1*Math.log(magnitude/springForces2))));
+			v.setDisplacement(v.getDisplacement().plus(udistance.normalise().scale((e.getRepeats()+1)*springForces1*Math.log(magnitude/springForces2))));
 		}
 	}
 	
@@ -72,7 +71,7 @@ public class Eades
 	*Calculates the replusive forces due to verteces present in a graph
 	*@param V the list of verexces
 	*/
-	private static void eForces(ArrayList<Vertex> V)
+	private static void eForces(ArrayList<Vertex> V,double electrostaticForces)
 	{
 		for(int i = 0; i < V.size(); i++)
 		{
@@ -84,9 +83,9 @@ public class Eades
 				Vector vdistance = v.getPosition().minus(u.getPosition());
 				double magnitude = udistance.length();
 				//u.setDisplacement(u.getDisplacement().plus(new Vector(1,1,0).scale(Math.log(optDistance/magnitude))));
-				//v.setDisplacement(v.getDisplacement().plus(new Vector(1,1,0).scale(Math.log(optDistance/magnitude))));										   
-				u.setDisplacement(u.getDisplacement().minus(vdistance.normalise().scale(c3/(magnitude*magnitude))));
-				v.setDisplacement(v.getDisplacement().minus(udistance.normalise().scale(c3/(magnitude*magnitude))));
+				//v.setDisplacement(v.getDisplacement().plus(new Vector(1,1,0).scale(Math.log(optDistance/magnitude))));
+				u.setDisplacement(u.getDisplacement().minus(vdistance.normalise().scale(electrostaticForces/(magnitude*magnitude))));
+				v.setDisplacement(v.getDisplacement().minus(udistance.normalise().scale(electrostaticForces/(magnitude*magnitude))));
 			}
 		}
 	}
@@ -210,7 +209,7 @@ public class Eades
 		{
 			v.randomise(256);
 		}
-		Eades.simulate(9000,test);
+		Eades.simulate(9000,test,1,2,60000);
 		System.out.println((test.getVertex("" + 0).getPosition().minus(test.getVertex("" + 1).getPosition())).length());
 		try 
 		{

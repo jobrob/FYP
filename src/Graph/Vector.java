@@ -262,4 +262,15 @@ public class Vector {
     public Vector proj(Vector v) {
         return v.scale( v.dot(this) / (v.length() * v.length()) );
     }
+
+    public Vector matrixMultiplication(double[][] matrix)
+    {
+        if(matrix.length != 2 || matrix[0].length !=2)
+        {
+            throw new RuntimeException("Illegal matrix dimensions");
+        }
+        double newX = getX() * matrix[0][0] + getY() * matrix[0][1];
+        double newY = getX() * matrix[1][0] + getY() * matrix[1][1];
+        return new Vector(newX,newY, z);
+    }
 }

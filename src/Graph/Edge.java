@@ -1,14 +1,17 @@
 package Graph;
+
+import java.util.ArrayList;
+
 public class Edge
 {
 	private final Vertex v1;
 	private final Vertex v2;
 	private String colour;
-	private String label;
+	private ArrayList<String> labels;
 	private int repeats;
 
 
-	public Edge(Vertex v1, Vertex v2, String colour, String label, int repeats)
+	public Edge(Vertex v1, Vertex v2, String colour, ArrayList<String> labels, int repeats)
     {
         if (v1 == null || v2 == null)
         {
@@ -21,24 +24,19 @@ public class Edge
             System.out.println(" Edges must have 2 unique vertices" + v1 + " is equal to " + v2);
         }
         this.colour = colour;
-        this.label = label;
+        this.labels = labels;
         this.repeats = repeats;
     }
-	
-	public Edge (Vertex v1, Vertex v2, String colour, String label)
+
+    public Edge(Vertex v1, Vertex v2, String colour, String label)
 	{
-		if (v1 == null || v2 == null)
-		{
-			System.err.println("Some vertex in edge is `null`.");
-		}
-		this.v1 = v1;
-		this.v2 = v2;
-        if (v1.equals(v2))
-        {
-            System.out.println(" Edges must have 2 unique vertices" + v1 + " is equal to " + v2);
-        }
-		this.colour = colour;
-		this.label = label;
+		this(v1,v2,colour);
+		addLabel(label);
+	}
+
+	public Edge(Vertex v1, Vertex v2, String colour)
+	{
+		this(v1,v2,colour,new ArrayList<String>(),0);
 	}
 	
 	/**
@@ -72,9 +70,9 @@ public class Edge
 		return colour;
 	}
 	
-	public String getLabel()
+	public ArrayList<String> getLabels()
 	{
-		return label;
+		return labels;
 	}
 
 	public int getRepeats()
@@ -87,9 +85,16 @@ public class Edge
 		this.colour = colour;
 	}
 	
-	public void setLabel(String label)
+	public void addLabel(String label)
 	{
-		this.label = label;
+		if(labels.size() > repeats)
+		{
+			labels.set(repeats,label);
+		}
+		else
+		{
+			labels.add(label);
+		}
 	}
 
     public void setRepeats (int repeats)
