@@ -6,6 +6,20 @@ public class Subgraph
 	private ArrayList<Edge> E;
 	private Colour colour;
 	private ArrayList<Subgraph> Sg;
+	private String name;
+
+	public Subgraph(ArrayList<Vertex> V, ArrayList<Subgraph> Sg,String name)
+	{
+		this.V = new ArrayList<Vertex>();
+		this.E = new ArrayList<Edge>();
+		this.Sg = Sg;
+		for(Vertex v : V)
+		{
+			addVertex(v);
+		}
+		this.colour = new Colour();
+		this.name = name;
+	}
 	
 	public Subgraph(ArrayList<Vertex> V, ArrayList<Subgraph> Sg)
 	{
@@ -74,6 +88,11 @@ public class Subgraph
 	public Colour getColour()
 	{
 		return colour;
+	}
+
+	public String getName()
+	{
+		return name;
 	}
 	
 	public void setColour(Colour colour)

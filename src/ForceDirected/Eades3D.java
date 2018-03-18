@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.Random;
 
 import Graph.*;
-import Util.InputGUI;
 import Util.InputUI;
 
 import javax.swing.*;
@@ -72,7 +71,7 @@ public class Eades3D
 			double[] minMax = g3d.minMax();
 			try
 			{
-				writer = new PrintWriter("../" + k + ".svg", "UTF-8");
+				writer = new PrintWriter("../output/" + k + ".svg", "UTF-8");
 				//double[] minMax = g3d.getG().get(k).minMax();
 				writer.print(SVG.of((g3d.getG().get(k)),minMax[0],minMax[1],minMax[2],minMax[3]));
 				writer.close();
@@ -198,132 +197,132 @@ public class Eades3D
 //			g6.addEdge(new Edge(g6.getVertex("bl"),g6.getVertex("y")));
 //			G.add(g6);
 
-		Vertex v1 = new Vertex("1");
-		Vertex v2 = new Vertex("2");
-		Edge e1 = new Edge(v1,v2);
-		Graph g2 = new Graph(V,E);
-		g2.addVertex(v1);
-		g2.addVertex(v2);
-		g2.addEdge(e1);
-		G.add(g2);
-
-		Vertex v3 = new Vertex("3");
-		Graph g3 = g2.copy();
-		g3.addVertex(v3);
-		g3.addEdge(new Edge(g3.getVertex("3"),g3.getVertex("1")));
-		G.add(g3);
-
-		Vertex v4 = new Vertex("4");
-		Graph g4 = g3.copy();
-		g4.addVertex(v4);
-		g4.addEdge(new Edge(g4.getVertex("4"),g4.getVertex("1")));
-		G.add(g4);
-
-		Vertex v5 = new Vertex("5");
-		Graph g5 = g4.copy();
-		g5.addVertex(v5);
-		g5.addEdge(new Edge(g5.getVertex("2"),g5.getVertex("5")));
-		G.add(g5);
-
-		Vertex v6 = new Vertex("6");
-		Graph g6 = g5.copy();
-		g6.addVertex(v6);
-		g6.addEdge(new Edge(g6.getVertex("2"),g6.getVertex("6")));
-		G.add(g6);
-
-		Vertex v7 = new Vertex("7");
-		Graph g7 = g6.copy();
-		g7.addVertex(v7);
-		g7.addEdge(new Edge(g7.getVertex("2"),g7.getVertex("7")));
-		G.add(g7);
-
-		Vertex v8 = new Vertex("8");
-		Graph g8 = g7.copy();
-		g8.addVertex(v8);
-		g8.addEdge(new Edge(g8.getVertex("2"),g8.getVertex("8")));
-		G.add(g8);
-
-		Vertex v9 = new Vertex("9");
-		Graph g9 = g8.copy();
-		g9.addVertex(v9);
-		g9.addEdge(new Edge(g9.getVertex("3"),g9.getVertex("9")));
-		G.add(g9);
-
-
-
-		Vertex v10 = new Vertex("10");
-		Graph g10 = g9.copy();
-		g10.addVertex(v10);
-		g10.addEdge(new Edge(g10.getVertex("3"),g10.getVertex("10")));
-		G.add(g10);
-
-		Vertex v11 = new Vertex("11");
-		Graph g11 = g10.copy();
-		g11.addVertex(v11);
-		g11.addEdge(new Edge(g11.getVertex("3"),g11.getVertex("11")));
-		G.add(g11);
-
-		Vertex v12 = new Vertex("12");
-		Edge e11 = new Edge(v4,v12);
-		Graph g12 = g11.copy();
-		g12.addVertex(v12);
-		g12.addEdge(new Edge(g12.getVertex("4"),g12.getVertex("12")));
-		G.add(g12);
-		g12.addSubgraph(new Subgraph(new ArrayList<Vertex>()));
-		g12.getSg().get(0).addVertex(g12.getVertex("9"));
-		g12.getSg().get(0).addVertex(g12.getVertex("8"));
-		g12.getSg().get(0).addVertex(g12.getVertex("12"));
-
-		Vertex v13 = new Vertex("13");
-		Graph g13 = g12.copy();
-		g13.addVertex(v13);
-		g13.addEdge(new Edge(g13.getVertex("4"),g13.getVertex("13")));
-		G.add(g13);
-
-		Vertex v14 = new Vertex("14");
-		Edge e13 = new Edge(v4,v14);
-		Graph g14 = g13.copy();
-		g14.addVertex(v14);
-		g14.addEdge(new Edge(g14.getVertex("4"),g14.getVertex("14")));
-		G.add(g14);
-
-		Vertex v15 = new Vertex("15");
-		Graph g15 = g14.copy();
-		g15.addVertex(v15);
-		g15.addEdge(new Edge(g15.getVertex("4"),g15.getVertex("15")));
-		G.add(g15);
-
-		Vertex v16 = new Vertex("16");
-		Graph g16 = g15.copy();
-		g16.addVertex(v16);
-		g16.addEdge(new Edge(g16.getVertex("4"),g16.getVertex("16")));
-		G.add(g16);
-
-
-//		try
-//		{
-//			for (int i = 0; i < 100; i++)
-//			{
-//				byte[] bytes = Files.readAllBytes(Paths.get("../dotGraphs/state-" + i + ".dot"));
-//				String s = new String(bytes, StandardCharsets.UTF_8);
+//		Vertex v1 = new Vertex("1");
+//		Vertex v2 = new Vertex("2");
+//		Edge e1 = new Edge(v1,v2);
+//		Graph g2 = new Graph(V,E);
+//		g2.addVertex(v1);
+//		g2.addVertex(v2);
+//		g2.addEdge(e1);
+//		G.add(g2);
 //
-//				// This ensures semi-colons are immediately followed by a newline character,
-//				// since the parser assumes such.
-//				s = s.replaceAll("\\;",";\n").replaceAll("\\n\\n","\n");
-//				String[] lines = s.split("\n");
+//		Vertex v3 = new Vertex("3");
+//		Graph g3 = g2.copy();
+//		g3.addVertex(v3);
+//		g3.addEdge(new Edge(g3.getVertex("3"),g3.getVertex("1")));
+//		G.add(g3);
 //
-//				List<String> linesList = new ArrayList<String>(Arrays.asList(lines));
+//		Vertex v4 = new Vertex("4");
+//		Graph g4 = g3.copy();
+//		g4.addVertex(v4);
+//		g4.addEdge(new Edge(g4.getVertex("4"),g4.getVertex("1")));
+//		G.add(g4);
 //
-//				Graph graph = Graph.convertDot(linesList);
-//				G.add(graph);
-//			}
+//		Vertex v5 = new Vertex("5");
+//		Graph g5 = g4.copy();
+//		g5.addVertex(v5);
+//		g5.addEdge(new Edge(g5.getVertex("2"),g5.getVertex("5")));
+//		G.add(g5);
 //
-//		}
-//		catch (IOException e)
-//		{
-//			e.printStackTrace();
-//			System.err.println("\nCouldn't get file at path");
-//		}
+//		Vertex v6 = new Vertex("6");
+//		Graph g6 = g5.copy();
+//		g6.addVertex(v6);
+//		g6.addEdge(new Edge(g6.getVertex("2"),g6.getVertex("6")));
+//		G.add(g6);
+//
+//		Vertex v7 = new Vertex("7");
+//		Graph g7 = g6.copy();
+//		g7.addVertex(v7);
+//		g7.addEdge(new Edge(g7.getVertex("2"),g7.getVertex("7")));
+//		G.add(g7);
+//
+//		Vertex v8 = new Vertex("8");
+//		Graph g8 = g7.copy();
+//		g8.addVertex(v8);
+//		g8.addEdge(new Edge(g8.getVertex("2"),g8.getVertex("8")));
+//		G.add(g8);
+//
+//		Vertex v9 = new Vertex("9");
+//		Graph g9 = g8.copy();
+//		g9.addVertex(v9);
+//		g9.addEdge(new Edge(g9.getVertex("3"),g9.getVertex("9")));
+//		G.add(g9);
+//
+//
+//
+//		Vertex v10 = new Vertex("10");
+//		Graph g10 = g9.copy();
+//		g10.addVertex(v10);
+//		g10.addEdge(new Edge(g10.getVertex("3"),g10.getVertex("10")));
+//		G.add(g10);
+//
+//		Vertex v11 = new Vertex("11");
+//		Graph g11 = g10.copy();
+//		g11.addVertex(v11);
+//		g11.addEdge(new Edge(g11.getVertex("3"),g11.getVertex("11")));
+//		G.add(g11);
+//
+//		Vertex v12 = new Vertex("12");
+//		Edge e11 = new Edge(v4,v12);
+//		Graph g12 = g11.copy();
+//		g12.addVertex(v12);
+//		g12.addEdge(new Edge(g12.getVertex("4"),g12.getVertex("12")));
+//		G.add(g12);
+//		g12.addSubgraph(new Subgraph(new ArrayList<Vertex>()));
+//		g12.getSg().get(0).addVertex(g12.getVertex("9"));
+//		g12.getSg().get(0).addVertex(g12.getVertex("8"));
+//		g12.getSg().get(0).addVertex(g12.getVertex("12"));
+//
+//		Vertex v13 = new Vertex("13");
+//		Graph g13 = g12.copy();
+//		g13.addVertex(v13);
+//		g13.addEdge(new Edge(g13.getVertex("4"),g13.getVertex("13")));
+//		G.add(g13);
+//
+//		Vertex v14 = new Vertex("14");
+//		Edge e13 = new Edge(v4,v14);
+//		Graph g14 = g13.copy();
+//		g14.addVertex(v14);
+//		g14.addEdge(new Edge(g14.getVertex("4"),g14.getVertex("14")));
+//		G.add(g14);
+//
+//		Vertex v15 = new Vertex("15");
+//		Graph g15 = g14.copy();
+//		g15.addVertex(v15);
+//		g15.addEdge(new Edge(g15.getVertex("4"),g15.getVertex("15")));
+//		G.add(g15);
+//
+//		Vertex v16 = new Vertex("16");
+//		Graph g16 = g15.copy();
+//		g16.addVertex(v16);
+//		g16.addEdge(new Edge(g16.getVertex("4"),g16.getVertex("16")));
+//		G.add(g16);
+//
+
+		try
+		{
+			for (int i = 1; i < 7; i++)
+			{
+				byte[] bytes = Files.readAllBytes(Paths.get("../dotGraphs/example2/dot" + i + ".txt"));
+				String s = new String(bytes, StandardCharsets.UTF_8);
+
+				// This ensures semi-colons are immediately followed by a newline character,
+				// since the parser assumes such.
+				s = s.replaceAll("\\;",";\n").replaceAll("\\n\\n","\n");
+				String[] lines = s.split("\n");
+
+				List<String> linesList = new ArrayList<String>(Arrays.asList(lines));
+
+				Graph graph = Graph.convertDot(linesList);
+				G.add(graph);
+			}
+
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+			System.err.println("\nCouldn't get file at path");
+		}
 
 
 		Graph3D g3d = new Graph3D(G);

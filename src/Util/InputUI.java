@@ -15,7 +15,6 @@ public class InputUI extends JFrame
 	private final String BUTTON_TEXT = "Generate";
 
 
-
 	public InputUI(Graph3D graph3D)
 	{
 		initComponents(graph3D);
@@ -25,11 +24,11 @@ public class InputUI extends JFrame
 	{
 
 		final String[][] fields = {
-				{"SpringForce1:",		  "2"},
-				{"SpringForce2:", 		  "1"},
-				{"ElectrostaticForces:",  "60000"},
-				{"Inertia:", 			  "0.2"},
-				{"Simulations",			  "10000"}
+				{"SpringForce1:", "2"},
+				{"SpringForce2:", "1"},
+				{"ElectrostaticForces:", "60000"},
+				{"Inertia:", "0.2"},
+				{"Simulations", "10000"}
 		};
 
 		final JTextField[] textFields = new JTextField[fields.length];
@@ -39,7 +38,7 @@ public class InputUI extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 
-		for(int i = 0; i < fields.length ; i++)
+		for (int i = 0; i < fields.length; i++)
 		{
 			c.gridx = 0;
 			c.gridy = i;
@@ -52,7 +51,7 @@ public class InputUI extends JFrame
 			c.gridx = 2;
 			c.gridy = i;
 			c.gridwidth = 2;
-			p.add(textFields[i],c);
+			p.add(textFields[i], c);
 		}
 
 		JButton button = new JButton(BUTTON_TEXT);
@@ -61,51 +60,49 @@ public class InputUI extends JFrame
 		c.gridheight = 4;
 
 		button.addActionListener(
-			new ActionListener()
-			{
-				@Override
-				public void actionPerformed(ActionEvent actionEvent)
+				new ActionListener()
 				{
-					button.setText("Working...");
-					button.setEnabled(false);
-					button.repaint();
-					button.revalidate();
-
-					Thread t = new Thread()
+					@Override
+					public void actionPerformed(ActionEvent actionEvent)
 					{
-						public void run()
+						button.setText("Working...");
+						button.setEnabled(false);
+						button.repaint();
+						button.revalidate();
+
+						Thread t = new Thread()
 						{
-							double springForce1 = Double.valueOf(textFields[0].getText());
-							double springForce2 = Double.valueOf(textFields[1].getText());
-							double electroStaticForce = Double.valueOf(textFields[2].getText());
-							double edgeForce = Double.valueOf(textFields[3].getText());
-							int simulations = Integer.valueOf(textFields[4].getText());
-							Eades3D.simulate(simulations, graph3D, edgeForce, springForce1, springForce2, electroStaticForce);
-
-							button.setText(BUTTON_TEXT);
-							button.setEnabled(true);
-
-							try
+							public void run()
 							{
-								Runtime.getRuntime().exec("xdg-open ../0.svg");
-							} catch (IOException ex)
-							{
-								ex.printStackTrace();
+								double springForce1 = Double.valueOf(textFields[0].getText());
+								double springForce2 = Double.valueOf(textFields[1].getText());
+								double electroStaticForce = Double.valueOf(textFields[2].getText());
+								double edgeForce = Double.valueOf(textFields[3].getText());
+								int simulations = Integer.valueOf(textFields[4].getText());
+								Eades3D.simulate(simulations, graph3D, edgeForce, springForce1, springForce2, electroStaticForce);
+
+								button.setText(BUTTON_TEXT);
+								button.setEnabled(true);
+
+								try
+								{
+									Runtime.getRuntime().exec("xdg-open ../output/0.svg");
+								} catch (IOException ex)
+								{
+									ex.printStackTrace();
+								}
 							}
-						}
-					};
-					t.start();
+						};
+						t.start();
+					}
 				}
-			}
 		);
 
-		p.add(button,c);
+		p.add(button, c);
 		JFrame frame = new JFrame("Test");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(p);
 		frame.pack();
 		frame.setVisible(true);
 	}
-
-
 }
