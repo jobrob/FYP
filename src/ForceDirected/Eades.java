@@ -47,6 +47,8 @@ public class Eades
 			v.setPosition(v.getPosition().plus(v.getDisplacement().scale(c4)));
 			v.setDisplacement(Vector.ZERO);
 		}
+		g.removeSubgraphs();
+
 	}
 	
 	/**

@@ -22,8 +22,8 @@ public class SVG
 		}
 		else
 		{
-			return "<circle class= \"node\" fill=\"white\" stroke=\"#000000\" cx=\"" + (v.getX() - xMin + 50) + "\" cy=\"" + (v.getY() - yMin + 50) +  "\" r=\"" + 20 + "\"/>" + "\n"
-					+ "\t<text text-anchor=\"middle\" x=\"" + (v.getX() - xMin + 48) +  "\" y=\"" + (v.getY() - yMin + 50) +  "\" font-family=\"Times,serif\" font-size=\"14.00\">" + v.getLabel() + "</text>";
+			return "<circle class= \"node\" fill=\"white\" stroke=\"" + v.getColour() + "\" cx=\"" + (v.getX() - xMin + 50) + "\" cy=\"" + (v.getY() - yMin + 50) +  "\" r=\"" + 20 + "\"/>" + "\n"
+						+ "\t<text text-anchor=\"middle\" x=\"" + (v.getX() - xMin + 48) +  "\" y=\"" + (v.getY() - yMin + 50) +  "\" font-family=\"Times,serif\" font-size=\"14.00\">" + v.getLabel() + "</text>";
 		}
 	}
 
@@ -88,47 +88,24 @@ public class SVG
 		return result;
 	}
 
-	public static String of(Subgraph sg, double xMin,double yMin)
+	public static String of(Subgraph sg, double xMin, double yMin)
 	{
-		System.out.println(sg.getColour());
 		StringBuilder result = new StringBuilder();
 		if(sg.isLeaf())
 		{
-			System.out.println(" the subgraph is a leaf it has a subgraph size of " + sg.getSg().size());
 			double[] coords = sg.minMax();
-			double originX 	= coords[0] - xMin 			- (BOX_MARGIN + NODE_RADIUS) + CANVAS_MARGIN;
-			double originY 	= coords[1] - yMin 			- (BOX_MARGIN + NODE_RADIUS) + CANVAS_MARGIN;
-			double width;
-			if(coords[0] == xMin)
-			{
-				System.out.println("True");
-				width = coords[2] - coords[0] + 2 * (BOX_MARGIN + NODE_RADIUS);
-			}
-			else
-			{
-				System.out.println("False");
-				width = coords[2] - coords[0] + 2 * (BOX_MARGIN + NODE_RADIUS);
-			}
-			double height;
-			if(coords[1] == yMin)
-			{
-				height = coords[3] - coords[1] + 2 * (BOX_MARGIN + NODE_RADIUS);
-			}
-			else
-			{
-				height = coords[3] - coords[1] + 2 * (BOX_MARGIN + NODE_RADIUS);
-			}
+			double originX 	= coords[0] - xMin	- (BOX_MARGIN + NODE_RADIUS) + CANVAS_MARGIN;
+			double originY 	= coords[1] - yMin	- (BOX_MARGIN + NODE_RADIUS) + CANVAS_MARGIN;
+			double width, height;
+			width 	= coords[2] - coords[0] + 2 * (BOX_MARGIN + NODE_RADIUS);
+			height 	= coords[3] - coords[1] + 2 * (BOX_MARGIN + NODE_RADIUS);
 
-			System.err.println("The height in svg " + height);
-			System.err.println("The width in svg" + width);
-			//		System.err.println(" ");
-
-			return "<rect class=\"box\" x=\"" + originX + "\" y=\"" + originY +"\" width=\"" + width + "\" height=\"" + height +"\" fill = \"" + sg.getColour() + "\" />" + "\n";
+			return "<rect class=\"box\" x=\"" + originX + "\" y=\"" + originY +"\" width=\"" + width + "\" height=\"" + height +"\" fill=\"" + sg.getColour() + "\" />" + "\n";
+			//  <rect class="box" x="originX" y="originY" width="width" height="height" fill="sg.getColour()" />
 		}
 
 		else
 		{
-			System.out.println(" The subgraph is not a leaf");
 			for(Subgraph subSg : sg.getSg())
 			{
 				result.append(SVG.of(subSg, xMin, yMin));
@@ -139,12 +116,10 @@ public class SVG
 			double width;
 			if(coords[0] == xMin)
 			{
-				System.out.println("True");
 				width = coords[2] - coords[0] + 2 * (BOX_MARGIN + NODE_RADIUS);
 			}
 			else
 			{
-				System.out.println("False");
 				width = coords[2] - coords[0] + 2 * (BOX_MARGIN + NODE_RADIUS);
 			}
 			double height;
@@ -156,9 +131,6 @@ public class SVG
 			{
 				height = coords[3] - coords[1] + 2 * (BOX_MARGIN + NODE_RADIUS);
 			}
-
-			System.err.println("The height in svg " + height);
-			System.err.println("The width in svg" + width);
 			//		System.err.println(" ");
 
 			result.append("<rect class=\"box\" x=\"").append(originX).append("\" y=\"").append(originY).append("\" width=\"").append(width).append("\" height=\"").append(height).append("\" fill = \"").append(sg.getColour()).append("\" />").append("\n");
@@ -234,14 +206,13 @@ public class SVG
 		result.append((0) + " " + (0) + " ").append(width).append(" ").append(height);
 		result.append(result2);
 		result.append("\t<rect x = \"" + (0) + "\" y=\"" + (0) + "\" width = \"").append(width).append("\" height = \"").append(height).append("\" fill = \"rgb(255,255,255)\" />\n");
-
 		for(Subgraph sg : g.getSg())
 		{
-			System.out.println("Making a svg subgraph");
 			result.append("    ").append(SVG.of(sg, xMin, yMin)).append("\n");
 		}
 		for(Edge e : g.getE())
 		{
+
 			result.append("    ").append(SVG.of(e, xMin, yMin)).append("\n");
 		}
 		for(Vertex v : g.getV())

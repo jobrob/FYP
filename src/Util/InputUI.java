@@ -28,7 +28,8 @@ public class InputUI extends JFrame
 				{"SpringForce1:",		  "2"},
 				{"SpringForce2:", 		  "1"},
 				{"ElectrostaticForces:",  "60000"},
-				{"Inertia:", 			  "0.2"}
+				{"Inertia:", 			  "0.2"},
+				{"Simulations",			  "10000"}
 		};
 
 		final JTextField[] textFields = new JTextField[fields.length];
@@ -56,7 +57,7 @@ public class InputUI extends JFrame
 
 		JButton button = new JButton(BUTTON_TEXT);
 		c.gridx = 3;
-		c.gridy = 4;
+		c.gridy = 5;
 		c.gridheight = 4;
 
 		button.addActionListener(
@@ -78,7 +79,8 @@ public class InputUI extends JFrame
 							double springForce2 = Double.valueOf(textFields[1].getText());
 							double electroStaticForce = Double.valueOf(textFields[2].getText());
 							double edgeForce = Double.valueOf(textFields[3].getText());
-							Eades3D.simulate(10000, graph3D, edgeForce, springForce1, springForce2, electroStaticForce);
+							int simulations = Integer.valueOf(textFields[4].getText());
+							Eades3D.simulate(simulations, graph3D, edgeForce, springForce1, springForce2, electroStaticForce);
 
 							button.setText(BUTTON_TEXT);
 							button.setEnabled(true);

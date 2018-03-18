@@ -118,14 +118,16 @@ public class Subgraph
 	 */
 	public double[] minMax()
 	{
-		for(Subgraph sub : Sg)
-		{
-			sub.minMax();
-		}
-		double xMin = Double.MAX_VALUE;
-		double xMax = Double.MIN_VALUE;
-		double yMin = Double.MAX_VALUE;
-		double yMax = Double.MIN_VALUE;
+//		for(Subgraph sub : Sg)
+//		{
+//			sub.minMax();
+//		}
+
+		double xMin = Double.POSITIVE_INFINITY;
+		double xMax = Double.NEGATIVE_INFINITY;
+		double yMin = Double.POSITIVE_INFINITY;
+		double yMax = Double.NEGATIVE_INFINITY;
+
 		for(Vertex v : V)
 		{
 			if(v.getX() < xMin)
@@ -159,12 +161,10 @@ public class Subgraph
 		double xMax = coorods[2];
 		double yMin = coorods[1];
 		double yMax = coorods[3];
-		System.out.println("Checking contained");
 		if((xMin<=v.getX()) && (v.getX()<=xMax) && (yMin<=v.getY()) && (v.getY()<=yMax))
 		{
 			if(!V.contains(v))
 			{
-				System.out.println("I think "  + v + " is in the box ");
 				move(v,xMin,xMax,yMin,yMax);
 			}
 		}
@@ -175,11 +175,9 @@ public class Subgraph
 	 */
 	public void move(Vertex v,double xMin,double xMax,double yMin,double yMax)
 	{
-		System.out.println("Im moving " + v);
-		System.out.println("The value of minMax " + xMin + "," + xMax + "," + yMin + "," + yMax);
+		System.out.println("Remove kebab");
 		double x = v.getX();
 		double y = v.getY();
-		System.out.println("diff " + (x-xMin) + ", " + (x-xMax) + ", " + (y-yMin) + ", " + (y-yMax));	
 		double[] d = new double[] {x-xMin,x-xMax,y-yMin,y-yMax};
 		int i = 0;
 		for(int j = 1;j<d.length;j++)
@@ -190,18 +188,14 @@ public class Subgraph
 			}
 		}
 		int sign = (i+1)%2;
-		System.out.println("i is " + i);
 		if(i < 2)
 		{
-			System.out.println("Set x to " + (d[i] + sign));
-			v.setX(v.getX() + d[i] + sign);
+			v.setX(v.getX() + d[i] + sign + 10);
 		}
 		else
 		{
-			System.out.println("Set y to " + (d[i] + sign));
-			v.setY(v.getY() + d[i] + sign);
+			v.setY(v.getY() + d[i] + sign + 10);
 		}
-		System.out.println("I have moved " + v);
 	}
 	
 	/**

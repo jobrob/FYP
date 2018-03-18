@@ -15,12 +15,19 @@ public class CharacterEscape
 		{
 			if(hashmap.containsKey("" + input.charAt(i)))
 			{
-				String replacement = hashmap.get("" + input.charAt(i));
+				StringBuilder replacement = new StringBuilder(hashmap.get("" + input.charAt(i)));
 				String[] parts = input.split("" + input.charAt(i));
-				newInput = new StringBuilder(parts[0]);
-				for(int j = 1; j<parts.length; j++)
+				if(parts.length>0)
 				{
-					newInput.append(parts[j]).append(replacement);
+					newInput.append(parts[0]);
+					for(int j = 1; j<parts.length; j++)
+					{
+						newInput.append(replacement.append(parts[j]));
+					}
+				}
+				else
+				{
+					newInput.append(replacement);
 				}
 			}
 		}

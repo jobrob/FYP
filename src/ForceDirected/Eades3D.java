@@ -1,8 +1,12 @@
 package ForceDirected;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.ArrayList;
 import java.nio.file.*;
+import java.util.Arrays;
+import java.util.Random;
 
 import Graph.*;
 import Util.InputGUI;
@@ -10,11 +14,12 @@ import Util.InputUI;
 
 import javax.swing.*;
 
-public class Eades3D 
+public class Eades3D
 {
 
 	public double temperature = 100;
 	private static int ORDER = 5;
+	private static int GRAPHS_TO_GENERATE = 100;
 
 
 	/**
@@ -23,7 +28,7 @@ public class Eades3D
 	 */
 	public static void simulate(int i,Graph3D g3d,double inertia, double springForces1, double springForces2, double electrostaticForces)
 	{
-		System.out.println("Starting to simulate");
+//		System.out.println("Starting to simulate");
 		long starttime = System.nanoTime();
 		PrintWriter writer;
 		for(Vertex v : g3d.getG().get(g3d.getG().size()-1).getV())
@@ -57,7 +62,10 @@ public class Eades3D
 			applyForces(g3d,inertia,springForces1,springForces2,electrostaticForces);
 			j++;
 		}
-		System.out.println(j);
+		for(Graph g : g3d.getG())
+		{
+			g.removeSubgraphs();
+		}
 
 		for (int k=0; k < g3d.getG().size(); k++)
 		{
@@ -74,10 +82,10 @@ public class Eades3D
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Simulation over");
+//		System.out.println("Simulation over");
 		long endtime = System.nanoTime();
 		double duration = (double)(endtime - starttime)/1000000000;
-		System.out.println("The simulation took " + duration + " seconds");
+		System.out.println(g3d.totalEdges() + g3d.totalVertices() + "," + duration);
 
 	}
 
@@ -111,13 +119,15 @@ public class Eades3D
 			Vertex by = e.getV1();
 			Vertex on = e.getV2();
 			by.setPosition(by.getPosition().plus(by.getDisplacement()));
+			by.setDisplacement(Vector.ZERO);
 			on.setPosition(on.getPosition().plus(on.getDisplacement()));
+			on.setDisplacement(Vector.ZERO);
 		}
 	}
 
 	public static void main(String[] args)
 	{
-		double graphEdges;
+		double inertia;
 		double springForces1;
 		double springForces2;
 		double electrostaticForces;
@@ -125,7 +135,7 @@ public class Eades3D
 		if(args.length >= 4)
 		{
 			System.out.println("user input");
-			graphEdges = Double.parseDouble(args[0]);
+			inertia = Double.parseDouble(args[0]);
 			springForces1 = Double.parseDouble(args[1]);
 			springForces2 = Double.parseDouble(args[2]);
 			electrostaticForces = Double.parseDouble(args[3]);
@@ -133,29 +143,189 @@ public class Eades3D
 		else
 		{
 			System.out.println("not user input");
-			graphEdges = 0.2;
+			inertia = 0.2;
 			springForces1 = 2.0;
 			springForces2 = 1.0;
 			electrostaticForces = 60000;
 		}
-		long starttime = System.nanoTime();
-		ArrayList<Graph> G = new ArrayList<>();
-		ArrayList<Vertex> V = new ArrayList<>();
-		ArrayList<Edge> E = new ArrayList<>();
-		try
-		{
-			for(int i = 0; i <100; i++)
-			{
-				Graph graph  = Graph.convertDot(Files.readAllLines(Paths.get("../dotGraphs/state-" + i + ".dot")));
-				G.add(graph);
-			}
+//		for(int j = 0; j < GRAPHS_TO_GENERATE; j++)
+//		{
+			ArrayList<Graph> G = new ArrayList<>();
+			ArrayList<Vertex> V = new ArrayList<>();
+			ArrayList<Edge> E = new ArrayList<>();
+//			Graph graph = Graph.K(3);
+//			G.add(graph);
+//			for(int i = 0;i<15 ; i++)
+//			{
+//				Graph newGraph = Graph.mutate(G.get(G.size()-1));
+//				G.add(newGraph);
+//			}
+//			Graph g1 = new Graph(V,E);
+//			Vertex v1 = new Vertex("r",Vector.ZERO,Vector.ZERO,new Colour(255,0,0),"r");
+//			Vertex v2 = new Vertex("b",Vector.ZERO,Vector.ZERO,new Colour(0,0,255),"b");
+//			Vertex v3 = new Vertex("g",Vector.ZERO,Vector.ZERO,new Colour(0,255,0),"g");
+//			g1.addVertex(v1);
+//			g1.addVertex(v2);
+//			g1.addVertex(v3);
+//			Edge e1 = new Edge(g1.getVertex("r"),g1.getVertex("b"));
+//			Edge e2 = new Edge(g1.getVertex("r"),g1.getVertex("g"));
+//			Edge e3 = new Edge(g1.getVertex("g"),g1.getVertex("b"));
+//			g1.addEdge(e1);
+//			g1.addEdge(e2);
+//			g1.addEdge(e3);
+//			G.add(g1);
+//
+//			Graph g2 = g1.copy();
+//			g2.addVertex(new Vertex("y",Vector.ZERO,Vector.ZERO,new Colour(255,255,0),"y"));
+//			g2.addEdge(new Edge(g2.getVertex("y"),g2.getVertex("g")));
+//			G.add(g2);
+//
+//			Graph g3 = g2.copy();
+//			g3.addEdge(new Edge(g3.getVertex("y"),g3.getVertex("b")));
+//			G.add(g3);
+//
+//			Graph g4 = g3.copy();
+//			g4.addEdge(new Edge(g4.getVertex("y"),g4.getVertex("r")));
+//			G.add(g4);
+//
+//			Graph g5 = g4.copy();
+//			g5.addVertex(new Vertex("p" ,Vector.ZERO,Vector.ZERO,new Colour(128,0,128), "p"));
+//			g5.addEdge(new Edge(g5.getVertex("y"),g5.getVertex("p")));
+//			G.add(g5);
+//
+//			Graph g6 = g5.copy();
+//			g6.addVertex(new Vertex("bl",Vector.ZERO,Vector.ZERO,new Colour(0,0,0),"bl"));
+//			g6.addEdge(new Edge(g6.getVertex("bl"),g6.getVertex("y")));
+//			G.add(g6);
 
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-			System.err.println("\nCouldn't get file at path");
-		}
+		Vertex v1 = new Vertex("1");
+		Vertex v2 = new Vertex("2");
+		Edge e1 = new Edge(v1,v2);
+		Graph g2 = new Graph(V,E);
+		g2.addVertex(v1);
+		g2.addVertex(v2);
+		g2.addEdge(e1);
+		G.add(g2);
+
+		Vertex v3 = new Vertex("3");
+		Graph g3 = g2.copy();
+		g3.addVertex(v3);
+		g3.addEdge(new Edge(g3.getVertex("3"),g3.getVertex("1")));
+		G.add(g3);
+
+		Vertex v4 = new Vertex("4");
+		Graph g4 = g3.copy();
+		g4.addVertex(v4);
+		g4.addEdge(new Edge(g4.getVertex("4"),g4.getVertex("1")));
+		G.add(g4);
+
+		Vertex v5 = new Vertex("5");
+		Graph g5 = g4.copy();
+		g5.addVertex(v5);
+		g5.addEdge(new Edge(g5.getVertex("2"),g5.getVertex("5")));
+		G.add(g5);
+
+		Vertex v6 = new Vertex("6");
+		Graph g6 = g5.copy();
+		g6.addVertex(v6);
+		g6.addEdge(new Edge(g6.getVertex("2"),g6.getVertex("6")));
+		G.add(g6);
+
+		Vertex v7 = new Vertex("7");
+		Graph g7 = g6.copy();
+		g7.addVertex(v7);
+		g7.addEdge(new Edge(g7.getVertex("2"),g7.getVertex("7")));
+		G.add(g7);
+
+		Vertex v8 = new Vertex("8");
+		Graph g8 = g7.copy();
+		g8.addVertex(v8);
+		g8.addEdge(new Edge(g8.getVertex("2"),g8.getVertex("8")));
+		G.add(g8);
+
+		Vertex v9 = new Vertex("9");
+		Graph g9 = g8.copy();
+		g9.addVertex(v9);
+		g9.addEdge(new Edge(g9.getVertex("3"),g9.getVertex("9")));
+		G.add(g9);
+
+
+
+		Vertex v10 = new Vertex("10");
+		Graph g10 = g9.copy();
+		g10.addVertex(v10);
+		g10.addEdge(new Edge(g10.getVertex("3"),g10.getVertex("10")));
+		G.add(g10);
+
+		Vertex v11 = new Vertex("11");
+		Graph g11 = g10.copy();
+		g11.addVertex(v11);
+		g11.addEdge(new Edge(g11.getVertex("3"),g11.getVertex("11")));
+		G.add(g11);
+
+		Vertex v12 = new Vertex("12");
+		Edge e11 = new Edge(v4,v12);
+		Graph g12 = g11.copy();
+		g12.addVertex(v12);
+		g12.addEdge(new Edge(g12.getVertex("4"),g12.getVertex("12")));
+		G.add(g12);
+		g12.addSubgraph(new Subgraph(new ArrayList<Vertex>()));
+		g12.getSg().get(0).addVertex(g12.getVertex("9"));
+		g12.getSg().get(0).addVertex(g12.getVertex("8"));
+		g12.getSg().get(0).addVertex(g12.getVertex("12"));
+
+		Vertex v13 = new Vertex("13");
+		Graph g13 = g12.copy();
+		g13.addVertex(v13);
+		g13.addEdge(new Edge(g13.getVertex("4"),g13.getVertex("13")));
+		G.add(g13);
+
+		Vertex v14 = new Vertex("14");
+		Edge e13 = new Edge(v4,v14);
+		Graph g14 = g13.copy();
+		g14.addVertex(v14);
+		g14.addEdge(new Edge(g14.getVertex("4"),g14.getVertex("14")));
+		G.add(g14);
+
+		Vertex v15 = new Vertex("15");
+		Graph g15 = g14.copy();
+		g15.addVertex(v15);
+		g15.addEdge(new Edge(g15.getVertex("4"),g15.getVertex("15")));
+		G.add(g15);
+
+		Vertex v16 = new Vertex("16");
+		Graph g16 = g15.copy();
+		g16.addVertex(v16);
+		g16.addEdge(new Edge(g16.getVertex("4"),g16.getVertex("16")));
+		G.add(g16);
+
+
+//		try
+//		{
+//			for (int i = 0; i < 100; i++)
+//			{
+//				byte[] bytes = Files.readAllBytes(Paths.get("../dotGraphs/state-" + i + ".dot"));
+//				String s = new String(bytes, StandardCharsets.UTF_8);
+//
+//				// This ensures semi-colons are immediately followed by a newline character,
+//				// since the parser assumes such.
+//				s = s.replaceAll("\\;",";\n").replaceAll("\\n\\n","\n");
+//				String[] lines = s.split("\n");
+//
+//				List<String> linesList = new ArrayList<String>(Arrays.asList(lines));
+//
+//				Graph graph = Graph.convertDot(linesList);
+//				G.add(graph);
+//			}
+//
+//		}
+//		catch (IOException e)
+//		{
+//			e.printStackTrace();
+//			System.err.println("\nCouldn't get file at path");
+//		}
+
+
 		Graph3D g3d = new Graph3D(G);
 		javax.swing.SwingUtilities.invokeLater(new Runnable()
 		{
@@ -165,11 +335,7 @@ public class Eades3D
 				new InputUI(g3d);
 			}
 		});
-//		Eades3D.simulate(10000,g3d,graphEdges,springForces1,springForces2,electrostaticForces);
-		int noVertixces = g3d.totalVertices();
-		int noEdges = g3d.totalEdges();
-		int total = noVertixces + noEdges;
-		int noGraphs = g3d.getG().size();
-		System.out.println(" Total Vertices: " + noVertixces + ",\n Total Edges:" + noEdges + ",\n Total Elements:" + total + ",\n Total Graphs:" + noGraphs);
+//		Eades3D.simulate(10000, g3d, inertia, springForces1, springForces2, electrostaticForces);
+//		}
 	}
 }

@@ -76,15 +76,68 @@ public class Colour
 	 */
 	public Colour(String colour) 
 	{
-		assert colour.charAt(0) == '#';
-		assert colour.length() == 7;
-		String red = colour.substring(1,3);
-		String green = colour.substring(3,5);
-		String blue = colour.substring(5,7);
-		
-		r =	Integer.parseInt(red, 16);
-		g =	Integer.parseInt(green, 16);
-		b =	Integer.parseInt(blue, 16);
+		if (colour.charAt(0) == '#')
+		{
+			String red = colour.substring(1,3);
+			String green = colour.substring(3,5);
+			String blue = colour.substring(5,7);
+
+			r =	Integer.parseInt(red, 16);
+			g =	Integer.parseInt(green, 16);
+			b =	Integer.parseInt(blue, 16);
+		}
+		else
+		{
+			switch (colour.toUpperCase())
+			{
+				case "RED":
+					r = 255;
+					g = 0;
+					b = 0;
+					break;
+				case "BLUE":
+					r = 0;
+					g = 0;
+					b = 255;
+					break;
+
+				case "GREEN":
+					r = 0;
+					g = 255;
+					b = 0;
+					break;
+
+				case "YELLOW":
+					r = 255;
+					g = 255;
+					b = 0;
+					break;
+
+				case "PURPLE":
+					r = 255;
+					g = 0;
+					b = 255;
+					break;
+
+				case "TEAL":
+					r = 0;
+					g = 255;
+					b = 255;
+					break;
+
+				case "ORANGE":
+					r = 255;
+					g = 140;
+					b = 0;
+					break;
+
+				default:
+					r = 0;
+					g = 0;
+					b = 0;
+					break;
+			}
+		}
 	}
 	
 	public static final Colour RED = new Colour (255,0,0);

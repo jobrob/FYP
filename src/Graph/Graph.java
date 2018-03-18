@@ -310,7 +310,7 @@ public class Graph implements Cloneable
 		ArrayList<Subgraph> copySg = new ArrayList<>();
 		for(Vertex v : V)
 		{
-			copyV.add(new Vertex(v.getName(),v.getPosition(),Vector.ZERO,v.getColour()));
+			copyV.add(new Vertex(v.getName(),v.getPosition(),Vector.ZERO,v.getColour(),v.getLabel()));
 		}
 		for(Edge e : E)
 		{
@@ -420,7 +420,6 @@ public class Graph implements Cloneable
 	 */
 	public void removeEdge(Edge edge)
 	{
-		System.out.println("removing " + edge);
 //		V.remove(edge.getV1());
 //		V.remove(edge.getV2());
 		E.remove(edge);
@@ -662,6 +661,49 @@ public class Graph implements Cloneable
 		while(lines.hasNext())
 		{
 			String line = "" + lines.next();
+			if(line.contains("subgraph "))
+			{
+				ArrayList<Vertex> subV = new ArrayList<>();
+				Subgraph subgraph = new Subgraph(subV);
+				while(!line.contains("graph["))
+				{
+					line = "" + lines.next();
+				}
+				if(line.contains("color"))
+				{
+
+					int colourStart = line.indexOf("color") + 7;
+					int colourEnd = line.indexOf("\"",colourStart);
+					String subgraphColour = line.substring(colourStart,colourEnd);
+					subgraph.setColour(new Colour(subgraphColour));
+				}
+				line = "" + lines.next();
+				while(!line.contains("}"))
+				{
+					if(line.contains("label"))
+					{
+						int nameEnd = line.indexOf("[");
+						int labelStart = line.indexOf("label=\"");
+						int labelEnd = line.indexOf("\"",labelStart+7);
+						String label = line.substring(labelStart+7,labelEnd);
+						if(!label.trim().isEmpty())
+						{
+							Vertex u1 = new Vertex(line.substring(0, nameEnd).trim(), CharacterEscape.escapeHtml(label));
+							newGraph.addVertex(u1);
+							subgraph.addVertex(u1);
+						}
+					}
+					else
+					{
+						int nameEnd = line.indexOf("[");
+						Vertex u1 = new Vertex(line.substring(0,nameEnd).trim());
+						newGraph.addVertex(u1);
+						subgraph.addVertex(u1);
+					}
+					line = "" + lines.next();
+				}
+				newGraph.addSubgraph(subgraph);
+			}
 			if(line.contains("label=") && !line.contains("->"))
 			{
 
@@ -697,12 +739,10 @@ public class Graph implements Cloneable
 				}
 				else
 				{
-					//Vertex u1 = new Vertex(u1Name);
-					//newGraph.addVertex(u1);
+
 					if(newGraph.isIn(u2Name))
 					{
-						//System.out.println(u1);
-						//System.out.println(newGraph.getVertex(u2Name));
+
 						newGraph.addVertex(new Vertex(u1Name));
 						newGraph.addEdge(new Edge(newGraph.getVertex(u1Name),newGraph.getVertex(u2Name)));
 					}
