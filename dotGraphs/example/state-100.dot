@@ -1,0 +1,66 @@
+digraph G {
+  rankdir=LR;
+  edge[arrowhead=none,arrowtail=none];
+  node[fixedsize=true,shape=circle]
+  size="12.133333333333333,4.987468750000001";
+  labeldistance=0;
+  nodesep=.175;
+  ranksep=.175;
+
+ nd1[shape=point];
+   nd14[label="1000",tooltip="nd14-ConstGraph",style=rounded,orientation=90,shape=square,color="#000000"];
+ nd42[label="::",tooltip="nd42-BinOpGraph",style=rounded,color="#000000"];
+ nd59[label=" ",tooltip="nd59-ContractGraph",style=rounded,orientation=90,shape=point];
+   nd111[label="999",tooltip="nd111-ConstGraph",style=rounded,orientation=90,shape=square,color="#000000"];
+ nd84[label="::",tooltip="nd84-BinOpGraph",style=rounded,color="#000000"];
+ nd92[label=" ",tooltip="nd92-ContractGraph",style=rounded,orientation=90,shape=point];
+   nd156[label="998",tooltip="nd156-ConstGraph",style=rounded,orientation=90,shape=square,color="#000000"];
+ nd129[label="::",tooltip="nd129-BinOpGraph",style=rounded,color="#000000"];
+ nd130[label="@",tooltip="nd130-AppGraph",style=rounded,orientation=90,shape=house,color="#000000"];
+ nd137[label=" ",tooltip="nd137-ContractGraph",style=rounded,orientation=90,shape=point];
+   nd201[label="997",tooltip="nd201-ConstGraph",style=rounded,orientation=90,shape=square,color="#000000"];
+ nd203[label="rec",tooltip="nd203-RecurGraph",style=rounded,width=.3,height=.3,color="#000000"];
+   subgraph cluster_nd207 {
+     graph[style=fill,color="orange"];ndcluster_nd207[tooltip="nd207",orientation=90,shape=point,color="orange"];
+   };
+ nd163[label="λ",tooltip="nd163-AbsGraph",style=rounded,color="#000000"];
+ nd164[label="if",tooltip="nd164-IfGraph",style=rounded,color="#000000"];
+ nd165[label="<=",tooltip="nd165-BinOpGraph",style=rounded,color="#000000"];
+   nd169[label="0",tooltip="nd169-ConstGraph",style=rounded,orientation=90,shape=square,color="#000000"];
+   nd173[label="[]",tooltip="nd173-ConstListGraph",style=rounded,orientation=90,shape=square,color="#000000"];
+ nd174[label="::",tooltip="nd174-BinOpGraph",style=rounded,color="#000000"];
+ nd175[label="@",tooltip="nd175-AppGraph",style=rounded,orientation=90,shape=house,color="#000000"];
+ nd177[label="-",tooltip="nd177-BinOpGraph",style=rounded,color="#000000"];
+   nd181[label="1",tooltip="nd181-ConstGraph",style=rounded,orientation=90,shape=square,color="#000000"];
+ nd182[label=" ",tooltip="nd182-ContractGraph",style=rounded,orientation=90,shape=point];
+ nd183[label=" ",tooltip="nd183-ContractGraph",style=rounded,orientation=90,shape=point];
+
+  nd42->nd59[tailport=n,headport=w];
+  nd1->nd42[label="",tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd59->nd14[label="x",tailport=e,headport=w];
+  nd84->nd92[tailport=n,headport=w];
+  nd42->nd84[label="",tailport=s,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd92->nd111[label="x",tailport=e,headport=w];
+  nd130->nd163[tailport=n,headport=w,color=red,arrowhead=normal];
+  nd130->nd201[tailport=s,headport=w];
+  nd129->nd130[tailport=s,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd129->nd137[tailport=n,headport=w];
+  nd84->nd129[label="",tailport=s,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd137->nd156[label="x",tailport=e,headport=w];
+  nd165->nd169[tailport=s,headport=w];
+  nd177->nd181[tailport=s,headport=w];
+  nd175->nd203[tailport=n,headport=w];
+  nd175->nd177[tailport=s,headport=w];
+  nd174->nd175[tailport=s,headport=w];
+  nd177->nd182[tailport=n,headport=w];
+  nd174->nd182[tailport=n,headport=w];
+  nd164->nd165[label="condition",tailport=n,headport=w];
+  nd164->nd173[label="is true",tailport=e,headport=w,color=grey,arrowhead=none,arrowtail=none];
+  nd164->nd174[label="is false",tailport=s,headport=w,color=grey,arrowhead=none,arrowtail=none];
+  nd165->nd183[tailport=n,headport=w];
+  nd182->nd183[tailport=e,headport=w];
+  nd163->nd164[tailport=s,headport=w];
+  nd163->nd183[dir=back,label="x",headport=ne,tailport=n,color=grey,arrowhead=none,arrowtail=none];
+  nd203->ndcluster_nd207[dir=back,headport=n,tailport=n];
+  nd203->ndcluster_nd207[tailport=s,headport=w];
+}

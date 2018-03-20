@@ -1,0 +1,16 @@
+digraph G {
+  rankdir=LR;
+  edge[arrowhead=none,arrowtail=none];
+  node[fixedsize=true,shape=circle]
+  size="9.201041666666667,5.219270833333334";
+  labeldistance=0;
+  nodesep=.175;
+  ranksep=.175;
+
+ nd1[shape=point];
+   nd463[label="10",tooltip="nd463-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+ nd429[label=" ",tooltip="nd429-ContractGraph",style=rounded,orientation=90,shape=point];
+
+  nd1->nd429[label="",tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd429->nd463[label="y",tailport=e,headport=w,color=red,arrowhead=normal];
+}

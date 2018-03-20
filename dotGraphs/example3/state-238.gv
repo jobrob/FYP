@@ -1,0 +1,36 @@
+digraph G {
+  rankdir=LR;
+  edge[arrowhead=none,arrowtail=none];
+  node[fixedsize=true,shape=circle]
+  size="9.201041666666667,5.219270833333334";
+  labeldistance=0;
+  nodesep=.175;
+  ranksep=.175;
+
+ nd1[shape=point];
+   nd34[label="4",tooltip="nd34-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd39[label="[]",tooltip="nd39-ConstEmptyGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd182[label="::",tooltip="nd182-ConstListGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+ nd314[label="rec",tooltip="nd314-RecurGraph",style=rounded,width=.3,height=.3,color="#000000"];
+   subgraph cluster_nd318 {
+     graph[style=fill,color="orange"];
+     ndcluster_nd318[tooltip="nd318",orientation=90,shape=point,color="orange"];
+   };
+ nd255[label="@",tooltip="nd255-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+ nd256[label="@",tooltip="nd256-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+ nd364[label=" ",tooltip="nd364-ContractGraph",style=rounded,orientation=90,shape=point];
+ nd377[label=" ",tooltip="nd377-ContractGraph",style=rounded,orientation=90,shape=point];
+   nd386[label="6",tooltip="nd386-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+
+  nd182->nd34[tailport=n,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd182->nd39[tailport=s,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd364->nd182[tailport=e,headport=w];
+  nd256->nd377[tailport=s,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd256->nd314[tailport=e,headport=w,color=black,arrowhead=none,arrowtail=none];
+  nd255->nd256[tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd255->nd386[tailport=s,headport=w];
+  nd1->nd255[label="",tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd314->ndcluster_nd318[dir=back,headport=e,tailport=n,color=grey,arrowhead=none,arrowtail=none];
+  nd314->ndcluster_nd318[tailport=e,headport=w];
+  nd377->nd364[tailport=e,headport=w,color=red,arrowhead=normal];
+}

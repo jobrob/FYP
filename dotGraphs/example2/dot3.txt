@@ -1,0 +1,13 @@
+graph G 
+{
+	r [color = "red"];
+	b [color = "blue"];
+	g [color = "green"];
+	y [color = "yellow"];
+	r -- b[];
+	r -- g[];
+	b -- g[];
+	g -- y[];
+	b -- y[];
+
+}

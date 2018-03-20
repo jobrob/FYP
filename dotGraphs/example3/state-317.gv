@@ -1,0 +1,36 @@
+digraph G {
+  rankdir=LR;
+  edge[arrowhead=none,arrowtail=none];
+  node[fixedsize=true,shape=circle]
+  size="9.201041666666667,5.219270833333334";
+  labeldistance=0;
+  nodesep=.175;
+  ranksep=.175;
+
+ nd1[shape=point];
+   nd39[label="[]",tooltip="nd39-ConstEmptyGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+ nd332[label="@",tooltip="nd332-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+ nd333[label="@",tooltip="nd333-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+   nd463[label="10",tooltip="nd463-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+ nd468[label="rec",tooltip="nd468-RecurGraph",style=rounded,width=.3,height=.3,color="#000000"];
+   subgraph cluster_nd472 {
+     graph[style=fill,color="orange"];
+     ndcluster_nd472[tooltip="nd472",orientation=90,shape=point,color="orange"];
+   };
+ nd396[label="fun",tooltip="nd396-AbsGraph",style=rounded,width=.4,height=.4,color="#000000"];
+ subgraph cluster_nd399 {
+   graph[style=fill,color="orange"];
+   ndcluster_nd399[tooltip="nd399",orientation=90,shape=point,color="orange"];
+ };
+
+  nd333->nd39[tailport=s,headport=w];
+  nd333->nd396[tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd332->nd333[tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd332->nd463[tailport=s,headport=w];
+  nd1->nd332[label="",tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  ndcluster_nd399->nd468[tailport=e,headport=w,color=black,arrowhead=none,arrowtail=none];
+  nd396->ndcluster_nd399[dir=back,label="x",headport=e,tailport=n,color=grey,arrowhead=none,arrowtail=none];
+  nd396->ndcluster_nd399[tailport=e,headport=w,color=red,arrowhead=normal];
+  nd468->ndcluster_nd472[dir=back,headport=e,tailport=n,color=grey,arrowhead=none,arrowtail=none];
+  nd468->ndcluster_nd472[tailport=e,headport=w];
+}

@@ -74,22 +74,39 @@ public class InputUI extends JFrame
 						{
 							public void run()
 							{
-								double springForce1 = Double.valueOf(textFields[0].getText());
-								double springForce2 = Double.valueOf(textFields[1].getText());
-								double electroStaticForce = Double.valueOf(textFields[2].getText());
-								double edgeForce = Double.valueOf(textFields[3].getText());
-								int simulations = Integer.valueOf(textFields[4].getText());
-								Eades3D.simulate(simulations, graph3D, edgeForce, springForce1, springForce2, electroStaticForce);
+								try
+								{
+									double springForce1 = Double.valueOf(textFields[0].getText());
+									double springForce2 = Double.valueOf(textFields[1].getText());
+									double electroStaticForce = Double.valueOf(textFields[2].getText());
+									double edgeForce = Double.valueOf(textFields[3].getText());
+									int simulations = Integer.valueOf(textFields[4].getText());
+									Eades3D.simulate(simulations, graph3D, edgeForce, springForce1, springForce2, electroStaticForce);
 
-								button.setText(BUTTON_TEXT);
-								button.setEnabled(true);
+									button.setText(BUTTON_TEXT);
+									button.setEnabled(true);
+								}
+								catch(Exception ex)
+								{
+									ex.printStackTrace();
+									double springForce1 = 2;
+									double springForce2 = 1;
+									double electroStaticForce = 60000;
+									double edgeForce = 0.2;
+									int simulations = 10000;
+									Eades3D.simulate(simulations, graph3D, edgeForce, springForce1, springForce2, electroStaticForce);
 
+									button.setText(BUTTON_TEXT);
+									button.setEnabled(true);
+								}
 								try
 								{
 									Runtime.getRuntime().exec("xdg-open ../output/0.svg");
-								} catch (IOException ex)
+								}
+								catch (IOException ex)
 								{
 									ex.printStackTrace();
+									System.exit(0);
 								}
 							}
 						};

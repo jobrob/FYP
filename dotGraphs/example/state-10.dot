@@ -1,0 +1,27 @@
+digraph G {
+  rankdir=LR;
+  edge[arrowhead=none,arrowtail=none];
+  node[fixedsize=true,shape=circle]
+  size="12.133333333333333,4.987468750000001";
+  labeldistance=0;
+  nodesep=.175;
+  ranksep=.175;
+
+ nd1[shape=point];
+ subgraph cluster_nd24 {
+   graph[style=fill,color="orange"];ndcluster_nd24[tooltip="nd24",orientation=90,shape=point,color="orange"];
+ };
+ nd68[label="rec",tooltip="nd68-RecurGraph",style=rounded,width=.3,height=.3,color="#000000"];
+   subgraph cluster_nd72 {
+     graph[style=fill,color="orange"];ndcluster_nd72[tooltip="nd72",orientation=90,shape=point,color="orange"];
+   };
+ nd7[label="@",tooltip="nd7-AppGraph",style=rounded,orientation=90,shape=house,color="#000000"];
+   nd14[label="1000",tooltip="nd14-ConstGraph",style=rounded,orientation=90,shape=square,color="#000000"];
+
+  nd7->ndcluster_nd24[label="build",tailport=n,headport=w];
+  nd7->nd14[tailport=s,headport=w,color=red,arrowhead=normal];
+  nd1->nd7[tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  ndcluster_nd24->nd68[tailport=n,headport=w];
+  nd68->ndcluster_nd72[dir=back,headport=n,tailport=n];
+  nd68->ndcluster_nd72[tailport=s,headport=w];
+}

@@ -1,0 +1,76 @@
+digraph G {
+  rankdir=LR;
+  edge[arrowhead=none,arrowtail=none];
+  node[fixedsize=true,shape=circle]
+  size="9.201041666666667,5.219270833333334";
+  labeldistance=0;
+  nodesep=.175;
+  ranksep=.175;
+
+ nd1[shape=point];
+ nd136[label="rec",tooltip="nd136-RecurGraph",style=rounded,width=.3,height=.3,color="#000000"];
+   subgraph cluster_nd140 {
+     graph[style=fill,color="orange"];
+     ndcluster_nd140[tooltip="nd140",orientation=90,shape=point,color="orange"];
+   };
+   nd16[label="1",tooltip="nd16-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd22[label="2",tooltip="nd22-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd28[label="3",tooltip="nd28-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd34[label="4",tooltip="nd34-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd39[label="[]",tooltip="nd39-ConstEmptyGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd50[label="0",tooltip="nd50-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd182[label="::",tooltip="nd182-ConstListGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd188[label="::",tooltip="nd188-ConstListGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd194[label="::",tooltip="nd194-ConstListGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd200[label="::",tooltip="nd200-ConstListGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+ nd67[label="if",tooltip="nd67-IfGraph",style=rounded,width=.4,height=.4,color="#000000"];
+ nd84[label="@",tooltip="nd84-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+ nd85[label="@",tooltip="nd85-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+ nd89[label="@",tooltip="nd89-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+ subgraph cluster_nd91 {
+   graph[style=fill,color="orange",label="tl"];
+   ndcluster_nd91[tooltip="nd91",orientation=90,shape=point,color="orange"];
+ };
+ nd105[label="+",tooltip="nd105-BinOpGraph",style=rounded,width=.4,height=.4,color="#000000"];
+ nd108[label="@",tooltip="nd108-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+ subgraph cluster_nd110 {
+   graph[style=fill,color="orange",label="hd"];
+   ndcluster_nd110[tooltip="nd110",orientation=90,shape=point,color="orange"];
+ };
+ nd123[label=" ",tooltip="nd123-ContractGraph",style=rounded,orientation=90,shape=point];
+ nd125[label=" ",tooltip="nd125-ContractGraph",style=rounded,orientation=90,shape=point];
+ nd126[label=" ",tooltip="nd126-ContractGraph",style=rounded,orientation=90,shape=point];
+ nd209[label=" ",tooltip="nd209-ContractGraph",style=rounded,orientation=90,shape=point];
+ nd210[label=" ",tooltip="nd210-ContractGraph",style=rounded,orientation=90,shape=point];
+   nd214[label="false",tooltip="nd214-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+
+  nd182->nd34[tailport=n,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd182->nd39[tailport=s,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd188->nd28[tailport=n,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd188->nd182[tailport=s,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd194->nd22[tailport=n,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd194->nd188[tailport=s,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd200->nd209[tailport=n,headport=w];
+  nd200->nd210[tailport=s,headport=w];
+  nd67->nd214[tailport=n,headport=w];
+  nd89->ndcluster_nd91[tailport=e,headport=w];
+  nd85->nd136[tailport=e,headport=w,color=black,arrowhead=none,arrowtail=none];
+  nd85->nd89[tailport=s,headport=w];
+  nd108->ndcluster_nd110[tailport=e,headport=w];
+  nd105->nd108[tailport=s,headport=w];
+  nd84->nd85[tailport=e,headport=w];
+  nd84->nd105[tailport=s,headport=w];
+  nd108->nd123[tailport=s,headport=w];
+  nd89->nd123[tailport=s,headport=w];
+  nd67->nd84[label="is false",tailport=s,headport=w,color=red,arrowhead=normal];
+  nd105->nd125[tailport=n,headport=w];
+  nd67->nd125[label="is true",tailport=e,headport=w,color=grey,arrowhead=none,arrowtail=none];
+  nd123->nd126[tailport=e,headport=w];
+  nd1->nd67[tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd125->nd50[label="y",tailport=e,headport=w];
+  nd126->nd200[label="x",tailport=e,headport=w];
+  nd136->ndcluster_nd140[dir=back,headport=e,tailport=n,color=grey,arrowhead=none,arrowtail=none];
+  nd136->ndcluster_nd140[tailport=e,headport=w];
+  nd209->nd16[tailport=e,headport=w];
+  nd210->nd194[tailport=e,headport=w];
+}

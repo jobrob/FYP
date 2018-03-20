@@ -1,0 +1,36 @@
+digraph G {
+  rankdir=LR;
+  edge[arrowhead=none,arrowtail=none];
+  node[fixedsize=true,shape=circle]
+  size="9.201041666666667,5.219270833333334";
+  labeldistance=0;
+  nodesep=.175;
+  ranksep=.175;
+
+ nd1[shape=point];
+   nd28[label="3",tooltip="nd28-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd34[label="4",tooltip="nd34-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd39[label="[]",tooltip="nd39-ConstEmptyGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd182[label="::",tooltip="nd182-ConstListGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd188[label="::",tooltip="nd188-ConstListGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+ nd237[label="rec",tooltip="nd237-RecurGraph",style=rounded,width=.3,height=.3,color="#000000"];
+   subgraph cluster_nd241 {
+     graph[style=fill,color="orange"];
+     ndcluster_nd241[tooltip="nd241",orientation=90,shape=point,color="orange"];
+   };
+ nd154[label="@",tooltip="nd154-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+ nd155[label="@",tooltip="nd155-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+   nd309[label="3",tooltip="nd309-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+
+  nd182->nd34[tailport=n,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd182->nd39[tailport=s,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd188->nd28[tailport=n,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd188->nd182[tailport=s,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd155->nd237[tailport=e,headport=w,color=black,arrowhead=none,arrowtail=none];
+  nd154->nd155[tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd154->nd309[tailport=s,headport=w];
+  nd1->nd154[label="",tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd155->nd188[tailport=s,headport=w,color=red,arrowhead=normal];
+  nd237->ndcluster_nd241[dir=back,headport=e,tailport=n,color=grey,arrowhead=none,arrowtail=none];
+  nd237->ndcluster_nd241[tailport=e,headport=w];
+}

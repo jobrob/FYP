@@ -1,0 +1,57 @@
+digraph G {
+  rankdir=LR;
+  edge[arrowhead=none,arrowtail=none];
+  node[fixedsize=true,shape=circle]
+  size="9.201041666666667,5.219270833333334";
+  labeldistance=0;
+  nodesep=.175;
+  ranksep=.175;
+
+ nd1[shape=point];
+ nd136[label="rec",tooltip="nd136-RecurGraph",style=rounded,width=.3,height=.3,color="#000000"];
+   subgraph cluster_nd140 {
+     graph[style=fill,color="orange"];
+     ndcluster_nd140[tooltip="nd140",orientation=90,shape=point,color="orange"];
+   };
+   nd16[label="1",tooltip="nd16-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd22[label="2",tooltip="nd22-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd28[label="3",tooltip="nd28-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd34[label="4",tooltip="nd34-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd39[label="[]",tooltip="nd39-ConstEmptyGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd182[label="::",tooltip="nd182-ConstListGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd188[label="::",tooltip="nd188-ConstListGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd194[label="::",tooltip="nd194-ConstListGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd200[label="::",tooltip="nd200-ConstListGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+ nd84[label="@",tooltip="nd84-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+ nd85[label="@",tooltip="nd85-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+ nd89[label="@",tooltip="nd89-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+ nd210[label=" ",tooltip="nd210-ContractGraph",style=rounded,orientation=90,shape=point];
+ nd222[label=" ",tooltip="nd222-ContractGraph",style=rounded,orientation=90,shape=point];
+ nd223[label=" ",tooltip="nd223-ContractGraph",style=rounded,orientation=90,shape=point];
+   nd232[label="1",tooltip="nd232-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+ nd93[label="fun",tooltip="nd93-AbsGraph",style=rounded,width=.4,height=.4,color="#000000"];
+ nd94[label="tl",tooltip="nd94-UnOpGraph",style=rounded,width=.4,height=.4,color="#000000"];
+
+  nd182->nd34[tailport=n,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd182->nd39[tailport=s,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd188->nd28[tailport=n,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd188->nd182[tailport=s,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd194->nd22[tailport=n,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd194->nd188[tailport=s,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd200->nd222[tailport=n,headport=w];
+  nd200->nd223[tailport=s,headport=w];
+  nd93->nd94[tailport=e,headport=w,color=red,arrowhead=normal];
+  nd93->nd94[dir=back,label="op_arg",headport=e,tailport=n,color=grey,arrowhead=none,arrowtail=none];
+  nd89->nd93[tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd85->nd136[tailport=e,headport=w,color=black,arrowhead=none,arrowtail=none];
+  nd85->nd89[tailport=s,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd84->nd85[tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd84->nd232[tailport=s,headport=w];
+  nd1->nd84[label="",tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd89->nd200[label="x",tailport=s,headport=w];
+  nd136->ndcluster_nd140[dir=back,headport=e,tailport=n,color=grey,arrowhead=none,arrowtail=none];
+  nd136->ndcluster_nd140[tailport=e,headport=w];
+  nd222->nd16[tailport=e,headport=w];
+  nd210->nd194[tailport=e,headport=w];
+  nd223->nd210[tailport=e,headport=w];
+}

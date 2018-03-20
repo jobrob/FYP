@@ -1,0 +1,41 @@
+digraph G {
+  rankdir=LR;
+  edge[arrowhead=none,arrowtail=none];
+  node[fixedsize=true,shape=circle]
+  size="9.201041666666667,5.219270833333334";
+  labeldistance=0;
+  nodesep=.175;
+  ranksep=.175;
+
+ nd1[shape=point];
+ subgraph cluster_nd45 {
+   graph[style=fill,color="orange"];
+   ndcluster_nd45[tooltip="nd45",orientation=90,shape=point,color="orange"];
+ };
+ nd362[label="rec",tooltip="nd362-RecurGraph",style=rounded,width=.3,height=.3,color="#000000"];
+   subgraph cluster_nd366 {
+     graph[style=fill,color="orange"];
+     ndcluster_nd366[tooltip="nd366",orientation=90,shape=point,color="orange"];
+   };
+ nd7[label="@",tooltip="nd7-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+ nd11[label="::",tooltip="nd11-BinOpGraph",style=rounded,width=.4,height=.4,color="#000000"];
+   nd15[label="2",tooltip="nd15-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+ nd17[label="::",tooltip="nd17-BinOpGraph",style=rounded,width=.4,height=.4,color="#000000"];
+   nd21[label="6",tooltip="nd21-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd27[label="3",tooltip="nd27-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd32[label="[]",tooltip="nd32-ConstEmptyGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+   nd540[label="::",tooltip="nd540-ConstListGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+
+  nd540->nd27[tailport=n,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd540->nd32[tailport=s,headport=w,color=purple,arrowhead=none,arrowtail=none];
+  nd17->nd21[dir=back,headport=w,tailport=n,color=red,arrowtail=normal];
+  nd17->nd540[tailport=s,headport=w];
+  nd11->nd15[tailport=n,headport=w];
+  nd11->nd17[tailport=s,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd7->ndcluster_nd45[label="bubble",tailport=e,headport=w];
+  nd7->nd11[tailport=s,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd1->nd7[tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  ndcluster_nd45->nd362[tailport=e,headport=w,color=black,arrowhead=none,arrowtail=none];
+  nd362->ndcluster_nd366[dir=back,headport=e,tailport=n,color=grey,arrowhead=none,arrowtail=none];
+  nd362->ndcluster_nd366[tailport=e,headport=w];
+}

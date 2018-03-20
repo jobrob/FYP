@@ -1,0 +1,32 @@
+digraph G {
+  rankdir=LR;
+  edge[arrowhead=none,arrowtail=none];
+  node[fixedsize=true,shape=circle]
+  size="12.133333333333333,4.987468750000001";
+  labeldistance=0;
+  nodesep=.175;
+  ranksep=.175;
+
+ nd1[shape=point];
+ nd2[label="@",tooltip="nd2-AppGraph",style=rounded,orientation=90,shape=house,color="#000000"];
+ subgraph cluster_nd24 {
+   graph[style=fill,color="orange"];ndcluster_nd24[tooltip="nd24",orientation=90,shape=point,color="orange"];
+ };
+ nd68[label="rec",tooltip="nd68-RecurGraph",style=rounded,width=.3,height=.3,color="#000000"];
+   subgraph cluster_nd72 {
+     graph[style=fill,color="orange"];ndcluster_nd72[tooltip="nd72",orientation=90,shape=point,color="orange"];
+   };
+ nd6[label="λ",tooltip="nd6-AbsGraph",style=rounded,color="#000000"];
+ nd7[label="b@a",tooltip="nd7-AppGraph",style=rounded,orientation=90,shape=house,color="#000000"];
+   nd14[label="1000",tooltip="nd14-ConstGraph",style=rounded,orientation=90,shape=square,color="#000000"];
+
+  nd6->nd7[dir=back,label="a, build",headport=n,tailport=n,color=grey,arrowhead=none,arrowtail=none];
+  nd7->nd14[label="b",tailport=s,headport=w];
+  nd6->nd7[tailport=s,headport=w,color=red,arrowhead=normal];
+  ndcluster_nd24->nd68[tailport=n,headport=w];
+  nd2->ndcluster_nd24[tailport=s,headport=w];
+  nd2->nd6[tailport=n,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd1->nd2[tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd68->ndcluster_nd72[dir=back,headport=n,tailport=n];
+  nd68->ndcluster_nd72[tailport=s,headport=w];
+}

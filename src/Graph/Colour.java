@@ -34,42 +34,7 @@ public class Colour
 		this.g = g;
 		this.b = b;
 	}
-	
-	public Colour(String type, int paleness) 
-	{
-		if (type.equals("saturated")) 
-		{
-			Random random = new Random();
-			int x = random.nextInt(256-paleness) + paleness;
-			int y = random.nextInt(256-paleness) + paleness;
-			int variant = random.nextInt(3);
-			switch(variant)
-			{
-				case 0:
-					r = x;
-					g = y;
-					b = 0;
-					break;
-				case 1:
-					r = x;
-					g = 0;
-					b = y;
-					break;
-				case 2:
-					r = 0;
-					g = x;
-					b = y;
-					break;
-				default:
-					System.err.println("WHAT HAPPENED HERE?");
-			}
-		} 
-		else
-		{
-			System.err.println("You spelled 'saturated' incorrectly, doofus.");
-		}
-	}
-	
+
 	/**
 	 * Creates a colour out of hex
 	 * @parm String colour the colour in hex

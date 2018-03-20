@@ -139,13 +139,6 @@ public class Edge
 		return(v1.equals(v) || v2.equals(v));
 	}
 
-    /**
-     * Make duplicate with curves
-     * Parameter int called number of edges
-     * Use cubic beziers curves with control points directly above the edge points
-     * scale the distance of the control points proporitnal to the number of repte edges
-     *
-     */
 
 
 } 

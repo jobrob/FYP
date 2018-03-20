@@ -90,18 +90,26 @@ public class Subgraph
 		return colour;
 	}
 
+	/**
+	 * Returns the name of the subgraph
+	 * @return
+	 */
 	public String getName()
 	{
 		return name;
 	}
-	
+
+	/**
+	 * Sets the colour of the subgraph box
+	 * @param colour
+	 */
 	public void setColour(Colour colour)
 	{
 		this.colour = colour;
 	}
 	
 	/**
-	 * Moves the nodes in the subgraphs based on the intersubgraph atraction.
+	 * Moves the nodes in the subgraphs based on the inter-subgraph atraction.
 	 */
 	public void applyForces()
 	{
@@ -137,11 +145,6 @@ public class Subgraph
 	 */
 	public double[] minMax()
 	{
-//		for(Subgraph sub : Sg)
-//		{
-//			sub.minMax();
-//		}
-
 		double xMin = Double.POSITIVE_INFINITY;
 		double xMax = Double.NEGATIVE_INFINITY;
 		double yMin = Double.POSITIVE_INFINITY;
@@ -166,7 +169,6 @@ public class Subgraph
 				yMax = v.getY();
 			}
 		}
-		
 		return new double[]{xMin, yMin, xMax, yMax};
 	}
 	

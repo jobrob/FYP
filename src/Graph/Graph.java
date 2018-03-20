@@ -654,18 +654,31 @@ public class Graph implements Cloneable
 
 	public static void convertSubgraph(Subgraph sg,List<String> strings, Graph graph)
 	{
-		Iterator lines = strings.iterator();
-		while(lines.hasNext())
+		String[] lines = new String[strings.size()];
+		lines = strings.toArray(lines);
+//		Iterator lines = strings.iterator();
+//		new Exception().printStackTrace();
+		for(int i = 0; i< lines.length;i++)
 		{
-			String line = "" + lines.next();
-//			lines.remove();
+			String line = "" + lines[i];
 			if(line.contains("subgraph "))
 			{
+				i = Arrays.asList(lines).indexOf("}");
 				int nameStart = line.indexOf("subgraph");
 				int nameEnd = line.indexOf("{");
-				System.out.println("before converting the subgraph i have a total of " + graph.getSg().size() + " subgraphs");
-				convertSubgraph(new Subgraph(new ArrayList<Vertex>(),new ArrayList<Subgraph>(),line.substring(nameStart,nameEnd)),strings,graph);
-				System.out.println("after converting the subgraph i have a total of " + graph.getSg().size() + " subgraphs");
+				if(nameEnd == -1)
+				{
+					nameEnd = line.length();
+				}
+				String name = line.substring(nameStart,nameEnd).trim();
+//				line = "" + lines.next();
+				lines = Arrays.copyOfRange(lines,i,lines.length);
+				List<String> newStrings = Arrays.asList(lines);
+				Subgraph newSubgraph = new Subgraph(new ArrayList<Vertex>(),new ArrayList<Subgraph>(),name);
+				sg.addSubgraph(newSubgraph);
+
+				convertSubgraph(newSubgraph,newStrings,graph);
+
 			}
 			else if(line.contains("graph"))
 			{
@@ -676,14 +689,17 @@ public class Graph implements Cloneable
 					String subgraphColour = line.substring(colourStart,colourEnd);
 					sg.setColour(new Colour(subgraphColour));
 				}
+//				lines.remove();
 			}
 			else if(line.contains("}"))
 			{
+//				lines.remove();
 				graph.addSubgraph(sg);
 				return;
 			}
 			else
 			{
+				System.out.println("adding vertex");
 				if(line.contains("label"))
 				{
 					int nameEnd = line.indexOf("[");
@@ -700,13 +716,21 @@ public class Graph implements Cloneable
 				else
 				{
 					int nameEnd = line.indexOf("[");
-					Vertex u1 = new Vertex(line.substring(0,nameEnd).trim());
-					graph.addVertex(u1);
-					sg.addVertex(u1);
+					if (nameEnd == -1)
+					{
+						nameEnd = line.length();
+					}
+					String name =line.substring(0,nameEnd).trim();
+					if(!name.equals("") && !name.equals("{"))
+					{
+						Vertex u1 = new Vertex(name);
+						graph.addVertex(u1);
+						sg.addVertex(u1);
+					}
 				}
+//				lines.remove();
 			}
 		}
-
 	}
 
 	/**
@@ -728,47 +752,57 @@ public class Graph implements Cloneable
 			{
 				int nameStart = line.indexOf("subgraph");
 				int nameEnd = line.indexOf("{");
-				convertSubgraph(new Subgraph(new ArrayList<Vertex>(),new ArrayList<Subgraph>(),line.substring(nameStart,nameEnd)),strings,newGraph);
-//				ArrayList<Vertex> subV = new ArrayList<>();
-//				Subgraph subgraph = new Subgraph(subV);
-//				while(!line.contains("graph["))
-//				{
-//					line = "" + lines.next();
-//				}
-//				if(line.contains("color"))
-//				{
-//
-//					int colourStart = line.indexOf("color") + 7;
-//					int colourEnd = line.indexOf("\"",colourStart);
-//					String subgraphColour = line.substring(colourStart,colourEnd);
-//					subgraph.setColour(new Colour(subgraphColour));
-//				}
-//				line = "" + lines.next();
-//				while(!line.contains("}"))
-//				{
-//					if(line.contains("label"))
-//					{
-//						int nameEnd = line.indexOf("[");
-//						int labelStart = line.indexOf("label=\"");
-//						int labelEnd = line.indexOf("\"",labelStart+7);
-//						String label = line.substring(labelStart+7,labelEnd);
-//						if(!label.trim().isEmpty())
-//						{
-//							Vertex u1 = new Vertex(line.substring(0, nameEnd).trim(), CharacterEscape.escapeHtml(label));
-//							newGraph.addVertex(u1);
-//							subgraph.addVertex(u1);
-//						}
-//					}
-//					else
-//					{
-//						int nameEnd = line.indexOf("[");
-//						Vertex u1 = new Vertex(line.substring(0,nameEnd).trim());
-//						newGraph.addVertex(u1);
-//						subgraph.addVertex(u1);
-//					}
-//					line = "" + lines.next();
-//				}
-//				newGraph.addSubgraph(subgraph);
+				if(nameEnd == -1)
+				{
+					nameEnd = line.length();
+				}
+				String name = line.substring(nameStart,nameEnd).trim();
+//				convertSubgraph(new Subgraph(new ArrayList<Vertex>(),new ArrayList<Subgraph>(),line.substring(nameStart,nameEnd)),strings,newGraph);
+				ArrayList<Vertex> subV = new ArrayList<>();
+				Subgraph subgraph = new Subgraph(subV);
+				while(!line.contains("graph["))
+				{
+					line = "" + lines.next();
+				}
+				if(line.contains("color"))
+				{
+
+					int colourStart = line.indexOf("color") + 7;
+					int colourEnd = line.indexOf("\"",colourStart);
+					String subgraphColour = line.substring(colourStart,colourEnd);
+					subgraph.setColour(new Colour(subgraphColour));
+				}
+				line = "" + lines.next();
+				while(!line.contains("}"))
+				{
+					if(line.contains("label"))
+					{
+						int vertexnameEnd = line.indexOf("[");
+						int labelStart = line.indexOf("label=\"");
+						int labelEnd = line.indexOf("\"",labelStart+7);
+						String label = line.substring(labelStart+7,labelEnd);
+						if(!label.trim().isEmpty())
+						{
+							Vertex u1 = new Vertex(line.substring(0, vertexnameEnd).trim(), CharacterEscape.escapeHtml(label));
+							newGraph.addVertex(u1);
+							subgraph.addVertex(u1);
+						}
+					}
+					else
+					{
+						int vertexnameEnd = line.indexOf("[");
+						if(vertexnameEnd == -1)
+						{
+							vertexnameEnd = line.length();
+						}
+
+						Vertex u1 = new Vertex(line.substring(0,vertexnameEnd).trim());
+						newGraph.addVertex(u1);
+						subgraph.addVertex(u1);
+					}
+					line = "" + lines.next();
+				}
+				newGraph.addSubgraph(subgraph);
 			}
 			if(line.contains("label=") && !line.matches(".*(--|->).*"))
 			{

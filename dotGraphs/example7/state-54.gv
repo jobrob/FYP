@@ -1,0 +1,19 @@
+digraph G {
+  rankdir=LR;
+  edge[arrowhead=none,arrowtail=none];
+  node[fixedsize=true,shape=circle]
+  size="9.201041666666667,5.219270833333334";
+  labeldistance=0;
+  nodesep=.175;
+  ranksep=.175;
+
+ nd1[shape=point];
+   nd36[label="2",tooltip="nd36-ConstGraph",style=rounded,orientation=90,shape=square,width=.4,height=.4,color="purple"];
+ nd110[label="@",tooltip="nd110-AppGraph",style=rounded,orientation=90,shape=house,width=.4,height=.4,color="#000000"];
+ nd58[label="fun",tooltip="nd58-AbsGraph",style=rounded,width=.4,height=.4,color="#000000"];
+
+  nd58->nd58[label="y",tailport=e,headport=n,color=red,arrowhead=normal];
+  nd110->nd58[tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd1->nd110[tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd110->nd36[label="y",tailport=s,headport=w];
+}

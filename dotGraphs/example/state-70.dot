@@ -1,0 +1,39 @@
+digraph G {
+  rankdir=LR;
+  edge[arrowhead=none,arrowtail=none];
+  node[fixedsize=true,shape=circle]
+  size="12.133333333333333,4.987468750000001";
+  labeldistance=0;
+  nodesep=.175;
+  ranksep=.175;
+
+ nd1[shape=point];
+   nd14[label="1000",tooltip="nd14-ConstGraph",style=rounded,orientation=90,shape=square,color="#000000"];
+ nd42[label="::",tooltip="nd42-BinOpGraph",style=rounded,color="#000000"];
+ nd59[label=" ",tooltip="nd59-ContractGraph",style=rounded,orientation=90,shape=point];
+   nd111[label="999",tooltip="nd111-ConstGraph",style=rounded,orientation=90,shape=square,color="#000000"];
+ nd84[label="::",tooltip="nd84-BinOpGraph",style=rounded,color="#000000"];
+ nd85[label="@",tooltip="nd85-AppGraph",style=rounded,orientation=90,shape=house,color="#000000"];
+ nd92[label=" ",tooltip="nd92-ContractGraph",style=rounded,orientation=90,shape=point];
+   nd156[label="998",tooltip="nd156-ConstGraph",style=rounded,orientation=90,shape=square,color="#000000"];
+ subgraph cluster_nd117 {
+   graph[style=fill,color="orange"];ndcluster_nd117[tooltip="nd117",orientation=90,shape=point,color="orange"];
+ };
+ nd158[label="rec",tooltip="nd158-RecurGraph",style=rounded,width=.3,height=.3,color="#000000"];
+   subgraph cluster_nd162 {
+     graph[style=fill,color="orange"];ndcluster_nd162[tooltip="nd162",orientation=90,shape=point,color="orange"];
+   };
+
+  nd42->nd59[tailport=n,headport=w];
+  nd1->nd42[label="",tailport=e,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd59->nd14[label="x",tailport=e,headport=w];
+  nd85->ndcluster_nd117[tailport=n,headport=w,color=red,arrowhead=normal];
+  nd85->nd156[tailport=s,headport=w];
+  nd84->nd85[tailport=s,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd84->nd92[tailport=n,headport=w];
+  nd42->nd84[label="",tailport=s,headport=w,color="#b70000",arrowhead=none,arrowtail=none];
+  nd92->nd111[label="x",tailport=e,headport=w];
+  ndcluster_nd117->nd158[tailport=n,headport=w];
+  nd158->ndcluster_nd162[dir=back,headport=n,tailport=n];
+  nd158->ndcluster_nd162[tailport=s,headport=w];
+}
