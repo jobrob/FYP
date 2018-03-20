@@ -3,6 +3,10 @@ import java.util.*;
 
 public class CharacterEscape
 {
+	/**
+	 * Takes a string an returns a string that has its special characters replaced by the escaped values
+	 * @return
+	 */
 	public static String escapeHtml(String input)
 	{
 		HashMap<String, String> hashmap = new HashMap<>();

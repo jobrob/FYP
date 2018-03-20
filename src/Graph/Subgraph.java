@@ -196,7 +196,6 @@ public class Subgraph
 	 */
 	public void move(Vertex v,double xMin,double xMax,double yMin,double yMax)
 	{
-		System.out.println("Remove kebab");
 		double x = v.getX();
 		double y = v.getY();
 		double[] d = new double[] {x-xMin,x-xMax,y-yMin,y-yMax};

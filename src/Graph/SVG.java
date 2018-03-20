@@ -82,6 +82,12 @@ public class SVG
 		return result;
 	}
 
+	/**
+	 * Converts a subgraph and all of its children into svg.
+	 * @param sg the subgraph
+	 * @param xMin yMin the minimum points of the subgraph
+	 * @return
+	 */
 	public static String of(Subgraph sg, double xMin, double yMin)
 	{
 		StringBuilder result = new StringBuilder();
@@ -95,7 +101,6 @@ public class SVG
 			height 	= coords[3] - coords[1] + 2 * (BOX_MARGIN + NODE_RADIUS);
 
 			return "<rect class=\"box\" x=\"" + originX + "\" y=\"" + originY +"\" width=\"" + width + "\" height=\"" + height +"\" fill=\"" + sg.getColour() + "\" />" + "\n";
-			//  <rect class="box" x="originX" y="originY" width="width" height="height" fill="sg.getColour()" />
 		}
 
 		else
@@ -139,38 +144,8 @@ public class SVG
 	/**
 	 * Converts a graph into a string for displaying with SVG 
 	 * @param g the graph being converted
+	 * @param xMax ,yMin, xMax,yMax the minimum and maximum points of the graph
 	 */
-	public static String of(Graph g)
-	{
-		return SVG.of(g,0,0,256,256);
-		/*String result = null;
-		try 
-		{
-			result = new String(Files.readAllBytes(Paths.get("../assets/template-header.svg")));
-			//	System.out.println(result);
-		} 
-		catch (IOException e)
-		{
-			System.err.println("Couldn't get `template-header.svg`.");
-			e.printStackTrace();
-		}
-
-		//if(result == null)
-		//	return null;
-
-		for(Vertex v : g.getV())
-		{
-			result += "    " + SVG.of(v) + "\n";
-		}
-
-		for(Edge e : g.getE())
-		{
-			result += "    " + SVG.of(e) + "\n";
-		}
-		result += "\n</svg>\n";
-		return result;*/
-	}
-
 	public static String of(Graph g, double xMin, double yMin, double xMax,double yMax)
 	{
 		StringBuilder result = null;
@@ -179,8 +154,7 @@ public class SVG
 		{
 			result = new StringBuilder(new String(Files.readAllBytes(Paths.get("../assets/template-header-part1.svg"))));
 			result2 = new String(Files.readAllBytes(Paths.get("../assets/template-header-part2.svg")));
-			//	System.out.println(result);
-		} 
+		}
 		catch (IOException e)
 		{
 			System.err.println("Couldn't get `template-header-part-part.svg`.");
@@ -216,32 +190,4 @@ public class SVG
 		result.append("\n</svg>\n");
 		return result.toString();
 	}
-
-	/*public static String of(Graph3D g3d)
-	{
-		String result = null;
-		try 
-		{
-			result = new String(Files.readAllBytes(Paths.get("../assets/template-header.svg")));
-			//	System.out.println(result);
-		} 
-		catch (IOException e)
-		{
-			System.err.println("Couldn't get `template-header.svg`.");
-			e.printStackTrace();
-		}
-		for(Graph g :g3d.getG())
-		{
-			for(Edge e : g.getE())
-			{
-				result += "    " + SVG.of(e) + "\n";
-			}
-			for(Vertex v : g.getV())
-			{
-				result += "    " + SVG.of(v) + "\n";
-			}
-		}
-		result += "\n</svg>\n";
-		return result;
-	}*/
 }

@@ -15,12 +15,6 @@ import javax.swing.*;
 
 public class Eades3D
 {
-
-	public double temperature = 100;
-	private static int ORDER = 5;
-	private static int GRAPHS_TO_GENERATE = 100;
-
-
 	/**
 	 * Sets up the initial position of vertex then calls apply forces on them the requierd amounts of time. Also outputs the SVG
 	 * @param i The number of times apply forces will be called
@@ -84,7 +78,7 @@ public class Eades3D
 //		System.out.println("Simulation over");
 		long endtime = System.nanoTime();
 		double duration = (double)(endtime - starttime)/1000000000;
-		System.out.println(g3d.totalEdges() + g3d.totalVertices() + "," + duration);
+		System.out.println("There was a total of " + (g3d.totalEdges() + g3d.totalVertices()) + " elements and the simulation took " + duration + " seconds");
 
 	}
 
@@ -127,13 +121,28 @@ public class Eades3D
 	public static void main(String[] args)
 	{
 		ArrayList<Graph> G = new ArrayList<>();
-//		Graph graph = Graph.K(3);
+		ArrayList<Vertex> V = new ArrayList<>();
+		ArrayList<Edge> E = new ArrayList<>();
+//
+// 		//RANDOM//
+// 		Graph graph = Graph.K(3);
 //		G.add(graph);
 //		for(int i = 0;i<15 ; i++)
 //		{
 //			Graph newGraph = Graph.mutate(G.get(G.size()-1));
 //			G.add(newGraph);
 //		}
+
+		//K CYCLE//
+//		Graph graph = Graph.K(3);
+//		G.add(graph);
+//		for(int i = 3;i<15 ; i++)
+//		{
+//			Graph newGraph = Graph.K(i);
+//			G.add(newGraph);
+//		}
+
+		//EARLY EXAMPLE//
 //		Graph g1 = new Graph(V,E);
 //		Vertex v1 = new Vertex("r",Vector.ZERO,Vector.ZERO,new Colour(255,0,0),"r");
 //		Vertex v2 = new Vertex("b",Vector.ZERO,Vector.ZERO,new Colour(0,0,255),"b");
@@ -172,6 +181,9 @@ public class Eades3D
 //		g6.addEdge(new Edge(g6.getVertex("bl"),g6.getVertex("y")));
 //		G.add(g6);
 
+
+
+		//SINGLE SUBGRAPH//
 //		Vertex v1 = new Vertex("1");
 //		Vertex v2 = new Vertex("2");
 //		Edge e1 = new Edge(v1,v2);
@@ -272,10 +284,40 @@ public class Eades3D
 //		g16.addVertex(v16);
 //		g16.addEdge(new Edge(g16.getVertex("4"),g16.getVertex("16")));
 //		G.add(g16);
+
+		//DOUBLE SUBGRAPH//
+//		for(int i = 3;i<6;i++)
+//		{
+//			Graph test = Graph.K(i);
+//			G.add(test);
+//		}
+//		Graph graph = Graph.K(5);
+//		Graph graph2 = graph.copy();
+//		ArrayList<Vertex> tempV = new ArrayList<Vertex>();
+//		tempV.add(graph2.getV().get(1));
+//		tempV.add(graph2.getV().get(2));
+//		Subgraph subgraph = new Subgraph(tempV);
+//		ArrayList<Vertex> tempV2 = new ArrayList<Vertex>();
+//		tempV2.add(graph2.getV().get(0));
+//		tempV2.add(graph2.getV().get(1));
+//		tempV2.add(graph2.getV().get(2));
+//		ArrayList<Subgraph> Subgraphs = new ArrayList<Subgraph>();
+//		Subgraphs.add(subgraph);
+//		Subgraph subgraph2 = new Subgraph(tempV2,Subgraphs);
+//		graph2.addSubgraph(subgraph2);
+//		Graph graph3 = graph2.copy();
+//		graph3.addVertex(new Vertex("6"));
+//		graph3.addEdge(new Edge(graph3.getVertex("6"),graph3.getVertex("0")));
+//		graph3.getSg().get(0).addVertex(graph3.getVertex("6"));
 //
+//		G.add(graph);
+//		G.add(graph2);
+//		G.add(graph3);
+
+
 		try
 		{
-			for (int i = 0; i < GRAPHS_TO_GENERATE; i++)
+			for (int i = 0; i < 100; i++)
 			{
 				byte[] bytes = Files.readAllBytes(Paths.get("../dotGraphs/example/state-" + i + ".dot"));
 				String s = new String(bytes, StandardCharsets.UTF_8);

@@ -11,9 +11,16 @@ public class Vertex
 	Colour colour;
 	final UUID id;
 	String label;
-	
-	
-	
+
+
+	/**
+	 * Creates a Vertex out of a name and a vector to define it position. gives it a random id.
+	 * @param name the name of the vertex
+	 * @param position the position of the vertex
+	 * @param displacement the displacement of the vertex
+	 * @param colour the colour values of the vertex
+	 * @param label the label of the vertex to be displayed in the svg
+	 */
 	public Vertex(String name,Vector position,Vector displacement,Colour colour,String label)
 	{
 		this.displacement = displacement;
@@ -27,14 +34,7 @@ public class Vertex
 	{
 		this(name,Vector.ZERO,Vector.ZERO,new Colour(),label);
 	}
-	
-	/**
-	 * Creates a Vertex out of a name and a vector to define it position. gives it a random id.
-	 * @param name the name of the vertex
-	 * @param position the position of the vertex
-	 * @param displacement the displacement of the vertex
-	 * @param colour the colour values of the vertex
-	 */
+
 	public Vertex(String name, Vector position,Vector displacement,Colour colour)
 	{
 		this(name,position,displacement,colour,"");
@@ -44,12 +44,7 @@ public class Vertex
 	{
 		this(name,position,displacement,new Colour());
 	}
-		
-	/**
-	 * Creates a vertex without a position vector
-	 * Automatically assigns the 0 vector is a assigned
-	 * @param name the name of the vertex
-	 */
+
 	public Vertex(String name)
 	{
 		this(name, Vector.ZERO, Vector.ZERO);
@@ -59,6 +54,7 @@ public class Vertex
 	{
 		this(name,Vector.ZERO,Vector.ZERO,colour);
 	}
+
 	public Vertex(String name, Vector position)
 	{
 		this(name, position, Vector.ZERO);
@@ -84,7 +80,10 @@ public class Vertex
 	{
 		return position.getY();
 	}
-	
+
+	/**
+	 * Returns the z value of the Vertex
+	 */
 	public double getZ()
 	{
 		return position.getZ();
@@ -120,17 +119,21 @@ public class Vertex
 		return colour;
 	}
 	/**
-	 * @return The gloably unique Id for the Vertex
+	 * @return The globaly unique Id for the Vertex
 	 */
 	public UUID getId()
 	{
 		return id;
 	}
-	
+
+	/**
+	 * returns the label of the Vertex
+	 */
 	public String getLabel()
 	{
 		return label;
 	}
+
 	/**
 	 * Sets the vector of the vertex to the one given
 	 * @param position the new position vector

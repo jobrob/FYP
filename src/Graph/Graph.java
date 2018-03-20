@@ -11,27 +11,6 @@ public class Graph implements Cloneable
 	private ArrayList<Edge> E;
 	private ArrayList<Subgraph> Sg;
 
-
-	/**
-	 *Constructs a graph out of a collection of vertices and edges
-	 *@param V the collection of vertices
-	 *@param E the collection of edges
-	 */
-	public Graph(ArrayList<Vertex> V,ArrayList<Edge> E) 
-	{
-		this.V = new ArrayList<>();
-		this.E = new ArrayList<>();
-		this.Sg = new ArrayList<>();
-		for(Vertex v : V)
-		{
-			addVertex(v);
-		}
-		for(Edge e : E)
-		{
-			addEdge(e);
-		}
-	}
-
 	/**
 	 * Contructs a graph out of a collection of vertices, edges and subgraphs
  	 *@param V the list of vertices
@@ -51,6 +30,11 @@ public class Graph implements Cloneable
 		{
 			addEdge(e);
 		}
+	}
+
+	public Graph(ArrayList<Vertex> V,ArrayList<Edge> E)
+	{
+		this(V,E,new ArrayList<Subgraph>());
 	}
 
 	/**
@@ -79,7 +63,7 @@ public class Graph implements Cloneable
 
 
 	/**
-	 *Adds a vertex to the collection of vertices and asserts that its not already in V
+	 *Adds a vertex to the collection of vertices and checks that its not already in V
 	 *@param vertex the vertex being added
 	 */
 	public void addVertex(Vertex vertex) 
@@ -94,7 +78,6 @@ public class Graph implements Cloneable
 			{
 				new Exception().printStackTrace();
                 System.out.println("Error two vertices " + v.getName() + " and " + vertex.getName() + " are the same");
-				System.exit(0);
 			}
 		}
 		V.add(vertex);
@@ -118,14 +101,12 @@ public class Graph implements Cloneable
 		if(!V.contains(edge.getV1()))
 		{
 				new Exception().printStackTrace();
-                System.out.println("Error edge not in graph " + edge.getV1());
-                System.exit(0);		
+                System.out.println("Vertex " + edge.getV1() + " is not in the graph");
 		}
 		if(!V.contains(edge.getV2()))
 		{
 				new Exception().printStackTrace();
-                System.out.println("Error edge not in graph " + edge.getV2());
-                System.exit(0);		
+				System.out.println("Vertex " + edge.getV2() + " is not in the graph");
 		}
 		E.add(edge);
 	}
@@ -241,6 +222,9 @@ public class Graph implements Cloneable
 		return false;
 	}
 
+	/**
+	 * Checks weather a vertex with the name "String Name" is in the graph
+	 */
 	public boolean isIn(String name)
 	{
 		for (Vertex v : V)
@@ -343,6 +327,10 @@ public class Graph implements Cloneable
 		return new Graph(copyV,copyE,copySg);
 	}
 
+	/**
+	 * Returns a new copy of the subgraph with all of it children
+	 * @param sg
+	 */
 	public Subgraph copySubgraph(Subgraph sg,ArrayList<Vertex> copyV)
 	{
 		if(!sg.isLeaf())
@@ -444,16 +432,6 @@ public class Graph implements Cloneable
 		}
 	}
 
-	public void removeRandomEdge()
-	{
-		Random rand = new Random();
-		if(E.size() > 0 )
-		{
-			int i = rand.nextInt(E.size());
-			removeEdge(E.get(i));
-		}
-	}
-
 	/**
 	 * Genarates a random graph with a random amounts of nodes and vertices. 
 	 */
@@ -548,189 +526,6 @@ public class Graph implements Cloneable
 			}
 		}
 		return graph;
-	}
-
-	/**
-	 * Crates a graph based of a input string and a graph from which to work on
-	 * Vertex addition is NAME||COLOUR
-	 * Vertex removal is NAME
-	 * Edge removal is U1NAME||U2NAME
-	 * Edge addition is U1NAME||U2NAME
-	 * Eeach section is ended with a blank line
-	 */
-	public static Graph of(List<String> lines,Graph graph) {
-
-		int i = 0;
-		String line = lines.get(i);
-
-		//ArrayList<Vertex> V = new ArrayList<Vertex>();
-		//ArrayList<Edge> E = new ArrayList<Edge>();
-		//Graph G = new Graph(V, E);
-
-
-		while(!line.equals("")) 
-		{
-			System.err.println("Parsing vertex: "+line);
-			// Add all vertices to `V`./
-			String[] vertexEntry = line.split("\\|");
-			switch (vertexEntry.length)
-			{
-				case 1:
-					graph.addVertex(new Vertex(vertexEntry[0]));
-					break;
-				case 2:
-					graph.addVertex(new Vertex(vertexEntry[0], new Colour(vertexEntry[1])));
-					break;
-				default:
-					System.err.println("Cannot parse vertex entry \""+ line +"\"; too many parameters.");
-					break;
-			}
-			line = lines.get(++i);
-		}
-		line = lines.get(++i);
-
-		while(!line.equals(""))
-		{
-			System.err.println("Parsing the vertex removal " +line);
-			String[] vertexRemoval = line.split("\\|");
-			switch (vertexRemoval.length)
-			{
-				case 1:
-					System.out.println("TRYING TO DELETE THE VERTEX " + vertexRemoval[0]);
-					if (graph.getVertex(vertexRemoval[0]) != null)
-					{
-						graph.removeVertex(graph.getVertex(vertexRemoval[0]));
-					}
-					break;
-				default:
-					System.err.println("Cannot parse vertex removal \"" + line + "\"; invalid number of parameters.");
-					break;
-			}
-			line = lines.get(++i);
-		}
-		line = lines.get(++i);
-		System.err.println("Parsed all vertices.");
-
-		while(!line.equals(""))
-		{
-			System.err.println("Parsing the edge removal " + line );
-			String[] edgeRemoval = line.split("\\|");
-			switch (edgeRemoval.length)
-			{
-				case 2:
-					graph.removeEdge(new Edge(graph.getVertex(edgeRemoval[0]),graph.getVertex(edgeRemoval[1])));
-					break;
-				default:
-					System.err.println("Cannot parse edge removal \"" + line + "\";invalid number of parameters.");
-			}
-			line = lines.get(++i);
-		}
-		line = lines.get(++i);
-
-
-		while(!line.equals("") && i < lines.size()) 
-		{
-			System.out.println("Parsing edge: "+line);
-			String[] edgeEntry = line.split("\\|");
-			switch (edgeEntry.length) 
-			{
-				case 2:
-					graph.addEdge(new Edge(graph.getVertex(edgeEntry[0]), graph.getVertex(edgeEntry[1])));
-					break;
-				default:
-					System.err.println("Cannot parse edge entry \""+ line +"\"; invalid number of parameters.");
-					break;
-			}
-			if (++i < lines.size())
-			{
-				line = lines.get(i);
-			}
-		}
-
-		System.err.println("Parsed all edges.");
-
-		return graph;
-	}
-
-	public static void convertSubgraph(Subgraph sg,List<String> strings, Graph graph)
-	{
-		String[] lines = new String[strings.size()];
-		lines = strings.toArray(lines);
-//		Iterator lines = strings.iterator();
-//		new Exception().printStackTrace();
-		for(int i = 0; i< lines.length;i++)
-		{
-			String line = "" + lines[i];
-			if(line.contains("subgraph "))
-			{
-				i = Arrays.asList(lines).indexOf("}");
-				int nameStart = line.indexOf("subgraph");
-				int nameEnd = line.indexOf("{");
-				if(nameEnd == -1)
-				{
-					nameEnd = line.length();
-				}
-				String name = line.substring(nameStart,nameEnd).trim();
-//				line = "" + lines.next();
-				lines = Arrays.copyOfRange(lines,i,lines.length);
-				List<String> newStrings = Arrays.asList(lines);
-				Subgraph newSubgraph = new Subgraph(new ArrayList<Vertex>(),new ArrayList<Subgraph>(),name);
-				sg.addSubgraph(newSubgraph);
-
-				convertSubgraph(newSubgraph,newStrings,graph);
-
-			}
-			else if(line.contains("graph"))
-			{
-				if(line.contains("color"))
-				{
-					int colourStart = line.indexOf("color") + 7;
-					int colourEnd = line.indexOf("\"",colourStart);
-					String subgraphColour = line.substring(colourStart,colourEnd);
-					sg.setColour(new Colour(subgraphColour));
-				}
-//				lines.remove();
-			}
-			else if(line.contains("}"))
-			{
-//				lines.remove();
-				graph.addSubgraph(sg);
-				return;
-			}
-			else
-			{
-				System.out.println("adding vertex");
-				if(line.contains("label"))
-				{
-					int nameEnd = line.indexOf("[");
-					int labelStart = line.indexOf("label=\"");
-					int labelEnd = line.indexOf("\"",labelStart+7);
-					String label = line.substring(labelStart+7,labelEnd);
-					if(!label.trim().isEmpty())
-					{
-						Vertex u1 = new Vertex(line.substring(0, nameEnd).trim(), CharacterEscape.escapeHtml(label));
-						graph.addVertex(u1);
-						sg.addVertex(u1);
-					}
-				}
-				else
-				{
-					int nameEnd = line.indexOf("[");
-					if (nameEnd == -1)
-					{
-						nameEnd = line.length();
-					}
-					String name =line.substring(0,nameEnd).trim();
-					if(!name.equals("") && !name.equals("{"))
-					{
-						Vertex u1 = new Vertex(name);
-						graph.addVertex(u1);
-						sg.addVertex(u1);
-					}
-				}
-//				lines.remove();
-			}
-		}
 	}
 
 	/**
