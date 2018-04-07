@@ -1,0 +1,44 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1201.2039632264364 1299.2918659741622" style="enable-background:new 0 0 256 256;" xml:space="preserve">
+
+	<style type="text/css">
+		.node {
+			stroke-width: 2;
+		}
+
+		.edge {
+			stroke-width: 2;
+			fill: none;
+		}
+		
+		.box {
+			opacity: 1;
+		}
+	</style>
+	
+	
+	<rect x = "0" y="0" width = "1201.2039632264364" height = "1299.2918659741622" fill = "rgb(255,255,255)" />
+    <rect class="box" x="572.9792569696932" y="280.5365487131315" width="16.0" height="16.0" fill="rgb(255,140,0)" />
+
+    <rect class="box" x="648.9523363210149" y="468.0145031937174" width="16.0" height="16.0" fill="rgb(255,140,0)" />
+
+    <rect class="box" x="695.5486053949527" y="729.5481176509651" width="16.0" height="16.0" fill="rgb(255,140,0)" />
+
+    <line class="edge" stroke = "black" x1="656.9523363210149" y1="476.0145031937174" x2="686.4202748868793" y2="669.5342222133174"/> <!--ndcluster_nd24,nd68-->
+    <line class="edge" stroke = "black" x1="672.4707412219201" y1="305.82334930065764" x2="656.9523363210149" y2="476.0145031937174"/> <!--nd2,ndcluster_nd24-->
+    <line class="edge" stroke = "red" x1="672.4707412219201" y1="305.82334930065764" x2="580.9792569696932" y2="288.5365487131315"/> <!--nd2,ndcluster_nd4-->
+    <line class="edge" stroke = "#b70000" x1="686.3311696017583" y1="149.66025679697094" x2="672.4707412219201" y2="305.82334930065764"/> <!--nd1,nd2-->
+    
+<path d ="M686.4202748868793 669.5342222133174 Q694.9844401409159 703.5411699321412 703.5486053949527 737.5481176509651" stroke = "black" stroke-width = "2" fill="none" />
+<path d ="M686.4202748868793 669.5342222133174 Q675.5899963416912 708.4253842721054 703.5486053949527 737.5481176509651" stroke = "black" stroke-width = "2" fill="none" />
+    <circle class= "node" fill="white" stroke="rgb(5,61,40)" cx="672.4707412219201" cy="305.82334930065764" r="20"/>
+	<text text-anchor="middle" x="672.4707412219201" y="305.82334930065764" font-family="Times,serif" font-size="14.00">@</text>
+    <circle class="node" cx="580.9792569696932" cy="288.5365487131315" r="7.0" fill="rgb(9,201,111)" />  <!--ndcluster_nd4-->
+    <circle class="node" cx="656.9523363210149" cy="476.0145031937174" r="7.0" fill="rgb(69,245,1)" />  <!--ndcluster_nd24-->
+    <circle class= "node" fill="white" stroke="rgb(132,62,103)" cx="686.4202748868793" cy="669.5342222133174" r="20"/>
+	<text text-anchor="middle" x="686.4202748868793" y="669.5342222133174" font-family="Times,serif" font-size="14.00">rec</text>
+    <circle class="node" cx="703.5486053949527" cy="737.5481176509651" r="7.0" fill="rgb(93,17,214)" />  <!--ndcluster_nd72-->
+    <circle class="node" cx="686.3311696017583" cy="149.66025679697094" r="7.0" fill="rgb(28,45,1)" />  <!--nd1-->
+
+</svg>

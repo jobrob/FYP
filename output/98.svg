@@ -1,0 +1,63 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1201.2039632264364 1299.2918659741622" style="enable-background:new 0 0 256 256;" xml:space="preserve">
+
+	<style type="text/css">
+		.node {
+			stroke-width: 2;
+		}
+
+		.edge {
+			stroke-width: 2;
+			fill: none;
+		}
+		
+		.box {
+			opacity: 1;
+		}
+	</style>
+	
+	
+	<rect x = "0" y="0" width = "1201.2039632264364" height = "1299.2918659741622" fill = "rgb(255,255,255)" />
+    <rect class="box" x="217.58392834970854" y="1101.2431277038745" width="16.0" height="16.0" fill="rgb(255,140,0)" />
+
+    <line class="edge" stroke = "black" x1="605.079977734822" y1="473.1439610817538" x2="521.4485745824054" y2="361.72592831741196"/> <!--nd42,nd59-->
+    <line class="edge" stroke = "#b70000" x1="686.7966491151624" y1="413.3421654522622" x2="605.079977734822" y2="473.1439610817538"/> <!--nd1,nd42-->
+    <line class="edge" stroke = "black" x1="521.4485745824054" y1="361.72592831741196" x2="469.351583307081" y2="275.8582948517067"/> <!--nd59,nd14-->	<text text-anchor="middle" x="493.4000789447432" y="318.79211158455934" font-family="Times,serif" font-size="14.00">x</text>
+    <line class="edge" stroke = "black" x1="633.573183368511" y1="668.7535399665754" x2="761.7064288449733" y2="678.829702670229"/> <!--nd84,nd92-->
+    <line class="edge" stroke = "#b70000" x1="605.079977734822" y1="473.1439610817538" x2="633.573183368511" y2="668.7535399665754"/> <!--nd42,nd84-->
+    <line class="edge" stroke = "black" x1="761.7064288449733" y1="678.829702670229" x2="863.4253069474823" y2="683.7428958454979"/> <!--nd92,nd111-->	<text text-anchor="middle" x="810.5658678962278" y="681.2862992578634" font-family="Times,serif" font-size="14.00">x</text>
+    <line class="edge" stroke = "#b70000" x1="344.8845235575368" y1="955.5051527888993" x2="269.5835583883871" y2="1061.7874970719172"/> <!--nd130,nd158-->
+    <line class="edge" stroke = "black" x1="344.8845235575368" y1="955.5051527888993" x2="269.8746465134574" y2="891.0210872619783"/> <!--nd130,nd201-->
+    <line class="edge" stroke = "#b70000" x1="524.9364771568994" y1="871.299210303659" x2="344.8845235575368" y2="955.5051527888993"/> <!--nd129,nd130-->
+    <line class="edge" stroke = "black" x1="524.9364771568994" y1="871.299210303659" x2="602.4316663826473" y2="971.9263162177303"/> <!--nd129,nd137-->
+    <line class="edge" stroke = "#b70000" x1="633.573183368511" y1="668.7535399665754" x2="524.9364771568994" y2="871.299210303659"/> <!--nd84,nd129-->
+    <line class="edge" stroke = "black" x1="602.4316663826473" y1="971.9263162177303" x2="662.911524538617" y2="1053.264408928677"/> <!--nd137,nd156-->	<text text-anchor="middle" x="630.6715954606321" y="1012.5953625732038" font-family="Times,serif" font-size="14.00">x</text>
+    
+<path d ="M269.5835583883871 1061.7874970719172 Q247.5837433690478 1085.5153123878958 225.58392834970854 1109.2431277038745" stroke = "black" stroke-width = "2" fill="none" />
+<path d ="M269.5835583883871 1061.7874970719172 Q232.91765882797523 1071.9172991420533 225.58392834970854 1109.2431277038745" stroke = "black" stroke-width = "2" fill="none" />
+    <circle class= "node" fill="white" stroke="rgb(85,29,95)" cx="469.351583307081" cy="275.8582948517067" r="20"/>
+	<text text-anchor="middle" x="469.351583307081" y="275.8582948517067" font-family="Times,serif" font-size="14.00">1000</text>
+    <circle class= "node" fill="white" stroke="rgb(139,91,44)" cx="605.079977734822" cy="473.1439610817538" r="20"/>
+	<text text-anchor="middle" x="605.079977734822" y="473.1439610817538" font-family="Times,serif" font-size="14.00">::</text>
+    <circle class= "node" fill="white" stroke="rgb(155,162,123)" cx="863.4253069474823" cy="683.7428958454979" r="20"/>
+	<text text-anchor="middle" x="863.4253069474823" y="683.7428958454979" font-family="Times,serif" font-size="14.00">999</text>
+    <circle class= "node" fill="white" stroke="rgb(233,90,126)" cx="633.573183368511" cy="668.7535399665754" r="20"/>
+	<text text-anchor="middle" x="633.573183368511" y="668.7535399665754" font-family="Times,serif" font-size="14.00">::</text>
+    <circle class= "node" fill="white" stroke="rgb(193,28,60)" cx="662.911524538617" cy="1053.264408928677" r="20"/>
+	<text text-anchor="middle" x="662.911524538617" y="1053.264408928677" font-family="Times,serif" font-size="14.00">998</text>
+    <circle class= "node" fill="white" stroke="rgb(63,76,111)" cx="269.5835583883871" cy="1061.7874970719172" r="20"/>
+	<text text-anchor="middle" x="269.5835583883871" y="1061.7874970719172" font-family="Times,serif" font-size="14.00">rec</text>
+    <circle class="node" cx="225.58392834970854" cy="1109.2431277038745" r="7.0" fill="rgb(149,137,85)" />  <!--ndcluster_nd162-->
+    <circle class= "node" fill="white" stroke="rgb(41,59,240)" cx="524.9364771568994" cy="871.299210303659" r="20"/>
+	<text text-anchor="middle" x="524.9364771568994" y="871.299210303659" font-family="Times,serif" font-size="14.00">::</text>
+    <circle class= "node" fill="white" stroke="rgb(66,115,120)" cx="344.8845235575368" cy="955.5051527888993" r="20"/>
+	<text text-anchor="middle" x="344.8845235575368" y="955.5051527888993" font-family="Times,serif" font-size="14.00">@</text>
+    <circle class= "node" fill="white" stroke="rgb(52,186,152)" cx="269.8746465134574" cy="891.0210872619783" r="20"/>
+	<text text-anchor="middle" x="269.8746465134574" y="891.0210872619783" font-family="Times,serif" font-size="14.00">997</text>
+    <circle class="node" cx="521.4485745824054" cy="361.72592831741196" r="7.0" fill="rgb(141,227,20)" />  <!--nd59-->
+    <circle class="node" cx="686.7966491151624" cy="413.3421654522622" r="7.0" fill="rgb(28,45,1)" />  <!--nd1-->
+    <circle class="node" cx="761.7064288449733" cy="678.829702670229" r="7.0" fill="rgb(148,32,159)" />  <!--nd92-->
+    <circle class="node" cx="602.4316663826473" cy="971.9263162177303" r="7.0" fill="rgb(9,39,187)" />  <!--nd137-->
+
+</svg>
