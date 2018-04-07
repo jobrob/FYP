@@ -561,7 +561,6 @@ public class Graph implements Cloneable
 				}
 				if(line.contains("color"))
 				{
-
 					int colourStart = line.indexOf("color") + 7;
 					int colourEnd = line.indexOf("\"",colourStart);
 					String subgraphColour = line.substring(colourStart,colourEnd);

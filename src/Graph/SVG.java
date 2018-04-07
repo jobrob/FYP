@@ -6,7 +6,7 @@ import java.nio.file.*;
 public class SVG
 {
 	private static final double CANVAS_MARGIN 	= 50;
-	private static final double NODE_RADIUS		= 5;
+	private static final double NODE_RADIUS		= 7;
 	private static final double BOX_MARGIN		= 1;
 	private static final double SCALE_FACTOR	= 20;
 
@@ -54,7 +54,7 @@ public class SVG
 
 				int separation = (int)Math.ceil(i/2.0);
 				Vector controlPoint = midpoint.plus(orthogonalDirection.scale(separation));
-				result += "\n<path d =\"M" +  (e.getV1().getX() - xMin + CANVAS_MARGIN) + " " + (e.getV1().getY() - yMin +CANVAS_MARGIN) + " Q" + (controlPoint.getX() - xMin + CANVAS_MARGIN) + " " + (controlPoint.getY() - yMin + CANVAS_MARGIN) + " " + (e.getV2().getX() - xMin + CANVAS_MARGIN) + " " + (e.getV2().getY() - yMin + CANVAS_MARGIN) + "\" stroke = \"black\" stroke-width = \"1\" fill=\"none\" />";
+				result += "\n<path d =\"M" +  (e.getV1().getX() - xMin + CANVAS_MARGIN) + " " + (e.getV1().getY() - yMin +CANVAS_MARGIN) + " Q" + (controlPoint.getX() - xMin + CANVAS_MARGIN) + " " + (controlPoint.getY() - yMin + CANVAS_MARGIN) + " " + (e.getV2().getX() - xMin + CANVAS_MARGIN) + " " + (e.getV2().getY() - yMin + CANVAS_MARGIN) + "\" stroke = \"black\" stroke-width = \"2\" fill=\"none\" />";
 				if(e.getLabels().size() > i && !e.getLabels().get(i).isEmpty())
 				{
 					result += "\t<text text-anchor=\"middle\" x=\"" + (controlPoint.getX() - xMin + CANVAS_MARGIN) +  "\" y=\"" + (controlPoint.getY() - yMin + CANVAS_MARGIN) +  "\" font-family=\"Times,serif\" font-size=\"14.00\">" + e.getLabels().get(i) + "</text>";

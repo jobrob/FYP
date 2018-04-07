@@ -138,7 +138,4 @@ public class Edge
 	{
 		return(v1.equals(v) || v2.equals(v));
 	}
-
-
-
 } 
