@@ -184,6 +184,7 @@ public class Eades3D
 
 
 		//SINGLE SUBGRAPH//
+		/*
 		Vertex v1 = new Vertex("1");
 		Vertex v2 = new Vertex("2");
 		Edge e1 = new Edge(v1,v2);
@@ -284,7 +285,7 @@ public class Eades3D
 		g16.addVertex(v16);
 		g16.addEdge(new Edge(g16.getVertex("4"),g16.getVertex("16")));
 		G.add(g16);
-
+		*/
 		//DOUBLE SUBGRAPH//
 //		for(int i = 3;i<6;i++)
 //		{
@@ -315,11 +316,11 @@ public class Eades3D
 //		G.add(graph3);
 
 
-		/*try
+		try
 		{
 			for (int i = 0; i < 100; i++)
 			{
-				byte[] bytes = Files.readAllBytes(Paths.get("../dotGraphs/example5/state-" + i + ".gv"));
+				byte[] bytes = Files.readAllBytes(Paths.get("../dotGraphs/example/state-" + i + ".dot"));
 				String s = new String(bytes, StandardCharsets.UTF_8);
 
 				// This ensures semi-colons are immediately followed by a newline character,
@@ -338,7 +339,7 @@ public class Eades3D
 		{
 			e.printStackTrace();
 			System.err.println("\nCouldn't get file at path");
-		}*/
+		}
 
 
 		Graph3D g3d = new Graph3D(G);
